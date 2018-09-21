@@ -1,47 +1,57 @@
 from kivy.app import App
-from kivy.uix.widget import Widget
 from kivy.uix.button import Button
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.label import Label
 from kivy.clock import Clock
 import math
-import time
+
+from src import Main, StateMachine
 
 timeKept = 0
 timerRunning = False
-robotState = "tele"
-robotEnabled = False
 
 # Callable functions
 
 def getTimerState():
-    if timerRunning:
+    if Main.timerRunning:
         return "running"
     else:
         return "stopped"
 
 # Returns time on timer in milliseconds
-def getTime():
-    return round(timeKept * 1000)
+def matchButtons():
+    if Main.robotEnabled:
+        modeMenu.enableLabel.text = "Enabled"
+    else:
+        modeMenu.enableLabel.text = "Disabled"
 
-# Returns strings "tele" or "auto"
-def getRobotState():
-    return robotState
+    if Main.gameMode == "tele":
+        modeMenu.stateLabel.text = "TeleOp"
+    else:
+        modeMenu.stateLabel.text = "Autonomous"
+
+    if Main.started:
+        startButton.text = "Stop"
+    else:
+        startButton.text = "Start"
+
+def getTime():
+    return round(Main.timeKept * 1000)
 
 def enable(self):
-    robotEnabled = True
+    Main.robotEnabled = True
     modeMenu.enableLabel.text = "Enabled"
 
 def disable(self):
-    robotEnabled = False
+    Main.robotEnabled = False
     modeMenu.enableLabel.text = "Disabled"
 
 def auto(self):
-    robotState = "auto"
+    Main.gameMode = "auto"
     modeMenu.stateLabel.text = "Autonomous"
 
 def tele(self):
-    robotState = "tele"
+    Main.gameMode = "tele"
     modeMenu.stateLabel.text = "TeleOp"
 
 # Call this to start the application
@@ -56,33 +66,23 @@ class TimerClock(Label):
         self.font_size = 100
         Clock.schedule_interval(self.update, 0.1)
 
-    # Formats timekept (seconds) to minutes:seconds
+    # Formats Main.timeKept (seconds) to minutes:seconds
     def update(self, dt):
-        global timeKept
-        if(timerRunning): timeKept += dt
-        deciseconds = str(math.floor(timeKept * 10) % 10)
-        seconds = str(math.floor(timeKept) % 60).zfill(2)
-        minutes = str(math.floor(timeKept / 60) % 100).zfill(2)
+        if Main.timerRunning: Main.timeKept += dt
+        remainingTime = 0
+        if(Main.gameMode == "auto"):
+            remainingTime = Main.autoSeconds - Main.timeKept
+        else:
+            remainingTime = Main.teleSeconds- Main.timeKept
+        deciseconds = str(math.floor(remainingTime * 10) % 10)
+        seconds = str(math.floor(remainingTime) % 60).zfill(2)
+        minutes = str(math.floor(remainingTime / 60) % 100).zfill(2)
         self.text = '{0}:{1}.{2}'.format(minutes, seconds, deciseconds)
+        Main.mainLoop()
+        matchButtons()
+
 timerclock = TimerClock()
 
-# Contains both the start and reset buttons
-class TimerButtons(GridLayout):
-
-    def __init__(self, **kwargs):
-        super(TimerButtons, self).__init__(**kwargs)
-        self.cols = 2
-        self.add_widget( StartButton() )
-        self.add_widget( ResetButton() )
-
-# The class for a button (used for styling)
-class GenericButton(Button):
-
-    def __init__(self, **kwargs):
-        super(GenericButton, self).__init__(**kwargs)
-        self.font_size = 48
-
-# The button responsible for starting and stopping the timer
 class StartButton(Button):
 
     def __init__(self, **kwargs):
@@ -92,13 +92,14 @@ class StartButton(Button):
         self.bind(on_press = lambda self: self.toggle())
 
     def toggle(self):
-        global timerRunning
-        global timeKept
-        timerRunning = not timerRunning
-        if timerRunning:
-            self.text = 'Stop'
+        Main.timerRunning = not Main.timerRunning
+        Main.started = not Main.started
+        if not Main.started:
+            StateMachine.stop()
+            Main.started = False
         else:
-            self.text = 'Start'
+            StateMachine.start()
+            Main.started = True
 
 # Button will reset timer to 0 (whether timer is running or not)
 class ResetButton(Button):
@@ -109,8 +110,28 @@ class ResetButton(Button):
         self.bind(on_press = lambda self: self.reset())
 
     def reset(self):
-        global timeKept
-        timeKept = 0
+        StateMachine.reset()
+
+startButton = StartButton()
+
+# Contains both the start and reset buttons
+class TimerButtons(GridLayout):
+
+    def __init__(self, **kwargs):
+        super(TimerButtons, self).__init__(**kwargs)
+        self.cols = 2
+        self.add_widget( startButton )
+        self.add_widget( ResetButton() )
+
+# The class for a button (used for styling)
+class GenericButton(Button):
+
+    def __init__(self, **kwargs):
+        super(GenericButton, self).__init__(**kwargs)
+        self.font_size = 48
+
+# The button responsible for starting and stopping the timer
+
 
 # Includes enable/disable and tele/auto
 class ModeMenu(GridLayout):
@@ -146,9 +167,11 @@ class AppLayout(GridLayout):
         super(AppLayout, self).__init__(**kwargs)
         self.cols = 1
         self.add_widget( timerclock )
-        self.add_widget( TimerButtons() )
+        self.add_widget(TimerButtons())
         self.add_widget( modeMenu )
 
 class GUIApp(App):
     def build(self):
         return AppLayout()
+
+launch()
