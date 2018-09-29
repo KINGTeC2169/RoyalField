@@ -18,8 +18,15 @@ public class FXCamTest extends Application {
 		
 		// note this is in init as it **must not** be called on the FX Application Thread:
 
-		Webcam cam = Webcam.getWebcams().get(0);
-		service = new WebCamService(cam);	
+		try{
+			Webcam cam = Webcam.getWebcams().get(0);
+			service = new WebCamService(cam);
+		}
+		catch(IndexOutOfBoundsException e){
+			System.out.println("Webcam not visible.  Please restart");
+			System.exit(1);
+		}
+
 	}
 
 	@Override
