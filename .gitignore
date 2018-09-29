@@ -4,3 +4,5 @@
 venv/
 
 src/__pycache__/
+
+AudienceInterface/out/production/WebcamSwingTest/
