@@ -27,13 +27,16 @@
   <center>
     <BorderPane fx:id="bpWebCamPaneHolder" prefHeight="200.0" prefWidth="200.0">
          <center>
-            <ImageView fx:id="imgWebCamCapturedImage" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
-         </center></BorderPane>
+            <ImageView fx:id="imgWebCamCapturedImage" fitHeight="480.0" fitWidth="720.0" pickOnBounds="true" preserveRatio="true" />
+         </center>
+         <top>
+            <Accordion BorderPane.alignment="CENTER" />
+         </top></BorderPane>
   </center>
   <top>
     <GridPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="120.0" style="-fx-background-color:#ccc;&#10;">
       <children>
-        <Label text="Webcam Capture Example Using Sarxos API" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0" GridPane.rowSpan="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+        <Label text="Webcam Capture Example" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0" GridPane.rowSpan="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
           <font>
             <Font name="Segoe UI" size="34.0" />
           </font>
