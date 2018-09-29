@@ -1,3 +1,5 @@
+package webcam;
+
 import com.github.sarxos.webcam.Webcam;
 
 import javafx.application.Application;
