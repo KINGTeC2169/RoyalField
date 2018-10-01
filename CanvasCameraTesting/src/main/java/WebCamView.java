@@ -1,4 +1,4 @@
-package webcam;
+package main.java;
 
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -92,11 +92,7 @@ public class WebCamView {
 	public WebCamService getService() {
 		return service ;
 	}
-
-	public Region getImage(){
-		return view;
-	}
-
+	
 	public Node getView() {
 		return view ;
 	}

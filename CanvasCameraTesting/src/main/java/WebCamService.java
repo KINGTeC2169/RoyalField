@@ -1,14 +1,15 @@
-package webcam;
+package main.java;
+
+import java.awt.Dimension;
+import java.awt.image.BufferedImage;
 
 import com.github.sarxos.webcam.Webcam;
 import com.github.sarxos.webcam.WebcamResolution;
+
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
-
-import java.awt.*;
-import java.awt.image.BufferedImage;
 
 public class WebCamService extends Service<Image> {
 
