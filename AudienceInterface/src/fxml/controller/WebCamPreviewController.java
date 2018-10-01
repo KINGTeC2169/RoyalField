@@ -4,11 +4,10 @@ import java.awt.image.BufferedImage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import com.github.sarxos.webcam.WebcamPanel;
 import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
@@ -27,6 +26,10 @@ import com.github.sarxos.webcam.Webcam;
 
 public class WebCamPreviewController implements Initializable {
 
+
+    //Constants
+    int desiredWebcam = 0;
+
 	
 	@FXML Button btnStartCamera;
 	@FXML Button btnStopCamera;
@@ -36,7 +39,6 @@ public class WebCamPreviewController implements Initializable {
 	@FXML FlowPane fpBottomPane;
 	@FXML ImageView imgWebCamCapturedImage;
 	private BufferedImage grabbedImage;
-//	private WebcamPanel selWebCamPanel = null;
 	private Webcam selWebCam = null;
 	private boolean stopCamera = false;
 	private ObjectProperty<Image> imageProperty = new SimpleObjectProperty<Image>();
@@ -60,24 +62,14 @@ public class WebCamPreviewController implements Initializable {
 		}
 		cbCameraOptions.setItems(options);
 		cbCameraOptions.setPromptText(cameraListPromptText);
-		cbCameraOptions.getSelectionModel().selectedItemProperty().addListener(new  ChangeListener<WebCamInfo>() {
+        initializeWebCam(desiredWebcam);
 
-	        @Override
-	        public void changed(ObservableValue<? extends WebCamInfo> arg0, WebCamInfo arg1, WebCamInfo arg2) {
-	            if (arg2 != null) {
-	               
-	            	System.out.println("WebCam Index: " + arg2.getWebCamIndex()+": WebCam Name:"+ arg2.getWebCamName());
-	            	initializeWebCam(arg2.getWebCamIndex());
-	            }
-	        }
-	    });
 		Platform.runLater(new Runnable() {
 			
 			@Override
 			public void run() {
 				
 				setImageViewSize();
-				
 			}
 		});
 		
@@ -99,7 +91,7 @@ public class WebCamPreviewController implements Initializable {
 
 			@Override
 			protected Void call() throws Exception {
-				
+
 				if(selWebCam == null)
 				{
 					selWebCam = Webcam.getWebcams().get(webCamIndex);
@@ -109,7 +101,7 @@ public class WebCamPreviewController implements Initializable {
 					closeCamera();
 					selWebCam = Webcam.getWebcams().get(webCamIndex);
 					selWebCam.open();
-					
+
 				}
 				startWebCamStream();
 				return null;
@@ -138,9 +130,10 @@ public class WebCamPreviewController implements Initializable {
 							Platform.runLater(new Runnable() {
 								@Override
 								public void run() {
-									final Image mainiamge = SwingFXUtils
+									final Image mainImage
+											= SwingFXUtils
 											.toFXImage(grabbedImage, null);
-									imageProperty.set(mainiamge);
+									imageProperty.set(mainImage);
 								}
 							});
 
@@ -203,15 +196,9 @@ public class WebCamPreviewController implements Initializable {
 	{
 		private String webCamName ;
 		private int webCamIndex ;
-		
-		public String getWebCamName() {
-			return webCamName;
-		}
+
 		public void setWebCamName(String webCamName) {
 			this.webCamName = webCamName;
-		}
-		public int getWebCamIndex() {
-			return webCamIndex;
 		}
 		public void setWebCamIndex(int webCamIndex) {
 			this.webCamIndex = webCamIndex;
