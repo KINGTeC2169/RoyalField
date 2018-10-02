@@ -9,7 +9,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import main.java.textHandler.TextPane;
+import main.java.text.TextPane;
 import main.java.webcamHandlers.WebCamService;
 import main.java.webcamHandlers.WebCamView;
 
@@ -53,6 +53,10 @@ public class Main extends Application {
 		primaryStage.setMaximized(true);
 		primaryStage.setFullScreen(true);
 		primaryStage.show();
+
+
+
+
 	}
 	
 

@@ -1,23 +1,22 @@
-package main.java.textHandler;
+package main.java.text;
 
 import javafx.scene.layout.Pane;
 
 public class TextPane {
 
     Pane pane;
+    TextHandler textHandler;
 
     public TextPane(){
 
          pane = new Pane();
+         textHandler = new TextHandler();
          draw();
-
     }
 
     public void draw(){
 
-        ScoreText t = new ScoreText(1920f/2f, 50);
-        t.setText("hi");
-        pane.getChildren().add(t);
+        textHandler.init(pane);
 
     }
 
