@@ -1,4 +1,4 @@
-package main.java;
+package main.java.webcamHandlers;
 
 import javafx.scene.Node;
 import javafx.scene.control.Label;

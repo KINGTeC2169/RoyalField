@@ -3,20 +3,16 @@ package main.java;
 import com.github.sarxos.webcam.Webcam;
 
 import javafx.application.Application;
-import javafx.beans.binding.Bindings;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import main.java.WebCamService;
+import main.java.webcamHandlers.WebCamService;
+import main.java.webcamHandlers.WebCamView;
 
-public class FXCamTest extends Application {
+public class Main extends Application {
 	
 	private WebCamService service;
 	
@@ -35,7 +31,7 @@ public class FXCamTest extends Application {
 		BorderPane imagePlacement = new BorderPane();
 		service.restart();
 
-		Image image = new Image("main/java/ScoringOverlay.jpeg",1920,250, false, false);
+		Image image = new Image("bin/media/ScoringOverlay.jpeg",1920,250, true, false);
 		ImageView iv1 = new ImageView(image);
 		imagePlacement.setTop(iv1);
 

@@ -1,4 +1,4 @@
-package main.java;
+package main.java.webcamHandlers;
 
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
