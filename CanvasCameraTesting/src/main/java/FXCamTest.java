@@ -8,7 +8,11 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import main.java.WebCamService;
 
@@ -28,29 +32,24 @@ public class FXCamTest extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 
-		Button startStop = new Button();
-		startStop.textProperty().bind(Bindings.
-				when(service.runningProperty()).
-				then("Stop").
-				otherwise("Start"));
-		
-		startStop.setOnAction(e -> {
-			if (service.isRunning()) {
-				service.cancel();
-			} else {
-				service.restart();
-			}
-		});
-		
+		BorderPane imagePlacement = new BorderPane();
+		service.restart();
+
+		Image image = new Image("main/java/ScoringOverlay.jpeg",1920,250, false, false);
+		ImageView iv1 = new ImageView(image);
+		imagePlacement.setTop(iv1);
+
 		WebCamView view = new WebCamView(service);
-		
-		BorderPane root = new BorderPane(view.getView());
-		BorderPane.setAlignment(startStop, Pos.CENTER);
-		BorderPane.setMargin(startStop, new Insets(5));
-		root.setBottom(startStop);
-		
-		Scene scene = new Scene(root);
+
+		StackPane stackPane = new StackPane();
+		stackPane.getChildren().add(view.getView());
+		stackPane.getChildren().add(imagePlacement);
+
+
+		Scene scene = new Scene(stackPane);
 		primaryStage.setScene(scene);
+		primaryStage.setMaximized(true);
+		primaryStage.setFullScreen(true);
 		primaryStage.show();
 	}
 	
