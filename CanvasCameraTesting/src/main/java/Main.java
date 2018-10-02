@@ -9,6 +9,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import main.java.textHandler.TextPane;
 import main.java.webcamHandlers.WebCamService;
 import main.java.webcamHandlers.WebCamView;
 
@@ -28,12 +29,17 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 
+	    TextPane textCanvas = new TextPane();
+
 		BorderPane imagePlacement = new BorderPane();
 		service.restart();
 
-		Image image = new Image("bin/media/ScoringOverlay.jpeg",1920,250, true, false);
+        StackPane imageStack = new StackPane();
+		Image image = new Image("bin/media/ScoringOverlay.png",1920,250, true, false);
 		ImageView iv1 = new ImageView(image);
-		imagePlacement.setTop(iv1);
+		imageStack.getChildren().add(iv1);
+        imageStack.getChildren().add(textCanvas.getPane());
+		imagePlacement.setTop(imageStack);
 
 		WebCamView view = new WebCamView(service);
 
