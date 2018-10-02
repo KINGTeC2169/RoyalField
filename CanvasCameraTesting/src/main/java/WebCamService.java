@@ -25,7 +25,7 @@ public class WebCamService extends Service<Image> {
 	}
 	
 	public WebCamService(Webcam cam) {
-		this(cam, WebcamResolution.QVGA);
+		this(cam, WebcamResolution.HD720);
 	}
 	
 	@Override
