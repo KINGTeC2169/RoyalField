@@ -9,3 +9,11 @@ src/__pycache__/
 *.class
 
 *.iml
+
+*.html
+
+*.jnlp
+
+*.MF
+
+CanvasCameraTesting/out/artifacts/CanvasCameraTesting/CanvasCameraTesting\.jar

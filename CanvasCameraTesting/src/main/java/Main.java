@@ -1,7 +1,6 @@
 package main.java;
 
 import com.github.sarxos.webcam.Webcam;
-
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -16,7 +15,7 @@ import main.java.webcamHandlers.WebCamView;
 public class Main extends Application {
 	
 	private WebCamService service;
-	
+
 	@Override
 	public void init() {
 		
@@ -29,7 +28,7 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 
-	    TextPane textCanvas = new TextPane();
+		TextPane textPane = new TextPane();
 
 		BorderPane imagePlacement = new BorderPane();
 		service.restart();
@@ -38,7 +37,7 @@ public class Main extends Application {
 		Image image = new Image("bin/media/ScoringOverlay.png",1920,250, true, false);
 		ImageView iv1 = new ImageView(image);
 		imageStack.getChildren().add(iv1);
-        imageStack.getChildren().add(textCanvas.getPane());
+        imageStack.getChildren().add(textPane.getPane());
 		imagePlacement.setTop(imageStack);
 
 		WebCamView view = new WebCamView(service);
@@ -47,22 +46,15 @@ public class Main extends Application {
 		stackPane.getChildren().add(view.getView());
 		stackPane.getChildren().add(imagePlacement);
 
-
 		Scene scene = new Scene(stackPane);
 		primaryStage.setScene(scene);
 		primaryStage.setMaximized(true);
 		primaryStage.setFullScreen(true);
 		primaryStage.show();
 
-
-
-
 	}
-	
-
 
 	public static void main(String[] args) {
 		launch(args);
 	}
 }
-

@@ -5,7 +5,7 @@ import javafx.scene.layout.Pane;
 public class TextPane {
 
     Pane pane;
-    TextHandler textHandler;
+    public TextHandler textHandler;
 
     public TextPane(){
 
@@ -18,6 +18,10 @@ public class TextPane {
 
         textHandler.init(pane);
 
+    }
+
+    public void update(){
+        textHandler.update();
     }
 
     public Pane getPane(){

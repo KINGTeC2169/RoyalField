@@ -39,7 +39,7 @@ public class ScoreText extends Text {
 
     public void updateText(String s){
         this.setText(s);
-        setPos(this.getX(), this.getY());
+        setPos(x_, y_);
     }
 
     private void setPos(double x, double y){
