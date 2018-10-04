@@ -4,17 +4,6 @@ import javafx.scene.layout.Pane;
 
 class TextHandler {
 
-    private String gameModeVal = "AUTO";
-    private String timeVal = "00:00";
-    private int blueScoreVal = 0;
-    private int blueRelicVal = 0;
-    private int bluePingPongVal = 0;
-    private int blueFlagVal = 0;
-    private int redScoreVal = 0;
-    private int redRelicVal = 0;
-    private int redPingPongVal = 0;
-    private int redFlagVal = 0;
-
     //General Data
     private ScoreText gameMode = new ScoreText(1920f/2f,200);
     private ScoreText time = new ScoreText(1920f/2f,100);
@@ -47,12 +36,14 @@ class TextHandler {
         p.getChildren().addAll(gameMode, time, blueScore, blueRelic, bluePingPong, blueFlag, redScore, redRelic, redPingPong, redFlag);
     }
 
+    double i = 9.999;
 
     void update(){
-
-        gameMode.updateText(gameModeVal);
-        time.updateText(timeVal);
-        blueScore.updateText("" + blueScoreVal);
+        UIStateMachine.setTime(i);
+        i -= .25;
+        //gameMode.updateText(gameModeVal);
+        time.updateText(UIStateMachine.getTime());
+        /*blueScore.updateText("" + blueScoreVal);
         blueRelic.updateText("" + blueRelicVal);
         bluePingPong.updateText("" + bluePingPongVal);
         blueFlag.updateText("" + blueFlagVal);
@@ -60,6 +51,8 @@ class TextHandler {
         redRelic.updateText("" + redRelicVal);
         redPingPong.updateText("" + redPingPongVal);
         redFlag.updateText("" + redFlagVal);
+        */
 
     }
+
 }
