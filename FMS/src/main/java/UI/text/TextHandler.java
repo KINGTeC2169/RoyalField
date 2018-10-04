@@ -47,11 +47,9 @@ class TextHandler {
         p.getChildren().addAll(gameMode, time, blueScore, blueRelic, bluePingPong, blueFlag, redScore, redRelic, redPingPong, redFlag);
     }
 
-    int i = 0;
 
-    public void update(){
+    void update(){
 
-        i++;
         gameMode.updateText(gameModeVal);
         time.updateText(timeVal);
         blueScore.updateText("" + blueScoreVal);
@@ -62,14 +60,6 @@ class TextHandler {
         redRelic.updateText("" + redRelicVal);
         redPingPong.updateText("" + redPingPongVal);
         redFlag.updateText("" + redFlagVal);
-        blueScore.updateText("" + i);
-        blueRelic.updateText("" + i);
-        bluePingPong.updateText("" + i);
-        blueFlag.updateText("" + i);
-        redScore.updateText("" + i);
-        redRelic.updateText("" + i);
-        redPingPong.updateText("" + i);
-        redFlag.updateText("" + i);
 
     }
 }

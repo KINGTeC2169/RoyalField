@@ -4,8 +4,8 @@ import javafx.scene.layout.Pane;
 
 public class TextPane {
 
-    Pane pane;
-    public TextHandler textHandler;
+    private Pane pane;
+    private TextHandler textHandler;
 
     public TextPane(){
 
@@ -14,7 +14,7 @@ public class TextPane {
          draw();
     }
 
-    public void draw(){
+    private void draw(){
 
         textHandler.init(pane);
 
