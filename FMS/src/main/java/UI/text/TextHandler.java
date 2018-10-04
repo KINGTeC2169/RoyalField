@@ -1,4 +1,4 @@
-package main.java.text;
+package main.java.UI.text;
 
 import javafx.scene.layout.Pane;
 

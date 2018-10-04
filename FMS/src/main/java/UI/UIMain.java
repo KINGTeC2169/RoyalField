@@ -1,4 +1,4 @@
-package main.java;
+package main.java.UI;
 
 import com.github.sarxos.webcam.Webcam;
 import javafx.animation.KeyFrame;
@@ -11,11 +11,11 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import main.java.text.TextPane;
-import main.java.webcamHandlers.WebCamService;
-import main.java.webcamHandlers.WebCamView;
+import main.java.UI.text.TextPane;
+import main.java.UI.webcamHandlers.WebCamService;
+import main.java.UI.webcamHandlers.WebCamView;
 
-public class Main extends Application {
+public class UIMain extends Application {
 	
 	private WebCamService service;
 
@@ -61,7 +61,7 @@ public class Main extends Application {
 
 	}
 
-	public static void main(String[] args) {
+	public static void start(String[] args) {
 		launch(args);
 	}
 }
