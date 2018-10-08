@@ -16,7 +16,6 @@ public class UIStateMachine {
 
 
     //Match State Setters
-
     public static void setTime(double s){
 
         if(s <= 0){

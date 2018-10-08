@@ -36,7 +36,7 @@ class TextHandler {
         p.getChildren().addAll(gameMode, time, blueScore, blueRelic, bluePingPong, blueFlag, redScore, redRelic, redPingPong, redFlag);
     }
 
-    double i = 9.999;
+    double i = 120;
 
     void update(){
         UIStateMachine.setTime(i);
