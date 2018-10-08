@@ -32,7 +32,7 @@ public class WebCamService extends Service<Image> {
 	public Task<Image> createTask() {
 		return new Task<Image>() {
 			@Override
-			protected Image call() throws Exception {
+			protected Image call() {
 				
 				try {
 					cam.open();

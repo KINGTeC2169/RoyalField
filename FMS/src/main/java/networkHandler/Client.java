@@ -18,20 +18,29 @@ class Client {
     private boolean hasDisconnected;
 
     Client(Socket socket){
+
+        //Take in information about the client.
         socket_ = socket;
         ip = socket.getInetAddress().getHostAddress();
         long time = System.currentTimeMillis();
+
+        //Create UUID, removing any strange characters
         UUID = socket_.getInetAddress().getHostName().replaceAll("[^A-Za-z0-9]", "")+ time;
         hasDisconnected = false;
+
+        //Start a new communication thread
         Thread n = new Thread(() -> {
             try {
+                //Try to talk.
                 talk();
             }
             catch(SocketException f) {
+                //If we can't talk, disconnect.  Something has gone wrong.
                 disconnect();
                 System.out.println(UUID + " has Disconnected!");
             }
             catch (IOException e) {
+                //If the problem wasn't connection, something has gone horribly wrong.  Print error.
                 e.printStackTrace();
             }
 
@@ -40,46 +49,54 @@ class Client {
 
     }
 
+    //IP Address getter
     String getIP(){
         return ip;
     }
 
+    //Universal User IDentification (UUID) getter
     String getUUID(){
         return UUID;
     }
 
+    //Connection health checker
     @SuppressWarnings("unused")
     boolean isConnected() throws IOException {
         return socket_.getInetAddress().isReachable(10);
     }
 
+    //Connection state getter
     boolean isHasDisconnected(){
         return hasDisconnected;
     }
 
+    //Method to disconnect
     private void disconnect(){
         hasDisconnected = true;
     }
 
+    //Method to write things to the client
     private void writeMessage(String s){
         out.println(s);
         out.flush();
     }
-    
+
+    //Talk method.  Main means of communication
     private void talk() throws IOException {
         String data;
         BufferedReader in = new BufferedReader(new InputStreamReader(socket_.getInputStream()));
         out = new PrintWriter(socket_.getOutputStream(), true);
-        writeMessage("Enter: time, mode, score, ping, flag, relic");
-        writeMessage("space");
-        writeMessage("desired value");
+        //While the socket is connected,
         while (socket_.isConnected()) {
+            //Check if we've got new data from our client.
             if ((data = in.readLine()) != null) {
+                //If we do, do something with it!
                 interpretMessage(data);
             }
         }
     }
 
+    //Temporary method for parsing human input into UI changes.
     private void interpretMessage(String s){
         System.out.println(s);
         if(s.contains(" ")){

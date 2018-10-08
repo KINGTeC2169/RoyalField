@@ -3,6 +3,9 @@ package main.java.UI.text;
 @SuppressWarnings("ALL")
 public class UIStateMachine {
 
+    //Massive set of getters and setters for statically adjusting scoreboard data without needing to interact with the
+    //JavaFX thread, which keeps things from getting thread-dangerous.
+
     private static String gameMode = "AUTO";
     private static String time = "00:00";
     private static int blueScore = 0;
