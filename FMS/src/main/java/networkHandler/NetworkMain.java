@@ -4,7 +4,7 @@ import java.io.IOException;
 
 public class NetworkMain {
 
-    public void start(){
+    public static void start(){
         Server m = null;
         try {
             m = new Server();
@@ -12,6 +12,7 @@ public class NetworkMain {
             e.printStackTrace();
         }
         try {
+            assert m != null;
             m.listen();
         } catch (IOException e) {
             e.printStackTrace();

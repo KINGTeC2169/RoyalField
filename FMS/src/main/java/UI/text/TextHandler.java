@@ -36,22 +36,18 @@ class TextHandler {
         p.getChildren().addAll(gameMode, time, blueScore, blueRelic, bluePingPong, blueFlag, redScore, redRelic, redPingPong, redFlag);
     }
 
-    double i = 120;
-
     void update(){
-        UIStateMachine.setTime(i);
-        i -= .25;
-        //gameMode.updateText(gameModeVal);
+        gameMode.updateText(UIStateMachine.getGameMode());
         time.updateText(UIStateMachine.getTime());
-        /*blueScore.updateText("" + blueScoreVal);
-        blueRelic.updateText("" + blueRelicVal);
-        bluePingPong.updateText("" + bluePingPongVal);
-        blueFlag.updateText("" + blueFlagVal);
-        redScore.updateText("" + redScoreVal);
-        redRelic.updateText("" + redRelicVal);
-        redPingPong.updateText("" + redPingPongVal);
-        redFlag.updateText("" + redFlagVal);
-        */
+        blueScore.updateText("" + UIStateMachine.getBlueScore());
+        blueRelic.updateText("" + UIStateMachine.getBlueRelic());
+        bluePingPong.updateText("" + UIStateMachine.getBluePingPong());
+        blueFlag.updateText("" + UIStateMachine.getBlueFlag());
+        redScore.updateText("" + UIStateMachine.getRedScore());
+        redRelic.updateText("" + UIStateMachine.getRedRelic());
+        redPingPong.updateText("" + UIStateMachine.getRedPingPong());
+        redFlag.updateText("" + UIStateMachine.getRedFlag());
+
 
     }
 

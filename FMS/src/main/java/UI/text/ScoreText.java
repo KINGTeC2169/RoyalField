@@ -5,17 +5,12 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
-public class ScoreText extends Text {
+class ScoreText extends Text {
 
     private double x_;
     private double y_;
 
-    private enum allianceType{
-        RED, BLUE, NEITHER
-    }
-    public allianceType alliance = allianceType.NEITHER;
-
-    public ScoreText(double x, double y){
+    ScoreText(double x, double y){
         super();
         x_ = x;
         y_ = y;
@@ -26,7 +21,7 @@ public class ScoreText extends Text {
         this.setFill(Color.WHITE);
     }
 
-    public ScoreText(double x, double y, int size){
+    ScoreText(double x, double y, int size){
         super();
         x_ = x;
         y_ = y;
@@ -37,7 +32,7 @@ public class ScoreText extends Text {
         this.setFill(Color.WHITE);
     }
 
-    public void updateText(String s){
+    void updateText(String s){
         this.setText(s);
         setPos(x_, y_);
     }

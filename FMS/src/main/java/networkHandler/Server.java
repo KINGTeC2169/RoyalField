@@ -6,12 +6,12 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
-public class Server {
+class Server {
 
     private ArrayList<Client> clients = new ArrayList<>();
     private ServerSocket server;
 
-    public Server() throws IOException {
+    Server() throws IOException {
         server = new ServerSocket(90, 1, InetAddress.getLocalHost());
     }
 
@@ -36,12 +36,13 @@ public class Server {
         else{
             //Client exists!  Give them their old info back
             Client c = checkIfClientExists(ip);
+            assert c != null;
             System.out.println("Client " + c.getUUID() + " already exists!");
         }
 
     }
 
-    private Client checkIfClientExists(String ip) throws IOException {
+    private Client checkIfClientExists(String ip){
         for(Client cl:clients){
             if(ip.equals(cl.getIP())){
                 if(!cl.isHasDisconnected()) {
