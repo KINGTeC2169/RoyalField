@@ -17,7 +17,7 @@ public class NetworkMain {
 
         //Start a listener on the server.
         assert m != null;
-        m.startListening();
+        m.start();
     }
 
 }

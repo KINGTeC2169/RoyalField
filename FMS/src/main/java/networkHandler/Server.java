@@ -1,13 +1,12 @@
 package main.java.networkHandler;
 
-import java.io.IOException;
+import java.io.*;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.SocketException;
 import java.util.ArrayList;
 
-class Server {
+class Server extends Thread{
 
     private ArrayList<Client> clients = new ArrayList<>();
     private ServerSocket server;
@@ -17,47 +16,43 @@ class Server {
         server = new ServerSocket(90, 1, InetAddress.getLocalHost());
     }
 
-    Thread l = new Thread(){
-        void listenerSpawn() throws IOException {
-            listen();
-        }
-    };
-
     //Listener function that grabs new clients and hands them information.
-    void listen() throws IOException {
-        //When client connects, accept them.
-        Socket client = server.accept();
-        client.setKeepAlive(true);
+    public void run() {
 
-        //Donate this thread to the client and spawn a new one for listening.
-        Thread t = new Thread(() -> {
-            try {
-                System.out.println("Grabbed New Client: " + client.getInetAddress().getHostAddress());
-                listen();
-            } catch (IOException e) {
+        // running infinite loop for getting
+        // client request
+        while (true)
+        {
+            Socket s = null;
+
+            try
+            {
+                // socket object to receive incoming client requests
+                s = server.accept();
+
+                System.out.println("A new client is connected : " + s);
+
+                // obtaining input and out streams
+
+                System.out.println("Assigning new thread for this client");
+
+                // create a new thread object
+                Thread t = new Client(s);
+
+                // Invoking the start() method
+                t.start();
+
+            }
+            catch (Exception e){
+                try {
+                    s.close();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
                 e.printStackTrace();
             }
-        });
-        t.start();
-
-        //Check database for this client to see if they have already connected at some point during this session.
-        String ip = client.getInetAddress().getHostAddress();
-        if(checkIfClientExists(ip) == null){
-            //Client Doesn't Exists, make a new one and add it to the array
-            clients.add(new Client(client));
-        }
-        else{
-            //Client exists!  Give them their old info back
-            Client c = checkIfClientExists(ip);
-            assert c != null;
-            System.out.println("Client " + c.getUUID() + " already exists!");
         }
 
-    }
-
-    //EXPERIMENTAL: Thread for starting listener thread.
-    void startListening(){
-        l.start();
     }
 
     private Client checkIfClientExists(String ip){
