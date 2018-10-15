@@ -1,6 +1,8 @@
-package main.java;
+package main.java.UI;
 
 import com.github.sarxos.webcam.Webcam;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -8,11 +10,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import main.java.text.TextPane;
-import main.java.webcamHandlers.WebCamService;
-import main.java.webcamHandlers.WebCamView;
+import javafx.util.Duration;
+import main.java.UI.text.TextPane;
+import main.java.UI.webcamHandlers.WebCamService;
+import main.java.UI.webcamHandlers.WebCamView;
 
-public class Main extends Application {
+public class UIMain extends Application {
 	
 	private WebCamService service;
 
@@ -52,9 +55,13 @@ public class Main extends Application {
 		primaryStage.setFullScreen(true);
 		primaryStage.show();
 
+        Timeline updateMachine = new Timeline(new KeyFrame(Duration.millis(250), event -> textPane.update()));
+        updateMachine.setCycleCount(Timeline.INDEFINITE);
+        updateMachine.play();
+
 	}
 
-	public static void main(String[] args) {
+	public static void start(String[] args) {
 		launch(args);
 	}
 }
