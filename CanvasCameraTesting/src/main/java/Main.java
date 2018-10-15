@@ -22,7 +22,7 @@ public class Main extends Application {
 		// note this is in init as it **must not** be called on the FX Application Thread:
 
 		Webcam cam = Webcam.getWebcams().get(0);
-		service = new WebCamService(cam);	
+		service = new WebCamService(cam);
 	}
 
 	@Override
