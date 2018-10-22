@@ -21,4 +21,7 @@ public class Main {
         return 0;
     }
 
+    public static void loop() {
+
+    }
 }

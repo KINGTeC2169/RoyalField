@@ -60,7 +60,10 @@ public class UIMain extends Application {
 		primaryStage.setFullScreen(true);
 		primaryStage.show();
 
-        Timeline updateMachine = new Timeline(new KeyFrame(Duration.millis(250), event -> textPane.update()));
+        Timeline updateMachine = new Timeline(new KeyFrame(Duration.millis(250), event -> {
+            Main.loop();
+            textPane.update();
+        }));
         updateMachine.setCycleCount(Timeline.INDEFINITE);
         updateMachine.play();
 
