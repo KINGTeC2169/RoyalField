@@ -17,4 +17,8 @@ public class Main {
 
     }
 
+    public static int shutdown(){
+        return 0;
+    }
+
 }
