@@ -1,14 +1,14 @@
 package main.java.networkHandler;
 
+import main.java.networkHandler.tablet.RobotTablet;
+
 import java.io.*;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
 
 class Server extends Thread{
 
-    private ArrayList<Client> clients = new ArrayList<>();
     private ServerSocket server;
 
     //Constructor that creates the ServerSocket
@@ -21,7 +21,7 @@ class Server extends Thread{
 
         // running infinite loop for getting
         // client request
-        while (true)
+        while (System.currentTimeMillis() > 0)
         {
             Socket s = null;
 
@@ -36,7 +36,27 @@ class Server extends Thread{
 
                 System.out.println("Assigning new thread for this client");
 
-                // create a new thread object
+                BufferedReader in;
+
+                try {
+                    in = new BufferedReader(new InputStreamReader(s.getInputStream()));
+
+                    String data;
+
+                    while (s.isConnected()) {
+                        //Check if we've got new data from our client.
+                        if ((data = in.readLine()) != null) {
+                            if(data.substring(0,2).equalsIgnoreCase("JTB")){
+                                new RobotTablet(s);
+                            }
+                        }
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+
+            // create a new thread object
                 Thread t = new Client(s);
 
                 // Invoking the start() method
@@ -45,6 +65,7 @@ class Server extends Thread{
             }
             catch (Exception e){
                 try {
+                    assert s != null;
                     s.close();
                 } catch (IOException e1) {
                     e1.printStackTrace();
@@ -55,26 +76,4 @@ class Server extends Thread{
 
     }
 
-    private Client checkIfClientExists(String ip){
-        //Search the list of clients
-        for(Client cl:clients){
-            //If the IP is found
-            if(ip.equals(cl.getIP())){
-                //If the client hadn't disconnected
-                if(!cl.isHasDisconnected()) {
-                    System.out.println("Client Already Connected!");
-                    //Client never left.
-                    return cl;
-                }
-                else{
-                    //Client left and came back
-                    System.out.println("Client Reconnecting!  Welcome Back!");
-                    return cl;
-                }
-
-            }
-        }
-        //Conditions weren't met.  Don't return any userdata
-        return null;
-    }
 }

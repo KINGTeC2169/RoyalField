@@ -39,4 +39,11 @@ public class Match {
 
     }
 
+    public Alliance getBlue() {
+        return blue;
+    }
+
+    public Alliance getRed() {
+        return blue;
+    }
 }

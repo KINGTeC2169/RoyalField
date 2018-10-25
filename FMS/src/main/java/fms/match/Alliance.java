@@ -12,6 +12,8 @@ public class Alliance {
 
     private ArrayList<Integer> teams;
     private AllianceColor color;
+    private int opponentMajorPenalties = 0;
+    private int opponentMinorPenalties = 0;
     private int relics = 0;
     private int moonRocks = 0;
     private int flags = 0;
@@ -66,7 +68,8 @@ public class Alliance {
     }
 
     public void calculateTotalScore(){
-        setTotalScore(getRelics() * ScoreConstants.relicPoints + getMoonRocks() * ScoreConstants.moonRockPoints +  getFlags() * ScoreConstants.flagPoints - getPenaltyPoints());
+        int penaltyBonus = getOpponentMinorPenalties() * ScoreConstants.minorPenaltyPoints + getOpponentMajorPenalties() * ScoreConstants.majorPenaltyPoints;
+        setTotalScore(getRelics() * ScoreConstants.relicPoints + getMoonRocks() * ScoreConstants.moonRockPoints +  getFlags() * ScoreConstants.flagPoints + penaltyBonus);
     }
 
     //Getters
@@ -91,8 +94,12 @@ public class Alliance {
         return rankingPoints;
     }
 
-    private int getPenaltyPoints(){
-        return penaltyPoints;
+    private int getOpponentMajorPenalties(){
+        return opponentMajorPenalties;
+    }
+
+    private int getOpponentMinorPenalties(){
+        return opponentMinorPenalties;
     }
 
     private boolean getWin(){
@@ -122,8 +129,12 @@ public class Alliance {
         rankingPoints = rankingPoints_;
     }
 
-    public void setPenaltyPoints(int penaltyPoints_){
-        penaltyPoints = penaltyPoints_;
+    public void setOpponentMajorPenalties(int opponentMajorPenalties){
+        this.opponentMajorPenalties = opponentMajorPenalties;
+    }
+
+    public void setOpponentMinorPenalties(int opponentMinorPenalties){
+        this.opponentMinorPenalties = opponentMinorPenalties;
     }
 
     public void setWin(boolean win_){

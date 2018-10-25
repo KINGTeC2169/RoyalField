@@ -4,7 +4,7 @@ import java.io.IOException;
 
 public class NetworkMain {
 
-    public static void start() throws IOException {
+    public static void start() {
         //Create an empty Server object.
         Server m = null;
 

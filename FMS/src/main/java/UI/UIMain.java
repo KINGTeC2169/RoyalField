@@ -4,16 +4,12 @@ import com.github.sarxos.webcam.Webcam;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 import main.java.Main;
 import main.java.UI.text.TextPane;
@@ -60,10 +56,7 @@ public class UIMain extends Application {
 		primaryStage.setFullScreen(true);
 		primaryStage.show();
 
-        Timeline updateMachine = new Timeline(new KeyFrame(Duration.millis(250), event -> {
-            Main.loop();
-            textPane.update();
-        }));
+        Timeline updateMachine = new Timeline(new KeyFrame(Duration.millis(250), event -> textPane.update()));
         updateMachine.setCycleCount(Timeline.INDEFINITE);
         updateMachine.play();
 
