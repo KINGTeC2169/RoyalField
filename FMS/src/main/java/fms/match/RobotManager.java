@@ -9,7 +9,7 @@ public class RobotManager {
     private static Robot disconnected = new Robot(true);
 
     public static Robot requestRobot(Robot r){
-        if(r1.requestLink()){
+        if(r.requestLink()){
             return r;
         }
         return disconnected;

@@ -8,10 +8,13 @@ import main.java.networkHandler.client.Client;
 
 import java.net.Socket;
 
+import static main.java.fms.match.RobotManager.*;
+
 public class RobotTablet extends Client {
 
     private Alliance opponentAlliance;
     private Robot robot;
+    private boolean linked = false;
 
     public RobotTablet(Socket s){
         super(s);
@@ -19,10 +22,8 @@ public class RobotTablet extends Client {
     }
 
     private void setRobot(){
-        robot = RobotManager.requestRobot(RobotManager.codeToRobot(latestData));
-        if(robot.getEmpty()){
-            setRobot();
-        }
+        robot = requestRobot(codeToRobot(latestData));
+        linked = !robot.getEmpty();
     }
 
     @SuppressWarnings("unused")
@@ -36,11 +37,21 @@ public class RobotTablet extends Client {
     }
 
     public void useData(String s){
-        String[] data = s.split(";");
-        int minorPenalties = Integer.parseInt(data[0]);
-        int majorPenalties = Integer.parseInt(data[1]);
-        opponentAlliance.setOpponentMinorPenalties(minorPenalties);
-        opponentAlliance.setOpponentMajorPenalties(majorPenalties);
+        if(RobotManager.codeToRobot(latestData) == robot && linked){
+            String[] data = s.split(";");
+            int minorPenalties = Integer.parseInt(data[0]);
+            int majorPenalties = Integer.parseInt(data[1]);
+            opponentAlliance.setOpponentMinorPenalties(minorPenalties);
+            opponentAlliance.setOpponentMajorPenalties(majorPenalties);
+
+        }
+        else{
+            setRobot();
+        }
+    }
+
+    public boolean isLinked(){
+        return linked;
     }
 
 }
