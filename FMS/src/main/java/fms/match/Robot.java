@@ -3,6 +3,8 @@ package main.java.fms.match;
 public class Robot {
 
     private Alliance.AllianceColor color_;
+    private boolean linked = false;
+    private boolean empty_ = false;
     public enum RobotNumber{
         ONE, TWO
     }
@@ -23,10 +25,35 @@ public class Robot {
         }
     }
 
+    Robot(Alliance.AllianceColor color, RobotNumber n){
+        color_ = color;
+        robotNumber_ = n;
+    }
+
+    Robot(boolean empty){
+        empty_ = empty;
+    }
+
     public RobotNumber getRobotNumber(){
         return robotNumber_;
     }
 
+
+    public boolean getEmpty(){
+        return empty_;
+    }
+
+    boolean requestLink(){
+        if(!linked){
+            linked = true;
+            return true;
+        }
+        return false;
+    }
+
+    public void unlink(){
+        linked = false;
+    }
 
     public Alliance.AllianceColor getAllianceColor(){
         return color_;

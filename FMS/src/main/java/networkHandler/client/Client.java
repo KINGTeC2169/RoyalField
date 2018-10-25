@@ -1,4 +1,4 @@
-package main.java.networkHandler;
+package main.java.networkHandler.client;
 
 import java.io.*;
 import java.net.Socket;

@@ -1,6 +1,7 @@
 package main.java.networkHandler;
 
-import main.java.networkHandler.tablet.RobotTablet;
+import main.java.networkHandler.client.Client;
+import main.java.networkHandler.client.tablet.RobotTablet;
 
 import java.io.*;
 import java.net.InetAddress;

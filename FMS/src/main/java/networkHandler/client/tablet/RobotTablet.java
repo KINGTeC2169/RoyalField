@@ -1,9 +1,10 @@
-package main.java.networkHandler.tablet;
+package main.java.networkHandler.client.tablet;
 
 import main.java.fms.match.Alliance;
 import main.java.fms.match.Match;
 import main.java.fms.match.Robot;
-import main.java.networkHandler.Client;
+import main.java.fms.match.RobotManager;
+import main.java.networkHandler.client.Client;
 
 import java.net.Socket;
 
@@ -18,7 +19,10 @@ public class RobotTablet extends Client {
     }
 
     private void setRobot(){
-        robot = new Robot(latestData.substring(9,11));
+        robot = RobotManager.requestRobot(RobotManager.codeToRobot(latestData));
+        if(robot.getEmpty()){
+            setRobot();
+        }
     }
 
     @SuppressWarnings("unused")

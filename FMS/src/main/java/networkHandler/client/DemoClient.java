@@ -1,4 +1,4 @@
-package main.java.networkHandler;
+package main.java.networkHandler.client;
 
 import main.java.UI.text.UIStateMachine;
 
