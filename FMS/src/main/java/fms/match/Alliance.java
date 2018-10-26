@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 public class Alliance {
 
+
     public enum AllianceColor {
         RED, BLUE
     }
@@ -19,6 +20,7 @@ public class Alliance {
     private int flags = 0;
     private int rankingPoints = 0;
     private int totalScore = 0;
+    private boolean active = false;
 
     //Penalty Points value is actually pulled from the other alliance
     private int penaltyPoints = 0;
@@ -29,6 +31,11 @@ public class Alliance {
     Alliance(AllianceColor color_){
         teams = new ArrayList<>();
         color = color_;
+        active = true;
+    }
+
+    public Alliance(boolean empty){
+        active = false;
     }
 
     void setTeams(int team1, int team2){
@@ -73,6 +80,15 @@ public class Alliance {
     }
 
     //Getters
+
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public AllianceColor getColor(){
+        return color;
+    }
 
     int getRelics(){
         return relics;
