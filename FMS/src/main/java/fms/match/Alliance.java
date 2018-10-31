@@ -2,14 +2,11 @@ package main.java.fms.match;
 
 import main.java.fms.match.robot.Robot;
 import main.java.fms.scoring.ScoreConstants;
-import main.java.networkHandler.client.tablet.RobotTablet;
 import main.java.networkHandler.client.tablet.TabletManager;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class Alliance {
-
 
     public enum AllianceColor {
         RED, BLUE, NONE
@@ -25,7 +22,7 @@ public class Alliance {
     private int flags = 0;
     private int rankingPoints = 0;
     private int totalScore = 0;
-    private boolean active;
+    private boolean isLinked;
 
     //Penalty Points value is actually pulled from the other alliance
     private int penaltyPoints = 0;
@@ -35,35 +32,36 @@ public class Alliance {
 
     Alliance(AllianceColor color_){
         teams = new ArrayList<>();
+        robots = new ArrayList<>();
         color = color_;
-        active = true;
+        isLinked = false;
     }
 
     public Alliance(boolean empty){
-        active = false;
+        isLinked = false;
     }
 
     void setTeams(int team1, int team2){
 
-        if(team1 == 0){
+        if(team1 != 0){
             teams.add(team1);
         }
         else{
             System.out.println("[WARNING] Setting " + color + " alliance's first partner to empty since no number was input");
         }
 
-        if(team2 == 0){
+        if(team2 != 0){
             teams.add(team2);
         }
         else{
             System.out.println("[WARNING] Setting " + color +  "alliance's second partner to empty since no number was input");
         }
 
-        if(robots.add(new Robot(this, teams.get(0)))){
+        if(!robots.add(new Robot(this, teams.get(0)))){
             System.out.println("Error creating first " + color + " robot for team " + teams.get(0));
         }
 
-        if(robots.add(new Robot(this, teams.get(1)))){
+        if(!robots.add(new Robot(this, teams.get(1)))){
             System.out.println("Error creating second " + color + " robot for team " + teams.get(1));
         }
 
@@ -88,6 +86,7 @@ public class Alliance {
     }
 
     public void calculateTotalScore(){
+        linkRobotTablets();
         int penaltyBonus = getOpponentMinorPenalties() * ScoreConstants.minorPenaltyPoints + getOpponentMajorPenalties() * ScoreConstants.majorPenaltyPoints;
         setTotalScore(getRelics() * ScoreConstants.relicPoints + getMoonRocks() * ScoreConstants.moonRockPoints +  getFlags() * ScoreConstants.flagPoints + penaltyBonus);
     }
@@ -95,8 +94,16 @@ public class Alliance {
     //Getters
 
 
-    public boolean isActive() {
-        return active;
+    public boolean attemptToLink(){
+        if(!isLinked){
+            isLinked = true;
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isLinked() {
+        return isLinked;
     }
 
     public AllianceColor getColor(){
@@ -141,13 +148,19 @@ public class Alliance {
 
     public void linkRobotTablets(){
         for(Robot r:robots){
-            if(r.attemptToLink()){
+            if(!r.isLinked()){
                 try{
-                    Objects.requireNonNull(TabletManager.getUnlinkedRobotTablet()).link(r);
+                    TabletManager.getUnlinkedRobotTablet().link(r);
                 }
                 catch(NullPointerException ignored){
-                    System.out.println("# of Robots > # of Tablets");
                 }
+            }
+        }
+        if(!this.isLinked()){
+            try{
+                TabletManager.getUnlinkedFieldTablet().link(this);
+            }
+            catch(NullPointerException ignored){
             }
         }
     }
@@ -184,6 +197,10 @@ public class Alliance {
 
     public void setWin(boolean win_){
         win = win_;
+    }
+
+    public String toString(){
+        return "" + this.getColor() + teams.size();
     }
 
 }

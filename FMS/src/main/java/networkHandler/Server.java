@@ -46,15 +46,19 @@ class Server extends Thread{
 
                     String data;
 
-                    while (s.isConnected()) {
+                    while (true) {
                         //Check if we've got new data from our client.
                         if ((data = in.readLine()) != null) {
-                            if(data.substring(0,2).equalsIgnoreCase("JTB")){
+                            if(data.equals("JTB")){
+                                System.out.println("Recieved Request for new RobotTablet");
                                 TabletManager.addRobotTablet(new RobotTablet(s));
+                                break;
                             }
-                            else if(data.substring(0,2).equalsIgnoreCase("FTC")){
+                            else if(data.equals("FTB")){
                                 TabletManager.addFieldTablet(new FieldTablet(s));
+                                break;
                             }
+                            System.out.println(data);
                         }
                     }
                 } catch (IOException e) {

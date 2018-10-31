@@ -4,15 +4,8 @@ import java.util.ArrayList;
 
 public class TabletManager {
 
-    private static ArrayList<RobotTablet> robotTablets;
-    private static ArrayList<FieldTablet> fieldTablets;
-
-    public TabletManager(){
-
-        robotTablets = new ArrayList<>();
-        fieldTablets = new ArrayList<>();
-
-    }
+    private static ArrayList<RobotTablet> robotTablets = new ArrayList<>();
+    private static ArrayList<FieldTablet> fieldTablets = new ArrayList<>();
 
     public static void addFieldTablet(FieldTablet fT){
         fieldTablets.add(fT);
@@ -25,6 +18,7 @@ public class TabletManager {
 
     public static RobotTablet getUnlinkedRobotTablet(){
         for(RobotTablet rT: robotTablets){
+            System.out.println(rT);
             if(!rT.isLinked()){
                 return rT;
             }
@@ -35,6 +29,7 @@ public class TabletManager {
     public static FieldTablet getUnlinkedFieldTablet(){
         for(FieldTablet fT: fieldTablets){
             if(!fT.isLinked()){
+                System.out.println(fT);
                 return fT;
             }
         }
@@ -45,6 +40,10 @@ public class TabletManager {
         for(RobotTablet rT: robotTablets){
             System.out.println(rT);
         }
+    }
+
+    public static void printNumRobotTablets(){
+        System.out.println(robotTablets.size());
     }
 
     public static void printFieldTablets() {

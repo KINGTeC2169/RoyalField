@@ -4,23 +4,34 @@ import main.java.UI.text.UIStateMachine;
 
 public class Match {
 
-    enum MatchType{
+    int matchNum;
+    MatchType matchType;
+
+
+    public enum MatchType{
         QUAL, Q1, Q2, Q3, Q4, S1, S2, F
     }
 
     private Alliance blue;
     private Alliance red;
-    private int matchNum;
-    private MatchType matchType;
 
 
     public Match(int matchNum_, MatchType matchType_){
 
         blue = new Alliance(Alliance.AllianceColor.BLUE);
         red = new Alliance(Alliance.AllianceColor.RED);
+
+        red.setTeams(1, 2);
+        blue.setTeams(3, 4);
+
         matchNum = matchNum_;
         matchType = matchType_;
 
+    }
+
+    public void update(){
+        blue.calculateTotalScore();
+        red.calculateTotalScore();
     }
 
     public void updateScoreBoard(){

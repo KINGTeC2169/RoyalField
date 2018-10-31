@@ -22,15 +22,27 @@ public class Client extends Thread {
             String data;
             BufferedReader in = new BufferedReader(new InputStreamReader(s.getInputStream()));
 
-            while (s.isConnected()) {
+            while (true) {
                 //Check if we've got new data from our client.
+                if(!s.getInetAddress().isReachable(10)){
+                    disconnect();
+                    break;
+                }
                 if ((data = in.readLine()) != null) {
                     useData(data);
                 }
             }
+
+
+
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+    }
+
+
+    protected void disconnect(){
 
     }
 
