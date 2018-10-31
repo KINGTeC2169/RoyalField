@@ -13,7 +13,6 @@ import java.net.Socket;
 class Server extends Thread{
 
     private ServerSocket server;
-    private TabletManager tabletManager = new TabletManager();
 
     //Constructor that creates the ServerSocket
     Server() throws IOException {
@@ -51,10 +50,10 @@ class Server extends Thread{
                         //Check if we've got new data from our client.
                         if ((data = in.readLine()) != null) {
                             if(data.substring(0,2).equalsIgnoreCase("JTB")){
-                                tabletManager.addRobotTablet(new RobotTablet(s));
+                                TabletManager.addRobotTablet(new RobotTablet(s));
                             }
                             else if(data.substring(0,2).equalsIgnoreCase("FTC")){
-                                tabletManager.addFieldTablet(new FieldTablet(s));
+                                TabletManager.addFieldTablet(new FieldTablet(s));
                             }
                         }
                     }

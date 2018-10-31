@@ -14,7 +14,17 @@ public class RobotTablet extends Client {
         super(s);
     }
 
+    public void link(Robot r){
+
+        robot = r;
+        linked = true;
+
+    }
+
     protected void useData(String s){
+        if(robot.isLinked()){
+            //TODO This tablet is now linked to a robot.  Score stuff
+        }
     }
 
     public boolean isLinked(){

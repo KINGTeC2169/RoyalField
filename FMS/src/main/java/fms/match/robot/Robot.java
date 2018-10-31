@@ -1,24 +1,34 @@
 package main.java.fms.match.robot;
 
+import main.java.fms.match.Alliance;
+
 public class Robot {
 
-    public enum RobotSelection{
-        RED1, RED2, BLUE1, BLUE2, ERROR
+    private boolean isLinked;
+    private Alliance alliance;
+    private int teamNum;
+
+    public Robot(Alliance a, int num){
+        alliance = a;
+        teamNum = num;
+        isLinked = true;
     }
-    private RobotSelection robotSelection;
 
-    private boolean isLinked = false;
-
-    Robot(RobotSelection r){
-        robotSelection = r;
+    public Robot(){
+        isLinked = false;
     }
 
-    public Robot attemptToLink(){
+
+    public boolean isLinked(){
+        return isLinked;
+    }
+
+    public boolean attemptToLink(){
         if(!isLinked){
             isLinked = true;
-            return this;
+            return true;
         }
-        return new Robot(RobotSelection.ERROR);
+        return false;
     }
 
     public void unlink(){

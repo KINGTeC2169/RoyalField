@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 public class TabletManager {
 
-    private ArrayList<RobotTablet> robotTablets;
-    private ArrayList<FieldTablet> fieldTablets;
+    private static ArrayList<RobotTablet> robotTablets;
+    private static ArrayList<FieldTablet> fieldTablets;
 
     public TabletManager(){
 
@@ -14,24 +14,41 @@ public class TabletManager {
 
     }
 
-    public void addFieldTablet(FieldTablet fT){
+    public static void addFieldTablet(FieldTablet fT){
         fieldTablets.add(fT);
     }
 
 
-    public void addRobotTablet(RobotTablet rT){
+    public static void addRobotTablet(RobotTablet rT){
         robotTablets.add(rT);
     }
 
-    public void printRobotTablets(){
+    public static RobotTablet getUnlinkedRobotTablet(){
+        for(RobotTablet rT: robotTablets){
+            if(!rT.isLinked()){
+                return rT;
+            }
+        }
+        return null;
+    }
+
+    public static FieldTablet getUnlinkedFieldTablet(){
+        for(FieldTablet fT: fieldTablets){
+            if(!fT.isLinked()){
+                return fT;
+            }
+        }
+        return null;
+    }
+
+    public static void printRobotTablets(){
         for(RobotTablet rT: robotTablets){
             System.out.println(rT);
         }
     }
 
-
-    public void printFieldTablets(){
-        for(FieldTablet fT: fieldTablets){
+    public static void printFieldTablets() {
+        for (FieldTablet fT : fieldTablets) {
             System.out.println(fT);
         }
     }

@@ -2,8 +2,11 @@ package main.java.fms.match;
 
 import main.java.fms.match.robot.Robot;
 import main.java.fms.scoring.ScoreConstants;
+import main.java.networkHandler.client.tablet.RobotTablet;
+import main.java.networkHandler.client.tablet.TabletManager;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Alliance {
 
@@ -54,6 +57,14 @@ public class Alliance {
         }
         else{
             System.out.println("[WARNING] Setting " + color +  "alliance's second partner to empty since no number was input");
+        }
+
+        if(robots.add(new Robot(this, teams.get(0)))){
+            System.out.println("Error creating first " + color + " robot for team " + teams.get(0));
+        }
+
+        if(robots.add(new Robot(this, teams.get(1)))){
+            System.out.println("Error creating second " + color + " robot for team " + teams.get(1));
         }
 
     }
@@ -124,6 +135,22 @@ public class Alliance {
         return win;
     }
 
+    public ArrayList<Robot> getRobots() {
+        return robots;
+    }
+
+    public void linkRobotTablets(){
+        for(Robot r:robots){
+            if(r.attemptToLink()){
+                try{
+                    Objects.requireNonNull(TabletManager.getUnlinkedRobotTablet()).link(r);
+                }
+                catch(NullPointerException ignored){
+                    System.out.println("# of Robots > # of Tablets");
+                }
+            }
+        }
+    }
 
     //Setters
 
