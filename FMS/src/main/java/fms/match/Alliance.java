@@ -1,5 +1,6 @@
 package main.java.fms.match;
 
+import main.java.fms.match.robot.Robot;
 import main.java.fms.scoring.ScoreConstants;
 
 import java.util.ArrayList;
@@ -8,10 +9,11 @@ public class Alliance {
 
 
     public enum AllianceColor {
-        RED, BLUE
+        RED, BLUE, NONE
     }
 
     private ArrayList<Integer> teams;
+    private ArrayList<Robot> robots;
     private AllianceColor color;
     private int opponentMajorPenalties = 0;
     private int opponentMinorPenalties = 0;
@@ -20,7 +22,7 @@ public class Alliance {
     private int flags = 0;
     private int rankingPoints = 0;
     private int totalScore = 0;
-    private boolean active = false;
+    private boolean active;
 
     //Penalty Points value is actually pulled from the other alliance
     private int penaltyPoints = 0;

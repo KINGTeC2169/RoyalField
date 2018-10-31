@@ -29,6 +29,7 @@ public class Main {
             case INIT:
                 break;
             case PREMATCH:
+                FMSStates.state = FMSStates.FMSState.MATCH;
                 break;
             case MATCH:
                 break;

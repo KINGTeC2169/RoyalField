@@ -1,7 +1,9 @@
 package main.java.networkHandler;
 
 import main.java.networkHandler.client.Client;
+import main.java.networkHandler.client.tablet.FieldTablet;
 import main.java.networkHandler.client.tablet.RobotTablet;
+import main.java.networkHandler.client.tablet.TabletManager;
 
 import java.io.*;
 import java.net.InetAddress;
@@ -11,6 +13,7 @@ import java.net.Socket;
 class Server extends Thread{
 
     private ServerSocket server;
+    private TabletManager tabletManager = new TabletManager();
 
     //Constructor that creates the ServerSocket
     Server() throws IOException {
@@ -48,7 +51,10 @@ class Server extends Thread{
                         //Check if we've got new data from our client.
                         if ((data = in.readLine()) != null) {
                             if(data.substring(0,2).equalsIgnoreCase("JTB")){
-                                new RobotTablet(s);
+                                tabletManager.addRobotTablet(new RobotTablet(s));
+                            }
+                            else if(data.substring(0,2).equalsIgnoreCase("FTC")){
+                                tabletManager.addFieldTablet(new FieldTablet(s));
                             }
                         }
                     }
