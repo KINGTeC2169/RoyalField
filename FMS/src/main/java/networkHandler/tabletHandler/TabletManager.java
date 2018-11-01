@@ -1,4 +1,4 @@
-package main.java.networkHandler.client.tablet;
+package main.java.networkHandler.tabletHandler;
 
 import java.util.ArrayList;
 

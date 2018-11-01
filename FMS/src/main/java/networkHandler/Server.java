@@ -1,9 +1,9 @@
 package main.java.networkHandler;
 
-import main.java.networkHandler.client.Client;
-import main.java.networkHandler.client.tablet.FieldTablet;
-import main.java.networkHandler.client.tablet.RobotTablet;
-import main.java.networkHandler.client.tablet.TabletManager;
+import main.java.networkHandler.clientBase.Client;
+import main.java.networkHandler.tabletHandler.FieldTablet;
+import main.java.networkHandler.tabletHandler.RobotTablet;
+import main.java.networkHandler.tabletHandler.TabletManager;
 
 import java.io.*;
 import java.net.InetAddress;
@@ -23,21 +23,21 @@ class Server extends Thread{
     public void run() {
 
         // running infinite loop for getting
-        // client request
+        // clientBase request
         while (System.currentTimeMillis() > 0)
         {
             Socket s = null;
 
             try
             {
-                // socket object to receive incoming client requests
+                // socket object to receive incoming clientBase requests
                 s = server.accept();
 
-                System.out.println("A new client is connected : " + s);
+                System.out.println("A new clientBase is connected : " + s);
 
                 // obtaining input and out streams
 
-                System.out.println("Assigning new thread for this client");
+                System.out.println("Assigning new thread for this clientBase");
 
                 BufferedReader in;
 
@@ -47,7 +47,7 @@ class Server extends Thread{
                     String data;
 
                     while (true) {
-                        //Check if we've got new data from our client.
+                        //Check if we've got new data from our clientBase.
                         if ((data = in.readLine()) != null) {
                             if(data.equals("JTB")){
                                 System.out.println("Recieved Request for new RobotTablet");

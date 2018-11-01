@@ -1,10 +1,8 @@
 package main.java;
 
-import main.java.UI.UIMain;
-import main.java.fms.FMSStates;
 import main.java.fms.match.Match;
 import main.java.networkHandler.NetworkMain;
-import main.java.networkHandler.client.tablet.TabletManager;
+import main.java.networkHandler.tabletHandler.TabletManager;
 
 import java.io.IOException;
 

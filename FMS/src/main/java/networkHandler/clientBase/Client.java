@@ -1,4 +1,4 @@
-package main.java.networkHandler.client;
+package main.java.networkHandler.clientBase;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -23,7 +23,7 @@ public class Client extends Thread {
             BufferedReader in = new BufferedReader(new InputStreamReader(s.getInputStream()));
 
             while (true) {
-                //Check if we've got new data from our client.
+                //Check if we've got new data from our clientBase.
                 if(!s.getInetAddress().isReachable(10)){
                     disconnect();
                     break;

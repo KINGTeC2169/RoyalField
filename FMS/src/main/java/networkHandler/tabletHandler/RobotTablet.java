@@ -1,7 +1,7 @@
-package main.java.networkHandler.client.tablet;
+package main.java.networkHandler.tabletHandler;
 
 import main.java.fms.match.robot.Robot;
-import main.java.networkHandler.client.Client;
+import main.java.networkHandler.clientBase.Client;
 
 import java.net.Socket;
 
@@ -27,7 +27,7 @@ public class RobotTablet extends Client {
 
     protected void useData(String s){
         if(robot.isLinked()){
-            //TODO This tablet is now linked to a robot.  Score stuff
+            //TODO This tabletHandler is now linked to a robot.  Score stuff
         }
     }
 

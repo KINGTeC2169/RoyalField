@@ -2,7 +2,7 @@ package main.java.fms.match;
 
 import main.java.fms.match.robot.Robot;
 import main.java.fms.scoring.ScoreConstants;
-import main.java.networkHandler.client.tablet.TabletManager;
+import main.java.networkHandler.tabletHandler.TabletManager;
 
 import java.util.ArrayList;
 
