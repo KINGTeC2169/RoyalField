@@ -5,6 +5,8 @@ import main.java.fms.scoring.ScoreConstants;
 import main.java.networkHandler.tabletHandler.TabletManager;
 
 import java.util.ArrayList;
+import java.util.Objects;
+import java.util.StringJoiner;
 
 public class Alliance {
 
@@ -85,21 +87,19 @@ public class Alliance {
 
     }
 
-    public void calculateTotalScore(){
+    void calculateTotalScore(){
         linkRobotTablets();
-        int penaltyBonus = getOpponentMinorPenalties() * ScoreConstants.minorPenaltyPoints + getOpponentMajorPenalties() * ScoreConstants.majorPenaltyPoints;
-        setTotalScore(getRelics() * ScoreConstants.relicPoints + getMoonRocks() * ScoreConstants.moonRockPoints +  getFlags() * ScoreConstants.flagPoints + penaltyBonus);
+        penaltyPoints = getOpponentMinorPenalties() * ScoreConstants.minorPenaltyPoints + getOpponentMajorPenalties() * ScoreConstants.majorPenaltyPoints;
+        setTotalScore(getRelics() * ScoreConstants.relicPoints + getMoonRocks() * ScoreConstants.moonRockPoints +  getFlags() * ScoreConstants.flagPoints + penaltyPoints);
     }
 
     //Getters
 
 
-    public boolean attemptToLink(){
+    public void attemptToLink(){
         if(!isLinked){
             isLinked = true;
-            return true;
         }
-        return false;
     }
 
     public boolean isLinked() {
@@ -146,11 +146,11 @@ public class Alliance {
         return robots;
     }
 
-    public void linkRobotTablets(){
+    private void linkRobotTablets(){
         for(Robot r:robots){
             if(!r.isLinked()){
                 try{
-                    TabletManager.getUnlinkedRobotTablet().link(r);
+                    Objects.requireNonNull(TabletManager.getUnlinkedRobotTablet()).link(r);
                 }
                 catch(NullPointerException ignored){
                 }
@@ -158,7 +158,7 @@ public class Alliance {
         }
         if(!this.isLinked()){
             try{
-                TabletManager.getUnlinkedFieldTablet().link(this);
+                Objects.requireNonNull(TabletManager.getUnlinkedFieldTablet()).link(this);
             }
             catch(NullPointerException ignored){
             }
@@ -200,7 +200,17 @@ public class Alliance {
     }
 
     public String toString(){
-        return "" + this.getColor() + teams.size();
+        StringJoiner b = new StringJoiner(",");
+        b.add(teams.get(0) + "");
+        b.add(teams.get(1) + "");
+        b.add(this.getMoonRocks() + "");
+        b.add(this.getFlags() + "");
+        b.add(this.getRelics() + "");
+        b.add(this.penaltyPoints + "");
+        b.add(this.getTotalScore() + "");
+        b.add(this.getWin() + "");
+        b.add(getRankingPoints() + "");
+        return b.toString();
     }
 
 }
