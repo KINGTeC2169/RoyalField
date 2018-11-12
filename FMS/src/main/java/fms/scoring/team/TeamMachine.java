@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 public class TeamMachine {
 
-    static HashMap<Integer, Team> teamMap = new HashMap<>();
+    private static HashMap<Integer, Team> teamMap = new HashMap<>();
 
     public static void generateTeamList() throws IOException {
         BufferedReader br = new BufferedReader(new FileReader("src/bin/data/Teams.csv"));

@@ -34,13 +34,13 @@ public class Match {
     private Alliance red;
 
 
-    public Match(int matchNum_, MatchType matchType_){
+    public Match(int matchNum_, MatchType matchType_, Team r1, Team r2, Team b1, Team b2){
 
         blue = new Alliance(Alliance.AllianceColor.BLUE);
         red = new Alliance(Alliance.AllianceColor.RED);
 
-        red.setTeams(new Team(1), new Team(2));
-        blue.setTeams(new Team(3), new Team(4));
+        red.setTeams(r1, r2);
+        blue.setTeams(b1, b2);
 
         matchNum = matchNum_;
         matchType = matchType_;
