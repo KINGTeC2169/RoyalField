@@ -24,6 +24,8 @@ public class DatabaseHandler {
 
     public MatchTemplate readMatch(){
 
+        return null;
+
     }
 
 
