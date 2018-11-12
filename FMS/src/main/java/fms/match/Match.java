@@ -126,4 +126,11 @@ public class Match {
         }
     }
 
+    public void updateTeamScores(){
+
+        blue.updateTeamScores();
+        red.updateTeamScores();
+
+    }
+
 }

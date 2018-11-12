@@ -11,7 +11,7 @@ public class DatabaseHandler {
 
     public FileWriter createPW(){
         try {
-            return new FileWriter("bin/data/MatchResults.csv",true);
+            return new FileWriter("src/bin/data/MatchResults.csv",true);
         } catch (IOException e) {
             System.out.println("Error Reading MatchResults.csv! Is it in /bin/data/?");
             e.printStackTrace();
@@ -19,10 +19,17 @@ public class DatabaseHandler {
         return null;
     }
 
-    public void archiveMatch(Match m){
-        FileWriter out = createPW();
+    //Save a match onto the disk and add the match data to the respective teams
+    public void archiveMatch(Match m) throws IOException {
+        FileWriter writer = createPW();
+        writer.append(m.toString());
+        writer.append('\n');
+        writer.flush();
+        writer.close();
+        m.updateTeamScores();
     }
 
+    //Read the next match from the disk and load it into a Match object
     public Match readNextMatch() throws IOException {
         BufferedReader br = new BufferedReader(new FileReader("src/bin/data/Schedule.csv"));
 
@@ -32,9 +39,9 @@ public class DatabaseHandler {
         return getMatch(currentMatch, br, i);
     }
 
+    //Read a match by ID from the disk and load it into a Match object
     public Match readMatch(int matchID) throws IOException {
         BufferedReader br = new BufferedReader(new FileReader("src/bin/data/Schedule.csv"));
-
         String line;
         int i = 0;
         Match values = getMatch(matchID, br, i);

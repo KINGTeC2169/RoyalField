@@ -200,10 +200,25 @@ public class Alliance {
         win = win_;
     }
 
+    public void updateTeamScores(){
+        for(Team t:teams){
+            t.setMoonRocks(t.getMoonRocks() + this.getMoonRocks());
+            t.setFlags(t.getFlags() + this.getFlags());
+            t.setRelics(t.getRelics() + this.getRelics());
+            t.setRp(t.getRp() + this.getRankingPoints());
+            if(getWin()){
+                t.setWins(t.getWins() + 1);
+            }
+            else{
+                t.setLosses(t.getLosses() + 1);
+            }
+        }
+    }
+
     public String toString(){
         StringJoiner b = new StringJoiner(",");
-        b.add(teams.get(0) + "");
-        b.add(teams.get(1) + "");
+        b.add(teams.get(0).getNumber() + "");
+        b.add(teams.get(1).getNumber() + "");
         b.add(this.getMoonRocks() + "");
         b.add(this.getFlags() + "");
         b.add(this.getRelics() + "");

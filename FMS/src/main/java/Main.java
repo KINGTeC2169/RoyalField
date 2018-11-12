@@ -105,6 +105,11 @@ public class Main {
 
             case POSTMATCH:
 
+                try {
+                    handler.archiveMatch(m);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 System.out.println("Match Completed");
                 System.out.println("*SHOWING RESULTS*");
                 System.out.println("Returning to prematch");
