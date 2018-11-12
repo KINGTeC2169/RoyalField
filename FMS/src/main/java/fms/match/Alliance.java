@@ -2,6 +2,7 @@ package main.java.fms.match;
 
 import main.java.fms.match.robot.Robot;
 import main.java.fms.scoring.ScoreConstants;
+import main.java.fms.scoring.Team;
 import main.java.networkHandler.tabletHandler.TabletManager;
 
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ public class Alliance {
         RED, BLUE, NONE
     }
 
-    private ArrayList<Integer> teams;
+    private ArrayList<Team> teams;
     private ArrayList<Robot> robots;
     private AllianceColor color;
     private int opponentMajorPenalties = 0;
@@ -43,27 +44,27 @@ public class Alliance {
         isLinked = false;
     }
 
-    void setTeams(int team1, int team2){
+    void setTeams(Team team1, Team team2){
 
-        if(team1 != 0){
+        if(team1.getNumber() != 0){
             teams.add(team1);
         }
         else{
             System.out.println("[WARNING] Setting " + color + " alliance's first partner to empty since no number was input");
         }
 
-        if(team2 != 0){
+        if(team2.getNumber() != 0){
             teams.add(team2);
         }
         else{
             System.out.println("[WARNING] Setting " + color +  "alliance's second partner to empty since no number was input");
         }
 
-        if(!robots.add(new Robot(this, teams.get(0)))){
+        if(!robots.add(new Robot(this, teams.get(0).getNumber()))){
             System.out.println("Error creating first " + color + " robot for team " + teams.get(0));
         }
 
-        if(!robots.add(new Robot(this, teams.get(1)))){
+        if(!robots.add(new Robot(this, teams.get(1).getNumber()))){
             System.out.println("Error creating second " + color + " robot for team " + teams.get(1));
         }
 
@@ -75,11 +76,11 @@ public class Alliance {
 
         String out = "";
 
-        if(teams.get(0) != 0){
+        if(teams.get(0).getNumber() != 0){
             out += teams.get(0) + ",";
         }
 
-        if(teams.get(1) != 0){
+        if(teams.get(1).getNumber() != 0){
             out += teams.get(1) + ",";
         }
 

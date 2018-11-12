@@ -71,6 +71,7 @@ public class Main {
                 m.update();
                 break;
             case VERIFICATION:
+                UIStateMachine.setGameMode("DONE");
                 System.out.println("Awaiting Score Verification");
                 System.out.println("Are these score correct?");
                 while (!scan.nextLine().equals("yes")) {
@@ -82,6 +83,7 @@ public class Main {
                 System.out.println("Match Completed");
                 System.out.println("*SHOWING RESULTS*");
                 System.out.println("Returning to prematch");
+                m.stop();
                 FMSStates.state = FMSStates.FMSState.PREMATCH;
                 break;
             default:

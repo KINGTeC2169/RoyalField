@@ -2,6 +2,7 @@ package main.java.fms.match;
 
 import main.java.UI.text.UIStateMachine;
 import main.java.fms.scoring.ScoreConstants;
+import main.java.fms.scoring.Team;
 
 import java.util.StringJoiner;
 import java.util.concurrent.TimeUnit;
@@ -38,8 +39,8 @@ public class Match {
         blue = new Alliance(Alliance.AllianceColor.BLUE);
         red = new Alliance(Alliance.AllianceColor.RED);
 
-        red.setTeams(1, 2);
-        blue.setTeams(3, 4);
+        red.setTeams(new Team(1), new Team(2));
+        blue.setTeams(new Team(3), new Team(4));
 
         matchNum = matchNum_;
         matchType = matchType_;

@@ -4,9 +4,12 @@ import com.github.sarxos.webcam.Webcam;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
@@ -32,6 +35,8 @@ public class UIMain extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 
+
+
 		TextPane textPane = new TextPane();
 
 		BorderPane imagePlacement = new BorderPane();
@@ -55,6 +60,12 @@ public class UIMain extends Application {
 		primaryStage.setMaximized(true);
 		primaryStage.setFullScreen(true);
 		primaryStage.show();
+
+        scene.setOnKeyPressed(e -> {
+            if(e.getCode() == KeyCode.F11) {
+                primaryStage.setFullScreen(!primaryStage.isFullScreen());
+            }
+        });
 
         Timeline updateMachine = new Timeline(new KeyFrame(Duration.millis(250), event -> textPane.update()));
         updateMachine.setCycleCount(Timeline.INDEFINITE);
