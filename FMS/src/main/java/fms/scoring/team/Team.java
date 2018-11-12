@@ -1,4 +1,4 @@
-package main.java.fms.scoring;
+package main.java.fms.scoring.team;
 
 public class Team {
 
@@ -90,6 +90,10 @@ public class Team {
 
     public void setRelics(int relics) {
         this.relics = relics;
+    }
+
+    public String toString(){
+        return number + ": "+ name;
     }
 
 }

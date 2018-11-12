@@ -61,6 +61,7 @@ public class UIMain extends Application {
 		primaryStage.setFullScreen(true);
 		primaryStage.show();
 
+		//F11 for Fullscreen
         scene.setOnKeyPressed(e -> {
             if(e.getCode() == KeyCode.F11) {
                 primaryStage.setFullScreen(!primaryStage.isFullScreen());

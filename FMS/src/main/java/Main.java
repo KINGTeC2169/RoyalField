@@ -5,8 +5,10 @@ import main.java.UI.UIMain;
 import main.java.UI.text.UIStateMachine;
 import main.java.fms.FMSStates;
 import main.java.fms.match.Match;
+import main.java.fms.scoring.team.TeamMachine;
 import main.java.networkHandler.NetworkMain;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Main {
@@ -26,7 +28,7 @@ public class Main {
         NetworkMain.start();
 
         //Launch the UI system
-        UIMain.start(args);
+        //UIMain.start(args);
 
     }
 
@@ -44,6 +46,14 @@ public class Main {
 
             case INIT:
                 //Wait For Connections until told to advance
+
+                try {
+                    TeamMachine.generateTeamList();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                TeamMachine.printTeamList();
+
                 FMSStates.state = FMSStates.FMSState.PREMATCH;
                 System.out.println("Init Complete");
                 break;

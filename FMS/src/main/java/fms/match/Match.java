@@ -2,7 +2,7 @@ package main.java.fms.match;
 
 import main.java.UI.text.UIStateMachine;
 import main.java.fms.scoring.ScoreConstants;
-import main.java.fms.scoring.Team;
+import main.java.fms.scoring.team.Team;
 
 import java.util.StringJoiner;
 import java.util.concurrent.TimeUnit;
