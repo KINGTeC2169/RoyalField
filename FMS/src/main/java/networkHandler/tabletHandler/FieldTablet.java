@@ -7,9 +7,9 @@ import java.net.Socket;
 
 public class FieldTablet extends Client {
 
-    private double standingRelics = 0;
-    private double fallenRelics = 0;
-    private double flags = 0;
+    private int standingRelics = 0;
+    private int fallenRelics = 0;
+    private int flags = 0;
 
     private double ID = 0;
     private Alliance alliance;
@@ -29,31 +29,31 @@ public class FieldTablet extends Client {
 
     }
 
-    public Alliance.AllianceColor getAllianceColor(){
+    Alliance.AllianceColor getAllianceColor(){
         return alliance.getColor();
     }
 
-    public double getStandingRelics() {
+    public int getStandingRelics() {
         return standingRelics;
     }
 
-    private void setStandingRelics(double standingRelics) {
+    private void setStandingRelics(int standingRelics) {
         this.standingRelics = standingRelics;
     }
 
-    public double getFallenRelics() {
+    public int getFallenRelics() {
         return fallenRelics;
     }
 
-    private void setFallenRelics(double fallenRelics) {
+    private void setFallenRelics(int fallenRelics) {
         this.fallenRelics = fallenRelics;
     }
 
-    public double getFlags() {
+    public int getFlags() {
         return flags;
     }
 
-    private void setFlags(double flags) {
+    private void setFlags(int flags) {
         this.flags = flags;
     }
 

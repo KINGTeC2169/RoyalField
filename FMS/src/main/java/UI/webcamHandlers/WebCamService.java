@@ -30,10 +30,10 @@ public class WebCamService extends Service<Image> {
 	
 	@Override
 	public Task<Image> createTask() {
-		return new Task<Image>() {
+		return new Task<>() {
 			@Override
 			protected Image call() {
-				
+
 				try {
 					cam.open();
 					while (!isCancelled()) {
@@ -50,7 +50,7 @@ public class WebCamService extends Service<Image> {
 					cam.close();
 				}
 			}
-			
+
 		};
 	}
 	

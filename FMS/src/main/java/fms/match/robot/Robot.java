@@ -6,12 +6,10 @@ public class Robot {
 
     private boolean isLinked;
     private Alliance alliance;
-    private int teamNum;
     private double ID;
 
     public Robot(Alliance a, int num){
         alliance = a;
-        teamNum = num;
         isLinked = false;
         ID = (int) (Math.random() * 1000);
     }
@@ -25,12 +23,10 @@ public class Robot {
         return isLinked;
     }
 
-    public boolean attemptToLink(){
+    public void attemptToLink(){
         if(!isLinked){
             isLinked = true;
-            return true;
         }
-        return false;
     }
 
     public void unlink(){

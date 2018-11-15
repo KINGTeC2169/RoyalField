@@ -2,7 +2,7 @@ package main.java.fms.scoring.team;
 
 public class Team {
 
-    public Team(int number){
+    Team(int number){
         setNumber(number);
     }
 
@@ -17,7 +17,8 @@ public class Team {
     private int losses = 0;
     private int moonRocks = 0;
     private int flags = 0;
-    private int relics = 0;
+    private int fallenRelics = 0;
+    private int standingRelics = 0;
 
     //Getters and Setters
     public int getNumber() {
@@ -32,7 +33,7 @@ public class Team {
         return name;
     }
 
-    public void setName(String name) {
+    void setName(String name) {
         this.name = name;
     }
 
@@ -84,12 +85,20 @@ public class Team {
         this.flags = flags;
     }
 
-    public int getRelics() {
-        return relics;
+    public int getFallenRelics() {
+        return fallenRelics;
     }
 
-    public void setRelics(int relics) {
-        this.relics = relics;
+    public int getStandingRelics() {
+        return standingRelics;
+    }
+
+    public void setFallenRelics(int relics) {
+        this.fallenRelics = relics;
+    }
+
+    public void setStandingRelics(int relics) {
+        this.standingRelics = relics;
     }
 
     public String toString(){
