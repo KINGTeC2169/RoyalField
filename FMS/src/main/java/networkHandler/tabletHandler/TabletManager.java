@@ -1,5 +1,7 @@
 package main.java.networkHandler.tabletHandler;
 
+import main.java.fms.match.Alliance;
+
 import java.util.ArrayList;
 
 public class TabletManager {
@@ -10,7 +12,6 @@ public class TabletManager {
     public static void addFieldTablet(FieldTablet fT){
         fieldTablets.add(fT);
     }
-
 
     public static void addRobotTablet(RobotTablet rT){
         robotTablets.add(rT);
@@ -24,6 +25,31 @@ public class TabletManager {
             }
         }
         return null;
+    }
+
+    public static ArrayList<FieldTablet> getAllianceFieldTablets(Alliance.AllianceColor color){
+
+        ArrayList<FieldTablet> out = new ArrayList<>();
+        for(FieldTablet fT:fieldTablets){
+            if(fT.getAllianceColor() == color){
+                out.add(fT);
+            }
+
+        }
+        return out;
+    }
+
+
+    public static ArrayList<RobotTablet> getAllianceRobotTablets(Alliance.AllianceColor color){
+
+        ArrayList<RobotTablet> out = new ArrayList<>();
+        for(RobotTablet rT:robotTablets){
+            if(rT.getAllianceColor() == color){
+                out.add(rT);
+            }
+
+        }
+        return out;
     }
 
     public static FieldTablet getUnlinkedFieldTablet(){

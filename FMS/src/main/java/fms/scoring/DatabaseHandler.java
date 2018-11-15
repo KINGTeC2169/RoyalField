@@ -31,7 +31,7 @@ public class DatabaseHandler {
 
     //Read the next match from the disk and load it into a Match object
     public Match readNextMatch() throws IOException {
-        BufferedReader br = new BufferedReader(new FileReader("src/bin/data/Schedule.csv"));
+        BufferedReader br = new BufferedReader(new FileReader(ScoreConstants.scheduleLocation));
 
         String line;
         int i = 0;
@@ -41,7 +41,7 @@ public class DatabaseHandler {
 
     //Read a match by ID from the disk and load it into a Match object
     public Match readMatch(int matchID) throws IOException {
-        BufferedReader br = new BufferedReader(new FileReader("src/bin/data/Schedule.csv"));
+        BufferedReader br = new BufferedReader(new FileReader(ScoreConstants.scheduleLocation));
         String line;
         int i = 0;
         Match values = getMatch(matchID, br, i);

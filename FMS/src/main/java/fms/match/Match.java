@@ -12,26 +12,24 @@ public class Match {
     private boolean scoresLocked = false;
     private static int matchID = 0;
     private int matchNum;
-    private MatchType matchType;
     private long startingTime = 0;
+    private Alliance blue;
+    private Alliance red;
 
     public enum MatchState{
         AUTO, BREAK, TELE, DONE
     }
     public MatchState matchState = MatchState.AUTO;
 
+    public enum MatchType{
+        QUAL, Q1, Q2, Q3, Q4, S1, S2, F
+    }
+    private MatchType matchType;
 
     private static int getNewMatchID(){
         matchID++;
         return matchID;
     }
-
-    public enum MatchType{
-        QUAL, Q1, Q2, Q3, Q4, S1, S2, F
-    }
-
-    private Alliance blue;
-    private Alliance red;
 
 
     public Match(int matchNum_, MatchType matchType_, Team r1, Team r2, Team b1, Team b2){
@@ -51,22 +49,17 @@ public class Match {
         return (int) TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis() - startingTime);
     }
 
-    public String toString(){
-        StringJoiner j = new StringJoiner(",");
-        j.add(getNewMatchID() + "");
-        j.add(matchType + "");
-        j.add(matchNum + "");
-        j.add(blue.toString());
-        j.add(red.toString());
-        return j.toString();
-    }
-
     public void start(){
 
         startingTime = System.currentTimeMillis();
         scoresLocked = false;
-
         UIStateMachine.setGameMode("AUTO");
+
+    }
+
+    public void stop(){
+
+        scoresLocked = true;
 
     }
 
@@ -99,9 +92,11 @@ public class Match {
         updateScoreBoard();
     }
 
-    public void stop(){
 
-        scoresLocked = true;
+    public void updateTeamScores(){
+
+        blue.updateTeamScores();
+        red.updateTeamScores();
 
     }
 
@@ -126,11 +121,14 @@ public class Match {
         }
     }
 
-    public void updateTeamScores(){
-
-        blue.updateTeamScores();
-        red.updateTeamScores();
-
+    public String toString(){
+        StringJoiner j = new StringJoiner(",");
+        j.add(getNewMatchID() + "");
+        j.add(matchType + "");
+        j.add(matchNum + "");
+        j.add(blue.toString());
+        j.add(red.toString());
+        return j.toString();
     }
 
 }
