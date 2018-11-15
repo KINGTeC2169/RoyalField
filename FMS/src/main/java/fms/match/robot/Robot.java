@@ -39,7 +39,13 @@ public class Robot {
 
     public Alliance.AllianceColor getAlliance() {
 
-        return alliance.getColor();
+        if(alliance.getColor() == Alliance.AllianceColor.RED){
+            return Alliance.AllianceColor.BLUE;
+        }
+        else if(alliance.getColor() == Alliance.AllianceColor.BLUE){
+            return Alliance.AllianceColor.RED;
+        }
+        return null;
     }
 
     public String toString(){
