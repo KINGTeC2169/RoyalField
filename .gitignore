@@ -17,3 +17,5 @@ src/__pycache__/
 *.MF
 
 CanvasCameraTesting/out/artifacts/CanvasCameraTesting/CanvasCameraTesting\.jar
+
+FMS/out/production/FMS/bin/media/

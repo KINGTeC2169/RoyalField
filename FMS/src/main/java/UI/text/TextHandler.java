@@ -10,41 +10,47 @@ class TextHandler {
 
     //Blue Data
     private ScoreText blueScore = new ScoreText(1250,200, 100);
-    private ScoreText blueRelic = new ScoreText(1725,215);
-    private ScoreText bluePingPong = new ScoreText(1502,205);
-    private ScoreText blueFlag = new ScoreText(1725,100);
+    private ScoreText blueStandingRelic = new ScoreText(1725 + 27,215 - 7);
+    private ScoreText blueFallenRelic = new ScoreText(1502 - 15,215 - 7);
+    private ScoreText bluePingPong = new ScoreText(1502 - 15,100-8);
+    private ScoreText blueFlag = new ScoreText(1725 + 27,100 - 8);
 
     //Red Data
     private ScoreText redScore = new ScoreText(680,200, 100);
-    private ScoreText redRelic = new ScoreText(200,215);
-    private ScoreText redPingPong = new ScoreText(421,205);
-    private ScoreText redFlag = new ScoreText(200,100);
+    private ScoreText redStandingRelic = new ScoreText(200 - 27,215 - 7);
+    private ScoreText redFallenRelic = new ScoreText(421 + 15,215-7);
+    private ScoreText redPingPong = new ScoreText(421 + 15,100-8);
+    private ScoreText redFlag = new ScoreText(200 - 27,100 - 8);
 
     void init(Pane p){
 
         //Initialize All Text
         time.updateText("00:00");
         gameMode.updateText("INIT");
-        blueScore.updateText("000");
-        blueRelic.updateText("0");
-        bluePingPong.updateText("000");
+        blueScore.updateText("0");
+        blueStandingRelic.updateText("0");
+        blueFallenRelic.updateText("0");
+        bluePingPong.updateText("0");
         blueFlag.updateText("0");
-        redScore.updateText("000");
-        redRelic.updateText("0");
-        redPingPong.updateText("000");
+        redScore.updateText("0");
+        redStandingRelic.updateText("0");
+        redFallenRelic.updateText("0");
+        redPingPong.updateText("0");
         redFlag.updateText("0");
-        p.getChildren().addAll(gameMode, time, blueScore, blueRelic, bluePingPong, blueFlag, redScore, redRelic, redPingPong, redFlag);
+        p.getChildren().addAll(gameMode, time, blueScore, blueStandingRelic, blueFallenRelic, bluePingPong, blueFlag, redScore, redStandingRelic, redFallenRelic, redPingPong, redFlag);
     }
 
     void update(){
         gameMode.updateText(UIStateMachine.getGameMode());
         time.updateText(UIStateMachine.getTime());
         blueScore.updateText("" + UIStateMachine.getBlueScore());
-        blueRelic.updateText("" + UIStateMachine.getBlueRelic());
+        blueStandingRelic.updateText("" + UIStateMachine.getBlueStandingRelic());
+        blueFallenRelic.updateText("" + UIStateMachine.getBlueFallenRelic());
         bluePingPong.updateText("" + UIStateMachine.getBluePingPong());
         blueFlag.updateText("" + UIStateMachine.getBlueFlag());
         redScore.updateText("" + UIStateMachine.getRedScore());
-        redRelic.updateText("" + UIStateMachine.getRedRelic());
+        redStandingRelic.updateText("" + UIStateMachine.getRedStandingRelic());
+        redFallenRelic.updateText("" + UIStateMachine.getRedFallenRelic());
         redPingPong.updateText("" + UIStateMachine.getRedPingPong());
         redFlag.updateText("" + UIStateMachine.getRedFlag());
 

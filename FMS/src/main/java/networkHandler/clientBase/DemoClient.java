@@ -36,10 +36,10 @@ class DemoClient extends Client {
             } else if (splited[0].toLowerCase().contains("relic")) {
                 if (splited[1].toLowerCase().contains("blue")) {
                     System.out.println("Setting blue relic to " + splited[2]);
-                    UIStateMachine.setBlueRelic(Integer.parseInt(splited[2]));
+                    UIStateMachine.setBlueStandingRelic(Integer.parseInt(splited[2]));
                 } else if (splited[1].toLowerCase().contains("red")) {
                     System.out.println("Setting red relic to " + splited[2]);
-                    UIStateMachine.setRedRelic(Integer.parseInt(splited[2]));
+                    UIStateMachine.setRedStandingRelic(Integer.parseInt(splited[2]));
                 }
             } else if (splited[0].toLowerCase().contains("ping")) {
                 if (splited[1].toLowerCase().contains("blue")) {

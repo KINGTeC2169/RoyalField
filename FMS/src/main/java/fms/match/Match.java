@@ -109,13 +109,15 @@ public class Match {
 
             //Update Blue Values
             UIStateMachine.setBlueScore(blue.getTotalScore());
-            UIStateMachine.setBlueRelic(blue.getStandingRelics());
+            UIStateMachine.setBlueStandingRelic(blue.getStandingRelics());
+            UIStateMachine.setBlueFallenRelic(blue.getFallenRelics());
             UIStateMachine.setBlueFlag(blue.getFlags());
             UIStateMachine.setBluePingPong(blue.getMoonRocks());
 
             //Update Red Values
             UIStateMachine.setRedScore(red.getTotalScore());
-            UIStateMachine.setRedRelic(red.getStandingRelics());
+            UIStateMachine.setRedStandingRelic(red.getStandingRelics());
+            UIStateMachine.setRedFallenRelic(red.getFallenRelics());
             UIStateMachine.setRedFlag(red.getFlags());
             UIStateMachine.setRedPingPong(red.getMoonRocks());
         }

@@ -9,11 +9,13 @@ public class UIStateMachine {
     private static String gameMode = "AUTO";
     private static String time = "00:00";
     private static int blueScore = 0;
-    private static int blueRelic = 0;
+    private static int blueStandingRelic = 0;
+    private static int blueFallenRelic = 0;
     private static int bluePingPong = 0;
     private static int blueFlag = 0;
     private static int redScore = 0;
-    private static int redRelic = 0;
+    private static int redStandingRelic = 0;
+    private static int redFallenRelic = 0;
     private static int redPingPong = 0;
     private static int redFlag = 0;
 
@@ -51,8 +53,12 @@ public class UIStateMachine {
         UIStateMachine.blueFlag = blueFlag;
     }
 
-    public static void setBlueRelic(int blueRelic) {
-        UIStateMachine.blueRelic = blueRelic;
+    public static void setBlueStandingRelic(int blueStandingRelic) {
+        UIStateMachine.blueStandingRelic = blueStandingRelic;
+    }
+
+    public static void setBlueFallenRelic(int blueFallenRelic) {
+        UIStateMachine.blueFallenRelic = blueFallenRelic;
     }
 
     //Red Score Setters
@@ -68,10 +74,13 @@ public class UIStateMachine {
         UIStateMachine.redFlag = redFlag;
     }
 
-    public static void setRedRelic(int redRelic) {
-        UIStateMachine.redRelic = redRelic;
+    public static void setRedStandingRelic(int redStandingRelic) {
+        UIStateMachine.redStandingRelic = redStandingRelic;
     }
 
+    public static void setRedFallenRelic(int redFallenRelic) {
+        UIStateMachine.redFallenRelic = redFallenRelic;
+    }
 
     //Blue Score Getters
     public static int getBlueScore() {
@@ -86,8 +95,12 @@ public class UIStateMachine {
         return blueFlag;
     }
 
-    public static int getBlueRelic() {
-        return blueRelic;
+    public static int getBlueStandingRelic() {
+        return blueStandingRelic;
+    }
+
+    public static int getBlueFallenRelic() {
+        return blueFallenRelic;
     }
 
 
@@ -104,10 +117,13 @@ public class UIStateMachine {
         return redFlag;
     }
 
-    public static int getRedRelic() {
-        return redRelic;
+    public static int getRedStandingRelic() {
+        return redStandingRelic;
     }
 
+    public static int getRedFallenRelic() {
+        return redFallenRelic;
+    }
 
     //Match Status Getters
     public static String getTime(){

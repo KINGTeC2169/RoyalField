@@ -1,6 +1,7 @@
 package main.java;
 
 import main.java.UI.AudioManager;
+import main.java.UI.UIMain;
 import main.java.UI.text.UIStateMachine;
 import main.java.fms.FMSStates;
 import main.java.fms.match.Match;
@@ -28,7 +29,7 @@ public class Main {
         NetworkMain.start();
 
         //Launch the UI system
-        //UIMain.start(args);
+        UIMain.start(args);
 
     }
 

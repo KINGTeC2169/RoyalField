@@ -78,7 +78,7 @@ public class Alliance {
         return color;
     }
 
-    private int getFallenRelics(){
+    int getFallenRelics(){
         return fallenRelics;
     }
 
