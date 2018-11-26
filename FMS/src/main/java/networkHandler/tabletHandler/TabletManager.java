@@ -19,7 +19,6 @@ public class TabletManager {
 
     public static RobotTablet getUnlinkedRobotTablet(){
         for(RobotTablet rT: robotTablets){
-            System.out.println(rT);
             if(!rT.isLinked()){
                 return rT;
             }
@@ -78,4 +77,11 @@ public class TabletManager {
         }
     }
 
+    static void removeRobotTablet(RobotTablet robotTablet) {
+        robotTablets.remove(robotTablet);
+    }
+
+    public static void removeFieldTablet(FieldTablet fieldTablet) {
+        fieldTablets.remove(fieldTablet);
+    }
 }

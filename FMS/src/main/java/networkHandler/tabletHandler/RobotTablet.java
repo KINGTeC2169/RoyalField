@@ -16,15 +16,16 @@ public class RobotTablet extends Client {
 
     public RobotTablet(Socket s){
         super(s);
+        this.start();
         System.out.println("[INFO] Created Robot Tablet");
     }
 
     public void link(Robot r){
         r.attemptToLink();
-        System.out.println("[INFO] Linking");
         robot = r;
         linked = true;
         ID = (int) (Math.random() * 100);
+        System.out.println("[INFO] Linked to " + getAllianceColor() + " robot #: " + r.getRobot());
 
     }
 
@@ -48,9 +49,11 @@ public class RobotTablet extends Client {
         String data[] = s.split(";");
         setMinorPenalties(Integer.parseInt(data[1]));
         setMajorPenalties(Integer.parseInt(data[2]));
+        System.out.println(data[1] + " " + data[2]);
     }
 
-    protected void useData(String s){
+    public void useData(String s){
+        System.out.println("Robot Print: " + s);
         if(robot.isLinked()){
             //TODO This tabletHandler is now linked to a robot.  Score stuff
             try{
@@ -63,6 +66,7 @@ public class RobotTablet extends Client {
     }
 
     protected void disconnect(){
+        TabletManager.removeRobotTablet(this);
         linked = false;
         robot = null;
         System.out.println("[INFO] Connection to " + ID + " lost");
@@ -81,7 +85,7 @@ public class RobotTablet extends Client {
         }
     }
 
-    public Alliance.AllianceColor getAllianceColor() {
+    Alliance.AllianceColor getAllianceColor() {
         return robot.getAlliance();
     }
 }

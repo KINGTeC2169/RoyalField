@@ -28,8 +28,16 @@ public class TeamMachine {
         }
     }
 
+    public static void getTeamByRank(int rank){
+        
+    }
+
     public static Team getTeam(int num){
         return teamMap.get(num);
+    }
+
+    public static void generateRankings(){
+
     }
 
     public static void saveTeamList(){

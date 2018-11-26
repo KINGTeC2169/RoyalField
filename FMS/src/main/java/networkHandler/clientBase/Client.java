@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
+import java.net.SocketException;
 
 // Client class
 public class Client extends Thread {
@@ -24,17 +25,16 @@ public class Client extends Thread {
 
             while (true) {
                 //Check if we've got new data from our clientBase.
-                if(!s.getInetAddress().isReachable(10)){
-                    disconnect();
-                    break;
-                }
                 if ((data = in.readLine()) != null) {
+                    System.out.println(data);
                     useData(data);
                 }
             }
 
-
-
+        }
+        catch(SocketException f) {
+                disconnect();
+                System.out.println(this + " has Disconnected!");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -46,8 +46,8 @@ public class Client extends Thread {
 
     }
 
-    protected void useData(String s){
-
+    public void useData(String s){
+        System.out.println("Client Print: " + s);
     }
 }
 

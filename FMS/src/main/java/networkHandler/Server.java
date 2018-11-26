@@ -33,11 +33,9 @@ class Server extends Thread{
                 // socket object to receive incoming clientBase requests
                 s = server.accept();
 
-                System.out.println("A new clientBase is connected : " + s);
+                System.out.println("[INFO] A new client is connected : " + s);
 
                 // obtaining input and out streams
-
-                System.out.println("Assigning new thread for this clientBase");
 
                 BufferedReader in;
 
@@ -50,11 +48,13 @@ class Server extends Thread{
                         //Check if we've got new data from our clientBase.
                         if ((data = in.readLine()) != null) {
                             if(data.equals("JTB")){
-                                System.out.println("Recieved Request for new RobotTablet");
-                                TabletManager.addRobotTablet(new RobotTablet(s));
+                                System.out.println("[INFO] Recieved Request for new RobotTablet");
+                                RobotTablet t = new RobotTablet(s);
+                                TabletManager.addRobotTablet(t);
                                 break;
                             }
                             else if(data.equals("FTB")){
+                                System.out.println("[INFO] Recieved Request for new FieldTablet");
                                 TabletManager.addFieldTablet(new FieldTablet(s));
                                 break;
                             }
@@ -64,13 +64,6 @@ class Server extends Thread{
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
-
-            // create a new thread object
-                Thread t = new Client(s);
-
-                // Invoking the start() method
-                t.start();
 
             }
             catch (Exception e){

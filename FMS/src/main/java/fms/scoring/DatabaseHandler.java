@@ -55,7 +55,7 @@ public class DatabaseHandler {
         while ((line = br.readLine()) != null) {
             if(i == matchID){
                 String[] values = line.split(",");
-                System.out.println("Created Match # " + values[1]);
+                System.out.println("[MATCH] Created Match # " + values[1]);
                 br.close();
                 return new Match(Integer.parseInt(values[1]), codeToType(values[0]), TeamMachine.getTeam(Integer.parseInt(values[2])), TeamMachine.getTeam(Integer.parseInt(values[3])),
                         TeamMachine.getTeam(Integer.parseInt(values[4])), TeamMachine.getTeam(Integer.parseInt(values[5])));

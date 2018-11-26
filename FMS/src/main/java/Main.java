@@ -56,7 +56,7 @@ public class Main {
                 }
 
                 FMSStates.state = FMSStates.FMSState.PREMATCH;
-                System.out.println("Init Complete");
+                System.out.println("[MATCH] Init Complete");
                 break;
 
             case PREMATCH:
@@ -64,21 +64,40 @@ public class Main {
                 //Check Sensors
                 //Check Tablet Count
                 UIStateMachine.setGameMode("AUTO");
-                while(!scan.hasNext()){
-
-                }
-                System.out.println("Prematch Started");
+                System.out.println("[MATCH] Prematch Started");
                 try {
                     m = handler.readNextMatch();
-                    m.start();
                 } catch (IOException e) {
                     e.printStackTrace();
-                } catch(NullPointerException e){
-                    System.out.println("ERROR: Match Not Found!");
-                    break;
+                    System.out.println("[ERROR] Match Read/Write Failed!");
+                } catch (NullPointerException e) {
+                    e.printStackTrace();
+                    System.out.println("[ERROR] Match Not Found!");
                 }
+
+                Thread loop = new Thread(() -> {
+                    while(System.currentTimeMillis() > 0){
+                        m.connectTablets();
+                    }
+                });
+                loop.start();
+
+                while(!scan.hasNext()){
+
+                    m.connectTablets();
+
+                }
+
+                try {
+                    m.start();
+                }
+                catch(Exception e) {
+                    System.out.println("[ERROR] Error Starting Match");
+                }
+
                 FMSStates.state = FMSStates.FMSState.MATCH;
-                System.out.println("Prematch Complete");
+                System.out.println("[MATCH] Prematch Complete");
+                System.out.println("[MATCH] Starting Auto");
                 AudioManager.playCharge();
                 break;
 
@@ -86,7 +105,7 @@ public class Main {
 
                 if(m.matchState == Match.MatchState.DONE){
                     m.stop();
-                    System.out.println("Match Complete");
+                    System.out.println("[MATCH] Match Complete");
                     FMSStates.state = FMSStates.FMSState.VERIFICATION;
                     break;
                 }
@@ -96,10 +115,10 @@ public class Main {
             case VERIFICATION:
 
                 UIStateMachine.setGameMode("DONE");
-                System.out.println("Awaiting Score Verification");
-                System.out.println("Are these score correct?");
+                System.out.println("[MATCH] Awaiting Score Verification");
+                System.out.println("[MATCH] Are these score correct?");
                 while (!scan.nextLine().equals("yes")) {
-                    System.out.println("Are these score correct?");
+                    System.out.println("[MATCH] Are these score correct?");
                 }
                 FMSStates.state = FMSStates.FMSState.POSTMATCH;
                 break;
@@ -111,9 +130,9 @@ public class Main {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                System.out.println("Match Completed");
-                System.out.println("*SHOWING RESULTS*");
-                System.out.println("Returning to prematch");
+                System.out.println("[MATCH] Match Completed");
+                System.out.println("[MATCH] *SHOWING RESULTS*");
+                System.out.println("[MATCH] Returning to prematch");
                 m.stop();
                 FMSStates.state = FMSStates.FMSState.PREMATCH;
                 break;

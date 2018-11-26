@@ -14,7 +14,7 @@ import java.util.StringJoiner;
 public class Alliance {
 
     //Instance Variables
-    
+
     public enum AllianceColor {
         RED, BLUE, NONE
     }
@@ -29,7 +29,7 @@ public class Alliance {
     private int flags = 0;
     private int rankingPoints = 0;
     private int totalScore = 0;
-    private boolean isLinked;
+    private boolean isLinked = false;
     private int enemyPenaltyPoints = 0;
     private boolean win = false;
 
@@ -90,7 +90,7 @@ public class Alliance {
         return moonRocks;
     }
 
-    int getFlags(){
+    public int getFlags(){
         return flags;
     }
 
@@ -180,7 +180,7 @@ public class Alliance {
         return isLinked;
     }
 
-    private void linkRobotTablets(){
+    void linkTablets(){
         for(Robot r:robots){
             if(!r.isLinked()){
                 try{
@@ -202,7 +202,7 @@ public class Alliance {
     //Outputs
 
     void calculateTotalScore(){
-        linkRobotTablets();
+        interpretTabletData();
         enemyPenaltyPoints = getOpponentMinorPenalties() * ScoreConstants.minorPenaltyPoints + getOpponentMajorPenalties() * ScoreConstants.majorPenaltyPoints;
         setTotalScore(getFallenRelics() * ScoreConstants.fallenRelicPoints + getStandingRelics() * ScoreConstants.standingRelicPoints + getMoonRocks() * ScoreConstants.moonRockPoints +  getFlags() * ScoreConstants.flagPoints + enemyPenaltyPoints);
     }

@@ -13,7 +13,7 @@ class DemoClient extends Client {
         super(s);
     }
 
-    protected void useData(String s) {
+    public void useData(String s) {
         System.out.println(s);
         if (s.contains(" ")) {
             String[] splited = s.split(" ");

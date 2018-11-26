@@ -63,6 +63,11 @@ public class Match {
 
     }
 
+    public void connectTablets(){
+        blue.linkTablets();
+        red.linkTablets();
+    }
+
     public void update(){
 
         switch(matchState){
@@ -74,7 +79,7 @@ public class Match {
                 }
                 break;
             case BREAK:
-                System.out.println("Teleop Starting");
+                System.out.println("[MATCH] Starting TeleOp");
                 UIStateMachine.setGameMode("TELE");
                 matchState = MatchState.TELE;
                 break;

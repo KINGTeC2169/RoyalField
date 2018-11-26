@@ -7,11 +7,13 @@ public class Robot {
     private boolean isLinked;
     private Alliance alliance;
     private double ID;
+    private int robotNum;
 
     public Robot(Alliance a, int num){
         alliance = a;
         isLinked = false;
         ID = (int) (Math.random() * 1000);
+        robotNum = num;
     }
 
     public Robot(){
@@ -42,6 +44,10 @@ public class Robot {
             return Alliance.AllianceColor.RED;
         }
         return null;
+    }
+
+    public int getRobot(){
+        return robotNum;
     }
 
     public String toString(){

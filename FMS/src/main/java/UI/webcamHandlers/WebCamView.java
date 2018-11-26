@@ -39,7 +39,7 @@ public class WebCamView {
 						getChildren().setAll(imageView);
 						break ;
 					case CANCELLED:
-						System.out.println("Cancelled");
+						System.out.println("[UI] Cancelled");
 						imageView.imageProperty().unbind();
 						imageView.setImage(null);
 						statusPlaceholder.setText("Stopped");

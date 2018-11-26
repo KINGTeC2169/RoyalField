@@ -17,15 +17,17 @@ public class FieldTablet extends Client {
 
     public FieldTablet(Socket s){
         super(s);
-        System.out.println("Created Field Tablet");
+        this.start();
+        System.out.println("[TABLET] Created Field Tablet");
     }
 
     public void link(Alliance a){
         a.attemptToLink();
-        System.out.println("Linking");
+        System.out.println("[TABLET] Linking");
         alliance  = a;
         linked = true;
         ID = (int) (Math.random() * 100);
+        System.out.println("[TABLET] Linked to " + alliance.getColor());
 
     }
 
@@ -64,11 +66,13 @@ public class FieldTablet extends Client {
         setStandingRelics(Integer.parseInt(data[3]));
     }
 
-    protected void useData(String s){
+    public void useData(String s){
+        System.out.println("FTB Print: " + s);
         if(alliance.isLinked()){
             //TODO This tabletHandler is now linked to a robot.  Score stuff
             try{
                 parseScoreData(s);
+                System.out.println("New Flag Score: "+alliance.getFlags());
             }
             catch(IndexOutOfBoundsException e){
                 System.out.println("[ERROR] Error parsing score data in " + toString());
@@ -77,6 +81,7 @@ public class FieldTablet extends Client {
     }
 
     protected void disconnect(){
+        TabletManager.removeFieldTablet(this);
         linked = false;
         alliance = null;
         System.out.println("Connection to " + ID + " lost");
