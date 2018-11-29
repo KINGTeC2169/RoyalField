@@ -79,6 +79,7 @@ public class TabletManager {
 
     static void removeRobotTablet(RobotTablet robotTablet) {
         robotTablets.remove(robotTablet);
+        System.out.println(robotTablets);
     }
 
     public static void removeFieldTablet(FieldTablet fieldTablet) {

@@ -49,11 +49,9 @@ public class RobotTablet extends Client {
         String data[] = s.split(";");
         setMinorPenalties(Integer.parseInt(data[1]));
         setMajorPenalties(Integer.parseInt(data[2]));
-        System.out.println(data[1] + " " + data[2]);
     }
 
     public void useData(String s){
-        System.out.println("Robot Print: " + s);
         if(robot.isLinked()){
             //TODO This tabletHandler is now linked to a robot.  Score stuff
             try{
@@ -68,6 +66,7 @@ public class RobotTablet extends Client {
     protected void disconnect(){
         TabletManager.removeRobotTablet(this);
         linked = false;
+        robot.unlink();
         robot = null;
         System.out.println("[INFO] Connection to " + ID + " lost");
     }

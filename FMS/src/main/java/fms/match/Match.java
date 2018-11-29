@@ -1,6 +1,7 @@
 package main.java.fms.match;
 
 import main.java.UI.text.UIStateMachine;
+import main.java.fms.FMSStates;
 import main.java.fms.scoring.ScoreConstants;
 import main.java.fms.scoring.team.Team;
 
@@ -57,7 +58,7 @@ public class Match {
 
     }
 
-    public void stop(){
+    public void lockScores(){
 
         scoresLocked = true;
 
@@ -75,6 +76,7 @@ public class Match {
             case AUTO:
                 if(getElapsedSeconds() >= ScoreConstants.autoDuration){
                     matchState = MatchState.BREAK;
+                    FMSStates.matchStatus = FMSStates.MatchStatus.AUTO;
                     break;
                 }
                 break;
@@ -82,6 +84,7 @@ public class Match {
                 System.out.println("[MATCH] Starting TeleOp");
                 UIStateMachine.setGameMode("TELE");
                 matchState = MatchState.TELE;
+                FMSStates.matchStatus = FMSStates.MatchStatus.TELE;
                 break;
             case TELE:
                 if(getElapsedSeconds() >= (ScoreConstants.autoDuration + ScoreConstants.teleDuration)) {
@@ -89,7 +92,8 @@ public class Match {
                 }
                 break;
             case DONE:
-                stop();
+                FMSStates.matchStatus = FMSStates.MatchStatus.PRE;
+                break;
         }
 
         blue.calculateTotalScore();

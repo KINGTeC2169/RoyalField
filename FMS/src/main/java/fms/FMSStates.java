@@ -7,5 +7,10 @@ public class FMSStates {
     }
     public static FMSState state = FMSState.INIT;
 
+    public enum MatchStatus{
+        PRE, TELE, AUTO
+    }
+    public static MatchStatus matchStatus = MatchStatus.PRE;
+
 
 }

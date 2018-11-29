@@ -104,7 +104,6 @@ public class Main {
             case MATCH:
 
                 if(m.matchState == Match.MatchState.DONE){
-                    m.stop();
                     System.out.println("[MATCH] Match Complete");
                     FMSStates.state = FMSStates.FMSState.VERIFICATION;
                     break;
@@ -126,6 +125,7 @@ public class Main {
             case POSTMATCH:
 
                 try {
+                    TeamMachine.updateRankings();
                     handler.archiveMatch(m);
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -133,7 +133,7 @@ public class Main {
                 System.out.println("[MATCH] Match Completed");
                 System.out.println("[MATCH] *SHOWING RESULTS*");
                 System.out.println("[MATCH] Returning to prematch");
-                m.stop();
+                m.lockScores();
                 FMSStates.state = FMSStates.FMSState.PREMATCH;
                 break;
 

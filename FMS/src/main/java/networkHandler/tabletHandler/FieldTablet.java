@@ -82,6 +82,8 @@ public class FieldTablet extends Client {
 
     protected void disconnect(){
         TabletManager.removeFieldTablet(this);
+        alliance.unlink();
+        TabletManager.printFieldTablets();
         linked = false;
         alliance = null;
         System.out.println("Connection to " + ID + " lost");

@@ -29,7 +29,7 @@ public class Alliance {
     private int flags = 0;
     private int rankingPoints = 0;
     private int totalScore = 0;
-    private boolean isLinked = false;
+    private boolean isLinked;
     private int enemyPenaltyPoints = 0;
     private boolean win = false;
 
@@ -176,6 +176,10 @@ public class Alliance {
         }
     }
 
+    public void unlink(){
+        isLinked = false;
+    }
+
     public boolean isLinked() {
         return isLinked;
     }
@@ -203,8 +207,11 @@ public class Alliance {
 
     void calculateTotalScore(){
         interpretTabletData();
-        enemyPenaltyPoints = getOpponentMinorPenalties() * ScoreConstants.minorPenaltyPoints + getOpponentMajorPenalties() * ScoreConstants.majorPenaltyPoints;
-        setTotalScore(getFallenRelics() * ScoreConstants.fallenRelicPoints + getStandingRelics() * ScoreConstants.standingRelicPoints + getMoonRocks() * ScoreConstants.moonRockPoints +  getFlags() * ScoreConstants.flagPoints + enemyPenaltyPoints);
+        enemyPenaltyPoints = getOpponentMinorPenalties() * ScoreConstants.minorPenaltyPoints + getOpponentMajorPenalties()
+                * ScoreConstants.majorPenaltyPoints;
+        setTotalScore(getFallenRelics() * ScoreConstants.fallenRelicPoints + getStandingRelics() *
+                ScoreConstants.standingRelicPoints + getMoonRocks() * ScoreConstants.moonRockPoints +
+                getFlags() * ScoreConstants.flagPoints + enemyPenaltyPoints);
     }
 
     // Returns alliance-match info in CSV form in order of;
@@ -221,7 +228,7 @@ public class Alliance {
             out += teams.get(1) + ",";
         }
 
-        return out + getStandingRelics() + "," + getMoonRocks()+ "," + getFlags() + "," + getTotalScore() + "," + getRankingPoints() + "," + getWin();
+        return out + getStandingRelics() + "," + getFallenRelics() + "," + getMoonRocks()+ "," + getFlags() + "," + getTotalScore() + "," + getRankingPoints() + "," + getWin();
 
     }
 

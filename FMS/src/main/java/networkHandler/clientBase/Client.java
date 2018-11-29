@@ -9,10 +9,19 @@ import java.net.SocketException;
 // Client class
 public class Client extends Thread {
     private final Socket s;
+    private boolean connected = false;
+
+    private boolean getConnected(){
+        return connected;
+    }
+    private void setConnected(boolean connected){
+        this.connected = connected;
+    }
 
     // Constructor
     public Client(Socket s) {
         this.s = s;
+        setConnected(true);
     }
 
     @Override
@@ -23,12 +32,25 @@ public class Client extends Thread {
             String data;
             BufferedReader in = new BufferedReader(new InputStreamReader(s.getInputStream()));
 
-            while (true) {
+            while (connected) {
                 //Check if we've got new data from our clientBase.
+                long startTime = System.currentTimeMillis();
+                while(!in.ready()){
+                    long elapsedTime = System.currentTimeMillis() - startTime;
+                    if(elapsedTime > 3000){
+                        if(getConnected()) {
+                            disconnect();
+                            System.out.println(getConnected());
+                            setConnected(false);
+                        }
+                    }
+                    Thread.sleep(250);
+
+                }
                 if ((data = in.readLine()) != null) {
-                    System.out.println(data);
                     useData(data);
                 }
+                Thread.sleep(250);
             }
 
         }
@@ -37,17 +59,20 @@ public class Client extends Thread {
                 System.out.println(this + " has Disconnected!");
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
 
     }
 
-
     protected void disconnect(){
-
+        if(getConnected()){
+            System.out.println("Device Disconnected!");
+            setConnected(false);
+        }
     }
 
     public void useData(String s){
-        System.out.println("Client Print: " + s);
     }
 }
 
