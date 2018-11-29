@@ -78,6 +78,26 @@ public class Alliance {
         return color;
     }
 
+    public char getAllianceCode(){
+        if(getColor() == AllianceColor.RED){
+            return 'r';
+        }
+        else if(getColor() == AllianceColor.BLUE){
+            return 'b';
+        }
+        return 'w';
+    }
+
+    public static char getAllianceCode(AllianceColor a){
+        if(a == AllianceColor.RED){
+            return 'r';
+        }
+        else if(a == AllianceColor.BLUE){
+            return 'b';
+        }
+        return 'w';
+    }
+
     int getFallenRelics(){
         return fallenRelics;
     }

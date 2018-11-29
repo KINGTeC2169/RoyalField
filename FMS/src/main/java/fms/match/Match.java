@@ -74,9 +74,9 @@ public class Match {
         switch(matchState){
 
             case AUTO:
+                FMSStates.matchStatus = FMSStates.MatchStatus.AUTO;
                 if(getElapsedSeconds() >= ScoreConstants.autoDuration){
                     matchState = MatchState.BREAK;
-                    FMSStates.matchStatus = FMSStates.MatchStatus.AUTO;
                     break;
                 }
                 break;

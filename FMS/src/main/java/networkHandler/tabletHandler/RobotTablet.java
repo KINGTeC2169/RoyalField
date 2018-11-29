@@ -1,5 +1,6 @@
 package main.java.networkHandler.tabletHandler;
 
+import main.java.fms.FMSStates;
 import main.java.fms.match.Alliance;
 import main.java.fms.match.robot.Robot;
 import main.java.networkHandler.clientBase.Client;
@@ -26,7 +27,7 @@ public class RobotTablet extends Client {
         linked = true;
         ID = (int) (Math.random() * 100);
         System.out.println("[INFO] Linked to " + getAllianceColor() + " robot #: " + r.getRobot());
-
+        this.setResponse(Alliance.getAllianceCode(r.getAlliance()) + ";" + FMSStates.stateToCode() + ";" + r.getRobot());
     }
 
     private void setMajorPenalties(int majorPenalties){
@@ -52,9 +53,12 @@ public class RobotTablet extends Client {
     }
 
     public void useData(String s){
+        System.out.println(FMSStates.matchStatus);
+        this.setResponse(Alliance.getAllianceCode(robot.getAlliance()) + ";" + FMSStates.stateToCode() + ";" + robot.getRobot());
         if(robot.isLinked()){
             //TODO This tabletHandler is now linked to a robot.  Score stuff
             try{
+                System.out.println(s);
                 parsePenaltyData(s);
             }
             catch(IndexOutOfBoundsException e){

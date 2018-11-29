@@ -12,5 +12,18 @@ public class FMSStates {
     }
     public static MatchStatus matchStatus = MatchStatus.PRE;
 
+    public static int stateToCode(){
+        if(matchStatus == MatchStatus.PRE){
+            return 0;
+        }
+        else if(matchStatus == MatchStatus.TELE){
+            return 2;
+        }
+        else if(matchStatus == MatchStatus.AUTO){
+            return 1;
+        }
+        return 1;
+    }
+
 
 }

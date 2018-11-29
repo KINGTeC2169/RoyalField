@@ -61,17 +61,7 @@ public class TabletManager {
         return null;
     }
 
-    public static void printRobotTablets(){
-        for(RobotTablet rT: robotTablets){
-            System.out.println(rT);
-        }
-    }
-
-    public static void printNumRobotTablets(){
-        System.out.println(robotTablets.size());
-    }
-
-    public static void printFieldTablets() {
+    static void printFieldTablets() {
         for (FieldTablet fT : fieldTablets) {
             System.out.println(fT);
         }
@@ -82,7 +72,7 @@ public class TabletManager {
         System.out.println(robotTablets);
     }
 
-    public static void removeFieldTablet(FieldTablet fieldTablet) {
+    static void removeFieldTablet(FieldTablet fieldTablet) {
         fieldTablets.remove(fieldTablet);
     }
 }
