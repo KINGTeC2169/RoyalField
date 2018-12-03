@@ -21,7 +21,7 @@ public class Main extends AppCompatActivity {
      * b connected to the blue alliance
      * */
 
-    String ip = "192.168.0.97";
+    String ip = "192.168.1.5";
     Socket s;
     private String incomingData = "";
     private int textColor = Color.WHITE;
@@ -29,6 +29,53 @@ public class Main extends AppCompatActivity {
     private int tipped_relics = 0;
     private int flags = 0;
     private String gameState;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        Thread t = new Thread(this::attemptToConnect);
+        t.start();
+
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        Button add_standing_relic = findViewById(R.id.standingAdd);
+        add_standing_relic.setOnClickListener(view -> {
+            if (standing_relics + tipped_relics != 2) standing_relics++;
+            ((TextView) findViewById(R.id.standingVal)).setText(Integer.toString(standing_relics));
+        });
+
+        Button add_tipped_relic = findViewById(R.id.fallenAdd);
+        add_tipped_relic.setOnClickListener(view -> {
+            if (standing_relics + tipped_relics != 2) tipped_relics++;
+            ((TextView) findViewById(R.id.fallenVal)).setText(Integer.toString(tipped_relics));
+        });
+
+        Button remove_standing_relic = findViewById(R.id.standingSub);
+        remove_standing_relic.setOnClickListener(view -> {
+            if (standing_relics > 0) standing_relics--;
+            ((TextView) findViewById(R.id.standingVal)).setText(Integer.toString(standing_relics));
+        });
+
+        Button remove_tipped_relic = findViewById(R.id.fallenSub);
+        remove_tipped_relic.setOnClickListener(view -> {
+            if (tipped_relics > 0) tipped_relics--;
+            ((TextView) findViewById(R.id.fallenVal)).setText(Integer.toString(tipped_relics));
+        });
+
+        Button addFlag = findViewById(R.id.flagsAdd);
+        addFlag.setOnClickListener(view -> {
+            if (flags + 1 <= 2) flags++;
+            ((TextView) findViewById(R.id.flagsVal)).setText(Integer.toString(flags));
+        });
+
+        Button subtractFlag = findViewById(R.id.flagsSub);
+        subtractFlag.setOnClickListener(view -> {
+            if (flags - 1 >= 0) flags--;
+            ((TextView) findViewById(R.id.flagsVal)).setText(Integer.toString(flags));
+        });
+
+
+    }
 
     private void ioThread(Socket s){
         BufferedReader in = null;
@@ -76,53 +123,6 @@ public class Main extends AppCompatActivity {
         System.out.println("Successfully Connected!");
         Thread in = new Thread(() -> ioThread(s));
         in.start();
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        Thread t = new Thread(this::attemptToConnect);
-        t.start();
-
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        Button add_standing_relic = findViewById(R.id.standingAdd);
-        add_standing_relic.setOnClickListener(view -> {
-            if (standing_relics + tipped_relics != 2) standing_relics++;
-            ((TextView) findViewById(R.id.standingVal)).setText(Integer.toString(standing_relics));
-        });
-
-        Button add_tipped_relic = findViewById(R.id.fallenAdd);
-        add_tipped_relic.setOnClickListener(view -> {
-            if (standing_relics + tipped_relics != 2) tipped_relics++;
-            ((TextView) findViewById(R.id.fallenVal)).setText(Integer.toString(tipped_relics));
-        });
-
-        Button remove_standing_relic = findViewById(R.id.standingSub);
-        remove_standing_relic.setOnClickListener(view -> {
-            if (standing_relics > 0) standing_relics--;
-            ((TextView) findViewById(R.id.standingVal)).setText(Integer.toString(standing_relics));
-        });
-
-        Button remove_tipped_relic = findViewById(R.id.fallenSub);
-        remove_tipped_relic.setOnClickListener(view -> {
-            if (tipped_relics > 0) tipped_relics--;
-            ((TextView) findViewById(R.id.fallenVal)).setText(Integer.toString(tipped_relics));
-        });
-
-        Button addFlag = findViewById(R.id.flagsAdd);
-        addFlag.setOnClickListener(view -> {
-            if (flags + 1 <= 2) flags++;
-            ((TextView) findViewById(R.id.flagsVal)).setText(Integer.toString(flags));
-        });
-
-        Button subtractFlag = findViewById(R.id.flagsSub);
-        subtractFlag.setOnClickListener(view -> {
-            if (flags - 1 >= 0) flags--;
-            ((TextView) findViewById(R.id.flagsVal)).setText(Integer.toString(flags));
-        });
-
-
     }
 
     public void visualsUpdate(){

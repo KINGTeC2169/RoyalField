@@ -5,12 +5,12 @@ import java.io.IOException;
 public class NetworkMain {
 
     public static void start() {
-        //Create an empty Server object.
-        Server m = null;
+        //Create an empty ClientServer object.
+        ClientServer m = null;
 
         //Try to create the server.
         try {
-            m = new Server();
+            m = new ClientServer();
         } catch (IOException e) {
             e.printStackTrace();
         }

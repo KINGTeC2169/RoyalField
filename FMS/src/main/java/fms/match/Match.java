@@ -1,5 +1,6 @@
 package main.java.fms.match;
 
+import main.java.UI.AudioManager;
 import main.java.UI.text.UIStateMachine;
 import main.java.fms.FMSStates;
 import main.java.fms.scoring.ScoreConstants;
@@ -85,6 +86,7 @@ public class Match {
                 UIStateMachine.setGameMode("TELE");
                 matchState = MatchState.TELE;
                 FMSStates.matchStatus = FMSStates.MatchStatus.TELE;
+                AudioManager.playTeleSound();
                 break;
             case TELE:
                 if(getElapsedSeconds() >= (ScoreConstants.autoDuration + ScoreConstants.teleDuration)) {

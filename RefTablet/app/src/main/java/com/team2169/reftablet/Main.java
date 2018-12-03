@@ -21,7 +21,7 @@ public class Main extends AppCompatActivity {
      * b connected to the blue alliance
      * */
 
-    String ip = "192.168.0.97";
+    String ip = "192.168.1.5";
     Socket s;
     private String incomingData = "";
     private int textColor = Color.WHITE;

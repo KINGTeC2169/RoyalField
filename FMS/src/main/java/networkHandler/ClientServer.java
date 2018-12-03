@@ -10,12 +10,12 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-class Server extends Thread{
+class ClientServer extends Thread{
 
     private ServerSocket server;
 
     //Constructor that creates the ServerSocket
-    Server() throws IOException {
+    ClientServer() throws IOException {
         server = new ServerSocket(2169, 1, InetAddress.getLocalHost());
     }
 

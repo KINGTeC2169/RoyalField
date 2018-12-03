@@ -113,6 +113,7 @@ public class Main {
 
             case VERIFICATION:
 
+                AudioManager.playEnd();
                 UIStateMachine.setGameMode("DONE");
                 System.out.println("[MATCH] Awaiting Score Verification");
                 System.out.println("[MATCH] Are these score correct?");

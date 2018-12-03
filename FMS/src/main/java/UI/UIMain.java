@@ -21,6 +21,11 @@ public class UIMain extends Application {
 	
 	private WebCamService service;
 
+	enum UIState{
+		PRE, MATCH, POST, INTER
+	}
+	public UIState state = UIState.PRE;
+
 	@Override
 	public void init() {
 		
@@ -33,34 +38,33 @@ public class UIMain extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 
-
-
 		TextPane textPane = new TextPane();
 
 		BorderPane imagePlacement = new BorderPane();
 		service.restart();
 
-        StackPane imageStack = new StackPane();
-		Image image = new Image("bin/media/ScoringOverlay.png",1920,250, true, false);
-		ImageView iv1 = new ImageView(image);
-		imageStack.getChildren().add(iv1);
-        imageStack.getChildren().add(textPane.getPane());
-		imagePlacement.setTop(imageStack);
+		//MatchView StackPane
+			StackPane matchView = new StackPane();
+			Image image = new Image("bin/media/ScoringOverlay.png",1920,250, true, false);
+			ImageView iv1 = new ImageView(image);
+			matchView.getChildren().add(iv1);
+			matchView.getChildren().add(textPane.getPane());
+			imagePlacement.setTop(matchView);
 
-		WebCamView view = new WebCamView(service);
+			WebCamView view = new WebCamView(service);
 
-		StackPane stackPane = new StackPane();
-		stackPane.getChildren().add(view.getView());
-		stackPane.getChildren().add(imagePlacement);
+			StackPane matchStackPane = new StackPane();
+			matchStackPane.getChildren().add(view.getView());
+			matchStackPane.getChildren().add(imagePlacement);
+			Scene matchScene = new Scene(matchStackPane);
 
-		Scene scene = new Scene(stackPane);
-		primaryStage.setScene(scene);
+		primaryStage.setScene(matchScene);
 		primaryStage.setMaximized(true);
 		primaryStage.setFullScreen(true);
 		primaryStage.show();
 
 		//F11 for Fullscreen
-        scene.setOnKeyPressed(e -> {
+        matchScene.setOnKeyPressed(e -> {
             if(e.getCode() == KeyCode.F11) {
                 primaryStage.setFullScreen(!primaryStage.isFullScreen());
             }

@@ -13,6 +13,18 @@ public class AudioManager {
         playSound("src/bin/media/sounds/charge.mp3");
     }
 
+    public static void playTeleSound(){
+        playSound("src/bin/media/sounds/tele.mp3");
+    }
+
+    public static void playFail(){
+        playSound("src/bin/media/sounds/fail.mp3");
+    }
+
+    public static void playEnd(){
+        playSound("src/bin/media/sounds/end.mp3");
+    }
+
     private static void playSound(String file)
     {
         Thread playSound = new Thread(() -> {
