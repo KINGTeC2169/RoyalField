@@ -10,17 +10,17 @@ class TextHandler {
 
     //Blue Data
     private ScoreText blueScore = new ScoreText(1250,200, 100);
-    private ScoreText blueStandingRelic = new ScoreText(1725 + 27,215 - 7);
-    private ScoreText blueFallenRelic = new ScoreText(1502 - 15,215 - 7);
-    private ScoreText bluePingPong = new ScoreText(1502 - 15,100-8);
-    private ScoreText blueFlag = new ScoreText(1725 + 27,100 - 8);
+    private ScoreText blueStandingRelic = new ScoreText(1752,208);
+    private ScoreText blueFallenRelic = new ScoreText(1487,208);
+    private ScoreText bluePingPong = new ScoreText(1487,92);
+    private ScoreText blueFlag = new ScoreText(1752,92);
 
     //Red Data
     private ScoreText redScore = new ScoreText(680,200, 100);
-    private ScoreText redStandingRelic = new ScoreText(200 - 27,215 - 7);
-    private ScoreText redFallenRelic = new ScoreText(421 + 15,215-7);
-    private ScoreText redPingPong = new ScoreText(421 + 15,100-8);
-    private ScoreText redFlag = new ScoreText(200 - 27,100 - 8);
+    private ScoreText redStandingRelic = new ScoreText(173,208);
+    private ScoreText redFallenRelic = new ScoreText(436,208);
+    private ScoreText redPingPong = new ScoreText(436,92);
+    private ScoreText redFlag = new ScoreText(173,92);
 
     void init(Pane p){
 
