@@ -33,7 +33,6 @@ public class Match {
         return matchID;
     }
 
-
     public Match(int matchNum_, MatchType matchType_, Team r1, Team r2, Team b1, Team b2){
 
         blue = new Alliance(Alliance.AllianceColor.BLUE);
@@ -94,6 +93,8 @@ public class Match {
                 }
                 break;
             case DONE:
+                blue.generateAllianceResults();
+                red.generateAllianceResults();
                 FMSStates.matchStatus = FMSStates.MatchStatus.PRE;
                 break;
         }
@@ -103,6 +104,25 @@ public class Match {
         updateScoreBoard();
     }
 
+    public Alliance.AllianceColor calculateWinner(){
+        if(red.getTotalScore() > blue.getTotalScore()){
+            red.setWin(true);
+            blue.setWin(false);
+            return Alliance.AllianceColor.RED;
+        }
+        else if(blue.getTotalScore() > red.getTotalScore()){
+            red.setWin(false);
+            blue.setWin(true);
+            return Alliance.AllianceColor.BLUE;
+        }
+        else{
+            red.setWin(false);
+            blue.setWin(false);
+            red.setTie(true);
+            blue.setTie(true);
+            return Alliance.AllianceColor.NONE;
+        }
+    }
 
     public void updateTeamScores(){
 
@@ -123,14 +143,22 @@ public class Match {
             UIStateMachine.setBlueStandingRelic(blue.getStandingRelics());
             UIStateMachine.setBlueFallenRelic(blue.getFallenRelics());
             UIStateMachine.setBlueFlag(blue.getFlags());
-            UIStateMachine.setBluePingPong(blue.getMoonRocks());
+            UIStateMachine.setBlueMoonRocks(blue.getMoonRocks());
 
             //Update Red Values
             UIStateMachine.setRedScore(red.getTotalScore());
             UIStateMachine.setRedStandingRelic(red.getStandingRelics());
             UIStateMachine.setRedFallenRelic(red.getFallenRelics());
             UIStateMachine.setRedFlag(red.getFlags());
-            UIStateMachine.setRedPingPong(red.getMoonRocks());
+            UIStateMachine.setRedMoonRocks(red.getMoonRocks());
+
+            UIStateMachine.Results.setBlueWLT(blue.getWLT());
+            UIStateMachine.Results.setRedWLT(red.getWLT());
+            UIStateMachine.Results.setRedOneNum(red.getTeam(0));
+            UIStateMachine.Results.setRedTwoNum(red.getTeam(1));
+            UIStateMachine.Results.setBlueOneNum(blue.getTeam(0));
+            UIStateMachine.Results.setBlueTwoNum(blue.getTeam(1));
+
         }
     }
 

@@ -5,7 +5,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
-class ScoreText extends Text {
+public class ScoreText extends Text {
 
     //Most of this class is pretty self-explanatory.  Holds information about individual pieces of text on the
     //scoreboard.
@@ -13,7 +13,7 @@ class ScoreText extends Text {
     private double x_;
     private double y_;
 
-    ScoreText(double x, double y){
+    public ScoreText(double x, double y){
         super();
         x_ = x;
         y_ = y;
@@ -24,7 +24,7 @@ class ScoreText extends Text {
         this.setFill(Color.WHITE);
     }
 
-    ScoreText(double x, double y, int size){
+    public ScoreText(double x, double y, int size){
         super();
         x_ = x;
         y_ = y;
@@ -35,7 +35,24 @@ class ScoreText extends Text {
         this.setFill(Color.WHITE);
     }
 
-    void updateText(String s){
+    public ScoreText(double x, double y, int size, boolean black){
+        super();
+        if(black){
+            this.setFill(Color.BLACK);
+        }
+        else{
+            this.setFill(Color.WHITE);
+        }
+        x_ = x;
+        y_ = y;
+        this.setX(x);
+        this.setY(y);
+        this.setTextAlignment(TextAlignment.CENTER);
+        this.setFont(Font.font("VCR OSD Mono", size));
+
+    }
+
+    public void updateText(String s){
         this.setText(s);
         setPos(x_, y_);
     }

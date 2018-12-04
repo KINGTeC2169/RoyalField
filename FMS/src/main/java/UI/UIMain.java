@@ -5,28 +5,34 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import main.java.Main;
 import main.java.UI.text.TextPane;
+import main.java.UI.text.textHandlers.MatchTextHandler;
+import main.java.UI.text.textHandlers.PostTextHandler;
 import main.java.UI.webcamHandlers.WebCamService;
-import main.java.UI.webcamHandlers.WebCamView;
 
 public class UIMain extends Application {
 	
 	private WebCamService service;
 
-	enum UIState{
+	public enum UIState{
 		PRE, MATCH, POST, INTER
 	}
-	public UIState state = UIState.PRE;
+	private static UIState state = UIState.PRE;
+    private static UIState lastState = UIState.PRE;
+	public static void setUIState(UIState state){
+        UIMain.lastState = UIMain.state;
+        UIMain.state = state;
+    }
+    private static UIState getUIState(){
+	    return state;
+    }
 
-	@Override
+    @Override
 	public void init() {
 		
 		// note this is in init as it **must not** be called on the FX Application Thread:
@@ -38,39 +44,67 @@ public class UIMain extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 
-		TextPane textPane = new TextPane();
+        service.restart();
 
-		BorderPane imagePlacement = new BorderPane();
-		service.restart();
+	    RegionManager regions = new RegionManager();
 
-		//MatchView StackPane
-			StackPane matchView = new StackPane();
-			Image image = new Image("bin/media/ScoringOverlay.png",1920,250, true, false);
-			ImageView iv1 = new ImageView(image);
-			matchView.getChildren().add(iv1);
-			matchView.getChildren().add(textPane.getPane());
-			imagePlacement.setTop(matchView);
+        StackPane pane = new StackPane();
+        Scene main = new Scene(pane);
 
-			WebCamView view = new WebCamView(service);
+        //Match Pane
+        TextPane matchText = new TextPane(new MatchTextHandler());
+        StackPane matchPane= new StackPane(regions.getMatchView(matchText, service));
 
-			StackPane matchStackPane = new StackPane();
-			matchStackPane.getChildren().add(view.getView());
-			matchStackPane.getChildren().add(imagePlacement);
-			Scene matchScene = new Scene(matchStackPane);
+        //Post Match Pane
+        TextPane postTextPane = new TextPane(new PostTextHandler());
+        StackPane postPane = new StackPane(regions.getPostMatchView(postTextPane));
 
-		primaryStage.setScene(matchScene);
+        //Rankings Pane
+        TextPane rankingsText = new TextPane(new MatchTextHandler());
+        StackPane rankingsPane = new StackPane(regions.getMatchView(matchText, service));
+
+        pane.getChildren().addAll(matchPane);
+
+        primaryStage.setScene(main);
 		primaryStage.setMaximized(true);
 		primaryStage.setFullScreen(true);
 		primaryStage.show();
 
 		//F11 for Fullscreen
-        matchScene.setOnKeyPressed(e -> {
+
+        main.setOnKeyPressed(e -> {
             if(e.getCode() == KeyCode.F11) {
-                primaryStage.setFullScreen(!primaryStage.isFullScreen());
+                primaryStage.setFullScreen(true);
             }
         });
 
-        Timeline updateMachine = new Timeline(new KeyFrame(Duration.millis(250), event -> textPane.update()));
+
+        Timeline updateMachine = new Timeline(new KeyFrame(Duration.millis(250), event -> {
+//            System.out.println(getLastUIState() + " " + getLastUIState());
+
+            if(UIMain.state != UIMain.lastState ){
+                switch(getUIState()){
+                    case PRE:
+                        break;
+                    case MATCH:
+                        pane.getChildren().clear();
+                        pane.getChildren().removeAll();
+                        pane.getChildren().add(matchPane);
+                        break;
+                    case POST:
+                        pane.getChildren().clear();
+                        pane.getChildren().removeAll();
+                        pane.getChildren().add(postPane);
+                        break;
+                    case INTER:
+                        break;
+                }
+                //Prevents this from running multiple times
+                UIMain.lastState = UIMain.state;
+            }
+            matchText.update();
+            postTextPane.update();
+        }));
         updateMachine.setCycleCount(Timeline.INDEFINITE);
         updateMachine.play();
 
@@ -82,7 +116,7 @@ public class UIMain extends Application {
 
 	}
 
-	public static void start(String[] args) {
+	public void start(String[] args) {
 		launch(args);
 	}
 }

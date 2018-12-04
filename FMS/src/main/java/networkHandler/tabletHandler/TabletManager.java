@@ -1,6 +1,7 @@
 package main.java.networkHandler.tabletHandler;
 
 import main.java.fms.match.Alliance;
+import main.java.networkHandler.sensorHandler.SensorUnit;
 
 import java.util.ArrayList;
 
@@ -8,6 +9,7 @@ public class TabletManager {
 
     private static ArrayList<RobotTablet> robotTablets = new ArrayList<>();
     private static ArrayList<FieldTablet> fieldTablets = new ArrayList<>();
+    private static ArrayList<SensorUnit> sensorUnits = new ArrayList<>();
 
     public static void addFieldTablet(FieldTablet fT){
         fieldTablets.add(fT);
@@ -15,6 +17,10 @@ public class TabletManager {
 
     public static void addRobotTablet(RobotTablet rT){
         robotTablets.add(rT);
+    }
+
+    public static void addSensorUnit(SensorUnit s){
+        sensorUnits.add(s);
     }
 
     public static RobotTablet getUnlinkedRobotTablet(){
@@ -49,6 +55,21 @@ public class TabletManager {
 
         }
         return out;
+    }
+
+    public static int getAllianceSensorData(Alliance.AllianceColor color){
+
+        for(SensorUnit s:sensorUnits){
+            if(color == Alliance.AllianceColor.RED){
+                return s.getRedMoonRocks();
+            }
+            else if(color == Alliance.AllianceColor.BLUE){
+                return s.getBlueMoonRocks();
+            }
+        }
+        return -1;
+
+
     }
 
     public static FieldTablet getUnlinkedFieldTablet(){

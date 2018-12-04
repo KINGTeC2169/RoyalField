@@ -1,6 +1,6 @@
 package main.java.networkHandler;
 
-import main.java.networkHandler.sensorHandler.SensorMain;
+import main.java.networkHandler.sensorHandler.SensorUnit;
 import main.java.networkHandler.tabletHandler.FieldTablet;
 import main.java.networkHandler.tabletHandler.RobotTablet;
 import main.java.networkHandler.tabletHandler.TabletManager;
@@ -59,7 +59,7 @@ class ClientServer extends Thread{
                             }
                             else if(data.startsWith("FMB")){
                                 System.out.println("Connected to Field Management Box");
-                                new SensorMain(s);
+                                new SensorUnit(s);
                             }
                         }
                     }

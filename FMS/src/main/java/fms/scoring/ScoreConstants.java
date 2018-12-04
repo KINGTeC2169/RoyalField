@@ -11,7 +11,7 @@ public class ScoreConstants {
     public static int minorPenaltyPoints = 15;
     public static int majorPenaltyPoints= 50;
 
-    public static final int autoDuration = 20;
-    public static final int teleDuration = 20;
+    public static final int autoDuration = 5;
+    public static final int teleDuration = 5;
 
 }

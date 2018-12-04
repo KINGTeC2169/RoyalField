@@ -11,12 +11,12 @@ public class UIStateMachine {
     private static int blueScore = 0;
     private static int blueStandingRelic = 0;
     private static int blueFallenRelic = 0;
-    private static int bluePingPong = 0;
+    private static int blueMoonRocks = 0;
     private static int blueFlag = 0;
     private static int redScore = 0;
     private static int redStandingRelic = 0;
     private static int redFallenRelic = 0;
-    private static int redPingPong = 0;
+    private static int redMoonRocks = 0;
     private static int redFlag = 0;
 
 
@@ -45,8 +45,8 @@ public class UIStateMachine {
         blueScore = s;
     }
 
-    public static void setBluePingPong(int bluePingPong) {
-        UIStateMachine.bluePingPong = bluePingPong;
+    public static void setBlueMoonRocks(int blueMoonRocks) {
+        UIStateMachine.blueMoonRocks = blueMoonRocks;
     }
 
     public static void setBlueFlag(int blueFlag) {
@@ -66,8 +66,8 @@ public class UIStateMachine {
         UIStateMachine.redScore = redScore;
     }
 
-    public static void setRedPingPong(int redPingPong) {
-        UIStateMachine.redPingPong = redPingPong;
+    public static void setRedMoonRocks(int redMoonRocks) {
+        UIStateMachine.redMoonRocks = redMoonRocks;
     }
 
     public static void setRedFlag(int redFlag) {
@@ -87,8 +87,8 @@ public class UIStateMachine {
         return blueScore;
     }
 
-    public static int getBluePingPong() {
-        return bluePingPong;
+    public static int getBlueMoonRocks() {
+        return blueMoonRocks;
     }
 
     public static int getBlueFlag() {
@@ -109,8 +109,8 @@ public class UIStateMachine {
         return redScore;
     }
 
-    public static int getRedPingPong() {
-        return redPingPong;
+    public static int getRedMoonRocks() {
+        return redMoonRocks;
     }
 
     public static int getRedFlag() {
@@ -139,6 +139,119 @@ public class UIStateMachine {
             return "0" + n;
         }
         return "" + n;
+    }
+
+    public static class Results{
+
+        private static int blueOneNum = 0;
+        private static int blueTwoNum = 0;
+        private static String blueOneRank = "";
+        private static String blueTwoRank = "";
+        private static String blueWLT = "";
+
+        private static int redOneNum = 0;
+        private static int redTwoNum = 0;
+        private static String redOneRank = "";
+        private static String redTwoRank = "";
+        private static String redWLT = "";
+
+        public static int getBlueOneNum() {
+            return blueOneNum;
+        }
+
+        public static void setBlueOneNum(int blueOneNum) {
+            Results.blueOneNum = blueOneNum;
+        }
+
+        public static int getBlueTwoNum() {
+            return blueTwoNum;
+        }
+
+        public static void setBlueTwoNum(int blueTwoNum) {
+            Results.blueTwoNum = blueTwoNum;
+        }
+
+        public static String getBlueOneRank() {
+            return blueOneRank;
+        }
+
+        public static void setBlueOneRank(String blueOneRank) {
+            Results.blueOneRank = blueOneRank;
+        }
+
+        public static String getBlueTwoRank() {
+            return blueTwoRank;
+        }
+
+        public static void setBlueTwoRank(String blueTwoRank) {
+            Results.blueTwoRank = blueTwoRank;
+        }
+
+        public static void setBlueWLT(char c){
+            if(c == 'W'){
+                Results.blueWLT = "W";
+            }
+            else if (c == 'L'){
+                Results.blueWLT = "L";
+            }
+            else if(c == 'T'){
+                Results.blueWLT = "T";
+            }
+        }
+
+        public static String getBlueWLT() {
+            return blueWLT;
+        }
+
+
+        public static int getRedOneNum() {
+            return redOneNum;
+        }
+
+        public static void setRedOneNum(int redOneNum) {
+            Results.redOneNum = redOneNum;
+        }
+
+        public static int getRedTwoNum() {
+            return redTwoNum;
+        }
+
+        public static void setRedTwoNum(int redTwpoNum) {
+            Results.redTwoNum = redTwpoNum;
+        }
+
+        public static String getRedOneRank() {
+            return redOneRank;
+        }
+
+        public static void setRedOneRank(String redOneRank) {
+            Results.redOneRank = redOneRank;
+        }
+
+        public static String getRedTwoRank() {
+            return redTwoRank;
+        }
+
+        public static void setRedTwoRank(String redTwoRank) {
+            Results.redTwoRank = redTwoRank;
+        }
+
+        public static void setRedWLT(char c){
+            if(c == 'W'){
+                Results.blueWLT = "W";
+            }
+            else if (c == 'L'){
+                Results.blueWLT = "L";
+            }
+            else if(c == 'T'){
+                Results.blueWLT = "T";
+            }
+        }
+
+        public static String getRedWLT() {
+            return redWLT;
+        }
+
     }
 
 }

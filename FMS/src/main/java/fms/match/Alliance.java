@@ -3,6 +3,7 @@ package main.java.fms.match;
 import main.java.fms.match.robot.Robot;
 import main.java.fms.scoring.ScoreConstants;
 import main.java.fms.scoring.team.Team;
+import main.java.networkHandler.sensorHandler.SensorUnit;
 import main.java.networkHandler.tabletHandler.FieldTablet;
 import main.java.networkHandler.tabletHandler.RobotTablet;
 import main.java.networkHandler.tabletHandler.TabletManager;
@@ -32,7 +33,7 @@ public class Alliance {
     private boolean isLinked;
     private int enemyPenaltyPoints = 0;
     private boolean win = false;
-
+    private boolean tie = false;
     //Initializers
 
     Alliance(AllianceColor color_){
@@ -98,6 +99,17 @@ public class Alliance {
         return 'w';
     }
 
+    int getTeam(int num){
+        try{
+            return teams.get(num).getNumber();
+        }
+        catch(IndexOutOfBoundsException e){
+            System.out.println("Team Doesn't Exist!");
+        }
+        return 0;
+
+    }
+
     int getFallenRelics(){
         return fallenRelics;
     }
@@ -130,15 +142,33 @@ public class Alliance {
         return opponentMinorPenalties;
     }
 
-    private boolean getWin(){
+    public boolean getWin(){
         return win;
+    }
+
+    public char getWLT(){
+        if(win){
+            return 'W';
+        }
+        else if(tie){
+            return 'T';
+        }
+        return 'L';
     }
 
     public ArrayList<Robot> getRobots() {
         return robots;
     }
 
+    public boolean getTie(){
+        return this.tie;
+    }
+
     //Setters
+
+    public void setTie(boolean b) {
+        this.tie = true;
+    }
 
     private void setFallenRelics(int fallenRelics){
         this.fallenRelics = fallenRelics;
@@ -187,6 +217,9 @@ public class Alliance {
             setFlags(t.getFlags());
             setFallenRelics(t.getFallenRelics());
             setStandingRelics(t.getStandingRelics());
+        }
+        if(SensorUnit.sensorsConnected){
+            setMoonRocks(TabletManager.getAllianceSensorData(getColor()));
         }
     }
 
