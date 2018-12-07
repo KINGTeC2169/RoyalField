@@ -2,6 +2,11 @@ var games, rankings;
 
 // Load the csv
 $(document).ready(() => {
+  loadRankings();
+  setInterval(loadRankings, 10000);
+});
+
+function loadRankings() {
   $.ajax({
     type: "GET",
     url: "rankings.csv",
@@ -13,24 +18,12 @@ $(document).ready(() => {
       );
     }
    });
-
-   $.ajax({
-     type: "GET",
-     url: "games.csv",
-     dataType: "text",
-     success: (data) => {
-       setGames(
-         document.getElementById("games"),
-         parseCSV(data)
-       );
-     }
-    });
-});
+}
 
 function setRankings(table, rankings){
   let ref = {html:""};
 
-  let addEntry = (val) => {
+  let addData = (val) => {
     ref.html += "<td>" + val + "</td>";
   }
   let openEntry = () => {
@@ -41,36 +34,66 @@ function setRankings(table, rankings){
   }
 
   openEntry();
-  addEntry("Rank");
-  addEntry("Team #");
-  addEntry("Team Name");
-  addEntry("W");
-  addEntry("T");
-  addEntry("L");
-  addEntry("Ranking Points");
+  addData("Rank");
+  addData("Team #");
+  addData("Team Name");
+  addData("W");
+  addData("T");
+  addData("L");
+  addData("Ranking Points");
   closeEntry();
 
   for(var i in rankings) {
     let team = rankings[i];
     openEntry();
-    addEntry(team.rank);
-    addEntry(team.number);
-    addEntry(team.name);
-    addEntry(team.w);
-    addEntry(team.t);
-    addEntry(team.l);
-    addEntry(team.points);
+    addData(team.rank);
+    addData(team.number);
+    addData(team.name);
+    addData(team.w);
+    addData(team.t);
+    addData(team.l);
+    addData(team.points);
     closeEntry();
   }
 
-  table.innerHTML += ref.html;
+  table.innerHTML = ref.html;
+
+  rankings.sort((a, b) => {
+    return a.number - b.number;
+  })
+
+  $.ajax({
+    type: "GET",
+    url: "games.csv",
+    dataType: "text",
+    success: (data) => {
+      setGames(
+        document.getElementById("games"),
+        rankings,
+        parseCSV(data)
+      );
+    }
+   });
 }
 
-function setGames(table, games){
+function setGames(table, teams, games){
   let ref = {html:""};
 
-  let addEntry = (val) => {
-    ref.html += "<td>" + val + "</td>";
+  let addAlliance = (color, name1, name2) => {
+    ref.html += "<td class='" + color + "'>" + name1 + " <br />-and-<br/> " + name2 + "</td>";
+  }
+  let addVersus = () => {
+    ref.html += "<td class='versus'>VS</td>"
+  }
+  let addScore = (redscore, bluescore) => {
+    if(redscore > bluescore) {
+      color = "red";
+    } else if(bluescore > redscore) {
+      color = "blue";
+    } else {
+      color = "orange";
+    }
+    ref.html += "<td class=" + color + ">Final Score<br />Blue:" + bluescore + "<br />Red:" + redscore + "</td>"
   }
   let openEntry = () => {
     ref.html += "<tr>"
@@ -79,24 +102,17 @@ function setGames(table, games){
     ref.html += "</tr>\n";
   }
 
-  openEntry();
-  addEntry("Red Alliance");
-  addEntry("Blue Alliance");
-  addEntry("Red Score");
-  addEntry("Blue Score");
-  closeEntry();
-
   for(var i in games) {
-    let team = games[i];
+    let game = games[i];
     openEntry();
-    addEntry(team.r1 + " and " + team.r2);
-    addEntry(team.b1 + " and " + team.b2);
-    addEntry(team.redscore);
-    addEntry(team.bluescore);
+    addAlliance("red", teams[game.r1-1].name, teams[game.r2-1].name);
+    addVersus();
+    addAlliance("blue", teams[game.b1-1].name, teams[game.b2-1].name);
+    addScore(game.redscore, game.bluescore);
     closeEntry();
   }
 
-  table.innerHTML += ref.html;
+  table.innerHTML = ref.html;
 }
 
 // Turn CSV text into an array of objects
