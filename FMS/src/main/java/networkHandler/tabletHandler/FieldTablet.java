@@ -1,5 +1,6 @@
 package main.java.networkHandler.tabletHandler;
 
+import main.java.fms.FMSStates;
 import main.java.fms.match.Alliance;
 import main.java.networkHandler.clientBase.Client;
 
@@ -19,6 +20,7 @@ public class FieldTablet extends Client {
         super(s);
         this.start();
         System.out.println("[TABLET] Created Field Tablet");
+        this.setResponse("w;0");
     }
 
     public void link(Alliance a){
@@ -28,7 +30,7 @@ public class FieldTablet extends Client {
         linked = true;
         ID = (int) (Math.random() * 100);
         System.out.println("[TABLET] Linked to " + alliance.getColor());
-
+        this.setResponse(Alliance.getAllianceCode(getAllianceColor()) + ";" + FMSStates.stateToCode() + ";");
     }
 
     Alliance.AllianceColor getAllianceColor(){
@@ -67,7 +69,9 @@ public class FieldTablet extends Client {
     }
 
     public void useData(String s){
-        System.out.println("FTB Print: " + s);
+        System.out.println(s);
+        System.out.println(Alliance.getAllianceCode(getAllianceColor()) + ";" + FMSStates.stateToCode() + ";");
+        this.setResponse(Alliance.getAllianceCode(getAllianceColor()) + ";" + FMSStates.stateToCode() + ";");
         if(alliance.isLinked()){
             //TODO This tabletHandler is now linked to a robot.  Score stuff
             try{
@@ -82,6 +86,8 @@ public class FieldTablet extends Client {
 
     protected void disconnect(){
         TabletManager.removeFieldTablet(this);
+        alliance.unlink();
+        TabletManager.printFieldTablets();
         linked = false;
         alliance = null;
         System.out.println("Connection to " + ID + " lost");

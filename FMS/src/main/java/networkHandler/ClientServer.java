@@ -1,6 +1,6 @@
 package main.java.networkHandler;
 
-import main.java.networkHandler.clientBase.Client;
+import main.java.networkHandler.sensorHandler.SensorUnit;
 import main.java.networkHandler.tabletHandler.FieldTablet;
 import main.java.networkHandler.tabletHandler.RobotTablet;
 import main.java.networkHandler.tabletHandler.TabletManager;
@@ -10,13 +10,13 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-class Server extends Thread{
+class ClientServer extends Thread{
 
     private ServerSocket server;
 
     //Constructor that creates the ServerSocket
-    Server() throws IOException {
-        server = new ServerSocket(90, 1, InetAddress.getLocalHost());
+    ClientServer() throws IOException {
+        server = new ServerSocket(2169, 1, InetAddress.getLocalHost());
     }
 
     //Listener function that grabs new clients and hands them information.
@@ -41,24 +41,26 @@ class Server extends Thread{
 
                 try {
                     in = new BufferedReader(new InputStreamReader(s.getInputStream()));
-
                     String data;
 
                     while (true) {
                         //Check if we've got new data from our clientBase.
                         if ((data = in.readLine()) != null) {
-                            if(data.equals("JTB")){
+                            if(data.startsWith("JTB")){
                                 System.out.println("[INFO] Recieved Request for new RobotTablet");
                                 RobotTablet t = new RobotTablet(s);
                                 TabletManager.addRobotTablet(t);
                                 break;
                             }
-                            else if(data.equals("FTB")){
+                            else if(data.startsWith("FTB")){
                                 System.out.println("[INFO] Recieved Request for new FieldTablet");
                                 TabletManager.addFieldTablet(new FieldTablet(s));
                                 break;
                             }
-                            System.out.println(data);
+                            else if(data.startsWith("FMB")){
+                                System.out.println("Connected to Field Management Box");
+                                new SensorUnit(s);
+                            }
                         }
                     }
                 } catch (IOException e) {

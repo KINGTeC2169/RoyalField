@@ -1,8 +1,10 @@
-package main.java.UI.text;
+package main.java.UI.text.textHandlers;
 
 import javafx.scene.layout.Pane;
+import main.java.UI.text.ScoreText;
+import main.java.UI.text.UIStateMachine;
 
-class TextHandler {
+public class MatchTextHandler extends TextHandler{
 
     //General Data
     private ScoreText gameMode = new ScoreText(1920f/2f,200);
@@ -10,19 +12,19 @@ class TextHandler {
 
     //Blue Data
     private ScoreText blueScore = new ScoreText(1250,200, 100);
-    private ScoreText blueStandingRelic = new ScoreText(1725 + 27,215 - 7);
-    private ScoreText blueFallenRelic = new ScoreText(1502 - 15,215 - 7);
-    private ScoreText bluePingPong = new ScoreText(1502 - 15,100-8);
-    private ScoreText blueFlag = new ScoreText(1725 + 27,100 - 8);
+    private ScoreText blueStandingRelic = new ScoreText(1752,208);
+    private ScoreText blueFallenRelic = new ScoreText(1487,208);
+    private ScoreText bluePingPong = new ScoreText(1487,92);
+    private ScoreText blueFlag = new ScoreText(1752,92);
 
     //Red Data
     private ScoreText redScore = new ScoreText(680,200, 100);
-    private ScoreText redStandingRelic = new ScoreText(200 - 27,215 - 7);
-    private ScoreText redFallenRelic = new ScoreText(421 + 15,215-7);
-    private ScoreText redPingPong = new ScoreText(421 + 15,100-8);
-    private ScoreText redFlag = new ScoreText(200 - 27,100 - 8);
+    private ScoreText redStandingRelic = new ScoreText(173,208);
+    private ScoreText redFallenRelic = new ScoreText(436,208);
+    private ScoreText redPingPong = new ScoreText(436,92);
+    private ScoreText redFlag = new ScoreText(173,92);
 
-    void init(Pane p){
+    public void init(Pane p){
 
         //Initialize All Text
         time.updateText("00:00");
@@ -40,18 +42,18 @@ class TextHandler {
         p.getChildren().addAll(gameMode, time, blueScore, blueStandingRelic, blueFallenRelic, bluePingPong, blueFlag, redScore, redStandingRelic, redFallenRelic, redPingPong, redFlag);
     }
 
-    void update(){
+    public void update(){
         gameMode.updateText(UIStateMachine.getGameMode());
         time.updateText(UIStateMachine.getTime());
         blueScore.updateText("" + UIStateMachine.getBlueScore());
         blueStandingRelic.updateText("" + UIStateMachine.getBlueStandingRelic());
         blueFallenRelic.updateText("" + UIStateMachine.getBlueFallenRelic());
-        bluePingPong.updateText("" + UIStateMachine.getBluePingPong());
+        bluePingPong.updateText("" + UIStateMachine.getBlueMoonRocks());
         blueFlag.updateText("" + UIStateMachine.getBlueFlag());
         redScore.updateText("" + UIStateMachine.getRedScore());
         redStandingRelic.updateText("" + UIStateMachine.getRedStandingRelic());
         redFallenRelic.updateText("" + UIStateMachine.getRedFallenRelic());
-        redPingPong.updateText("" + UIStateMachine.getRedPingPong());
+        redPingPong.updateText("" + UIStateMachine.getRedMoonRocks());
         redFlag.updateText("" + UIStateMachine.getRedFlag());
 
 

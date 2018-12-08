@@ -3,7 +3,6 @@ package com.team2169.reftablet;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -22,99 +21,22 @@ public class Main extends AppCompatActivity {
      * b connected to the blue alliance
      * */
 
-    String ip = "192.168.0.97";
+    String ip = "192.168.1.5";
     Socket s;
     private String incomingData = "";
     private int textColor = Color.WHITE;
     private int standing_relics = 0;
     private int tipped_relics = 0;
     private int flags = 0;
-    private String connection = "0";
     private String gameState;
-
-    private void inThread(Socket s){
-        BufferedReader in = null;
-        try {
-            in = new BufferedReader(new InputStreamReader((s.getInputStream())));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        while(true){
-            String data;
-            try {
-                if((data = in.readLine()) != null){
-                    incomingData = data;
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            try {
-                Thread.sleep(250);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    private void outThread(Socket s){
-        PrintWriter out = null;
-        try {
-            out = new PrintWriter(s.getOutputStream(), true);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        while(true){
-            out.println("JTB;"+ flags+ ";" + tipped_relics + ";" + standing_relics + ";");
-            out.flush();
-            try {
-                Thread.sleep(250);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    private void attemptToConnect() {
-        try {
-            s = new Socket(ip, 2169);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("Failed to Connect!");
-        }
-        System.out.println("Successfully Connected!");
-        Thread out = new Thread(() -> outThread(s));
-        Thread in = new Thread(() -> inThread(s));
-        in.start();
-        out.start();
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Thread t = new Thread(this::attemptToConnect);
         t.start();
 
-        Thread v = new Thread(this::visualsUpdate);
-        v.start();
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        Thread run = new Thread(() -> visualsUpdate());
-        run.start();
-
-        runOnUiThread(new Runnable() {
-
-            @Override
-            public void run() {
-
-                ((TextView) findViewById(R.id.mode)).setText(gameState);
-                ((TextView) findViewById(R.id.mode)).setTextColor(textColor);
-
-            }
-        });
 
         Button add_standing_relic = findViewById(R.id.standingAdd);
         add_standing_relic.setOnClickListener(view -> {
@@ -155,9 +77,56 @@ public class Main extends AppCompatActivity {
 
     }
 
+    private void ioThread(Socket s){
+        BufferedReader in = null;
+        PrintWriter out = null;
+        try {
+            in = new BufferedReader(new InputStreamReader((s.getInputStream())));
+            out = new PrintWriter(s.getOutputStream(), true);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        out.println("FTB");
+        while(true){
+            String data;
+            try {
+                if((data = in.readLine()) != null){
+                    incomingData = data;
+                }
+                visualsUpdate();
+                out.println("JTB;"+ flags+ ";" + tipped_relics + ";" + standing_relics + ";");
+                out.flush();
+                try {
+                    Thread.sleep(250);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                Thread.sleep(250);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void attemptToConnect() {
+        try {
+            s = new Socket(ip, 2169);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Failed to Connect!");
+        }
+        System.out.println("Successfully Connected!");
+        Thread in = new Thread(() -> ioThread(s));
+        in.start();
+    }
+
     public void visualsUpdate(){
 
-        while(true){
         /*
          * Output is in format connection;standingRelics;tippedRelics
          * Connection is the name of the alliance the user has selected (r, b)
@@ -174,9 +143,9 @@ public class Main extends AppCompatActivity {
          * 3: Endgame
          * */
 
-            System.out.println("Receiving");
             String inputs[] = incomingData.split(";", 2);
             try{
+
                 String alliance = inputs[0];
                 if(alliance.equals("r")){
                     textColor = Color.RED;
@@ -188,6 +157,9 @@ public class Main extends AppCompatActivity {
                 String gameState = inputs[1];
                 if(gameState.equals("0")){
                     this.gameState = "Pre-Match";
+                    standing_relics = 0;
+                    tipped_relics = 0;
+                    flags = 0;
                 }
                 else if(gameState.equals("1")){
                     this.gameState = "Auto";
@@ -198,10 +170,21 @@ public class Main extends AppCompatActivity {
                 else if(gameState.equals("3")){
                     this.gameState = "End";
                 }
+
             }
             catch (ArrayIndexOutOfBoundsException e) {
-                e.printStackTrace();
                 textColor = Color.WHITE;
             }
+            catch(NullPointerException e){
+                System.out.println("Gamemode Not Found!");
+            }
 
-        }}}
+
+            runOnUiThread(() -> {
+
+                ((TextView) findViewById(R.id.mode)).setText(this.gameState);
+                ((TextView) findViewById(R.id.mode)).setTextColor(this.textColor);
+
+            });
+
+        }}

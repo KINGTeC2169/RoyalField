@@ -1,5 +1,6 @@
 package main.java.networkHandler.tabletHandler;
 
+import main.java.fms.FMSStates;
 import main.java.fms.match.Alliance;
 import main.java.fms.match.robot.Robot;
 import main.java.networkHandler.clientBase.Client;
@@ -26,7 +27,7 @@ public class RobotTablet extends Client {
         linked = true;
         ID = (int) (Math.random() * 100);
         System.out.println("[INFO] Linked to " + getAllianceColor() + " robot #: " + r.getRobot());
-
+        this.setResponse(Alliance.getAllianceCode(r.getAlliance()) + ";" + FMSStates.stateToCode() + ";" + r.getRobot());
     }
 
     private void setMajorPenalties(int majorPenalties){
@@ -49,14 +50,15 @@ public class RobotTablet extends Client {
         String data[] = s.split(";");
         setMinorPenalties(Integer.parseInt(data[1]));
         setMajorPenalties(Integer.parseInt(data[2]));
-        System.out.println(data[1] + " " + data[2]);
     }
 
     public void useData(String s){
-        System.out.println("Robot Print: " + s);
+        System.out.println(FMSStates.matchStatus);
+        this.setResponse(Alliance.getAllianceCode(robot.getAlliance()) + ";" + FMSStates.stateToCode() + ";" + robot.getRobot());
         if(robot.isLinked()){
             //TODO This tabletHandler is now linked to a robot.  Score stuff
             try{
+                System.out.println(s);
                 parsePenaltyData(s);
             }
             catch(IndexOutOfBoundsException e){
@@ -68,6 +70,7 @@ public class RobotTablet extends Client {
     protected void disconnect(){
         TabletManager.removeRobotTablet(this);
         linked = false;
+        robot.unlink();
         robot = null;
         System.out.println("[INFO] Connection to " + ID + " lost");
     }

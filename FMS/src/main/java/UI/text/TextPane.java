@@ -1,16 +1,17 @@
 package main.java.UI.text;
 
 import javafx.scene.layout.Pane;
+import main.java.UI.text.textHandlers.TextHandler;
 
 public class TextPane {
 
     private Pane pane;
     private TextHandler textHandler;
 
-    public TextPane(){
+    public TextPane(TextHandler textHandler){
 
          pane = new Pane();
-         textHandler = new TextHandler();
+         this.textHandler = textHandler;
          draw();
     }
 

@@ -44,10 +44,10 @@ class DemoClient extends Client {
             } else if (splited[0].toLowerCase().contains("ping")) {
                 if (splited[1].toLowerCase().contains("blue")) {
                     System.out.println("Setting blue ping pong to " + splited[2]);
-                    UIStateMachine.setBluePingPong(Integer.parseInt(splited[2]));
+                    UIStateMachine.setBlueMoonRocks(Integer.parseInt(splited[2]));
                 } else if (splited[1].toLowerCase().contains("red")) {
                     System.out.println("Setting red ping pong to " + splited[2]);
-                    UIStateMachine.setRedPingPong(Integer.parseInt(splited[2]));
+                    UIStateMachine.setRedMoonRocks(Integer.parseInt(splited[2]));
                 }
             } else if (splited[0].toLowerCase().contains("time")) {
                 UIStateMachine.setTime(Integer.parseInt(splited[1]));

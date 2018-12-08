@@ -12,8 +12,11 @@ import main.java.networkHandler.NetworkMain;
 import java.io.IOException;
 import java.util.Scanner;
 
+import static main.java.UI.UIMain.UIState.*;
+
 public class Main {
 
+    static UIMain ui;
     public static void main(String[] args) {
 
 
@@ -29,7 +32,8 @@ public class Main {
         NetworkMain.start();
 
         //Launch the UI system
-        UIMain.start(args);
+        ui = new UIMain();
+        ui.start(args);
 
     }
 
@@ -95,6 +99,7 @@ public class Main {
                     System.out.println("[ERROR] Error Starting Match");
                 }
 
+                ui.setUIState(MATCH);
                 FMSStates.state = FMSStates.FMSState.MATCH;
                 System.out.println("[MATCH] Prematch Complete");
                 System.out.println("[MATCH] Starting Auto");
@@ -102,9 +107,7 @@ public class Main {
                 break;
 
             case MATCH:
-
                 if(m.matchState == Match.MatchState.DONE){
-                    m.stop();
                     System.out.println("[MATCH] Match Complete");
                     FMSStates.state = FMSStates.FMSState.VERIFICATION;
                     break;
@@ -114,6 +117,8 @@ public class Main {
 
             case VERIFICATION:
 
+                ui.setUIState(POST);
+                AudioManager.playEnd();
                 UIStateMachine.setGameMode("DONE");
                 System.out.println("[MATCH] Awaiting Score Verification");
                 System.out.println("[MATCH] Are these score correct?");
@@ -124,18 +129,24 @@ public class Main {
                 break;
 
             case POSTMATCH:
-
                 try {
+                    TeamMachine.updateRankings();
                     handler.archiveMatch(m);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
                 System.out.println("[MATCH] Match Completed");
                 System.out.println("[MATCH] *SHOWING RESULTS*");
-                System.out.println("[MATCH] Returning to prematch");
-                m.stop();
-                FMSStates.state = FMSStates.FMSState.PREMATCH;
+                m.lockScores();
+                FMSStates.state = FMSStates.FMSState.INTER;
                 break;
+
+            case INTER:
+                System.out.println("[MATCH] Entering Intermatch");
+                while (!scan.nextLine().equals("yes")) {
+                    System.out.println("[MATCH] Would you like to start the next match?");
+                }
+                FMSStates.state = FMSStates.FMSState.PREMATCH;
 
             default:
                 break;

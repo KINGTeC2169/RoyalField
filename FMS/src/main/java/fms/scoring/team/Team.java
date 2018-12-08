@@ -1,6 +1,6 @@
 package main.java.fms.scoring.team;
 
-public class Team {
+public class Team implements Comparable<Team> {
 
     Team(int number){
         setNumber(number);
@@ -105,4 +105,24 @@ public class Team {
         return number + ": "+ name;
     }
 
+    @Override
+    public int compareTo(Team o) {
+        if(this.getRp() > o.getRp()){
+            return 1;
+        }
+        else if(this.getRp() < o.getRp()){
+            return -1;
+        }
+        else{
+            if(this.getMoonRocks() > o.getMoonRocks()){
+                return 1;
+            }
+            else if(this.getMoonRocks() < o.getMoonRocks()){
+                return -1;
+            }
+            else{
+                return Integer.compare(this.getFlags(), o.getFlags());
+            }
+        }
+    }
 }

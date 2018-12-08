@@ -3,6 +3,7 @@ package main.java.fms.match;
 import main.java.fms.match.robot.Robot;
 import main.java.fms.scoring.ScoreConstants;
 import main.java.fms.scoring.team.Team;
+import main.java.networkHandler.sensorHandler.SensorUnit;
 import main.java.networkHandler.tabletHandler.FieldTablet;
 import main.java.networkHandler.tabletHandler.RobotTablet;
 import main.java.networkHandler.tabletHandler.TabletManager;
@@ -29,10 +30,10 @@ public class Alliance {
     private int flags = 0;
     private int rankingPoints = 0;
     private int totalScore = 0;
-    private boolean isLinked = false;
+    private boolean isLinked;
     private int enemyPenaltyPoints = 0;
     private boolean win = false;
-
+    private boolean tie = false;
     //Initializers
 
     Alliance(AllianceColor color_){
@@ -78,6 +79,37 @@ public class Alliance {
         return color;
     }
 
+    public char getAllianceCode(){
+        if(getColor() == AllianceColor.RED){
+            return 'r';
+        }
+        else if(getColor() == AllianceColor.BLUE){
+            return 'b';
+        }
+        return 'w';
+    }
+
+    public static char getAllianceCode(AllianceColor a){
+        if(a == AllianceColor.RED){
+            return 'r';
+        }
+        else if(a == AllianceColor.BLUE){
+            return 'b';
+        }
+        return 'w';
+    }
+
+    int getTeam(int num){
+        try{
+            return teams.get(num).getNumber();
+        }
+        catch(IndexOutOfBoundsException e){
+            System.out.println("Team Doesn't Exist!");
+        }
+        return 0;
+
+    }
+
     int getFallenRelics(){
         return fallenRelics;
     }
@@ -110,15 +142,33 @@ public class Alliance {
         return opponentMinorPenalties;
     }
 
-    private boolean getWin(){
+    public boolean getWin(){
         return win;
+    }
+
+    public char getWLT(){
+        if(win){
+            return 'W';
+        }
+        else if(tie){
+            return 'T';
+        }
+        return 'L';
     }
 
     public ArrayList<Robot> getRobots() {
         return robots;
     }
 
+    public boolean getTie(){
+        return this.tie;
+    }
+
     //Setters
+
+    public void setTie(boolean b) {
+        this.tie = true;
+    }
 
     private void setFallenRelics(int fallenRelics){
         this.fallenRelics = fallenRelics;
@@ -168,12 +218,19 @@ public class Alliance {
             setFallenRelics(t.getFallenRelics());
             setStandingRelics(t.getStandingRelics());
         }
+        if(SensorUnit.sensorsConnected){
+            setMoonRocks(TabletManager.getAllianceSensorData(getColor()));
+        }
     }
 
     public void attemptToLink(){
         if(!isLinked){
             isLinked = true;
         }
+    }
+
+    public void unlink(){
+        isLinked = false;
     }
 
     public boolean isLinked() {
@@ -203,8 +260,11 @@ public class Alliance {
 
     void calculateTotalScore(){
         interpretTabletData();
-        enemyPenaltyPoints = getOpponentMinorPenalties() * ScoreConstants.minorPenaltyPoints + getOpponentMajorPenalties() * ScoreConstants.majorPenaltyPoints;
-        setTotalScore(getFallenRelics() * ScoreConstants.fallenRelicPoints + getStandingRelics() * ScoreConstants.standingRelicPoints + getMoonRocks() * ScoreConstants.moonRockPoints +  getFlags() * ScoreConstants.flagPoints + enemyPenaltyPoints);
+        enemyPenaltyPoints = getOpponentMinorPenalties() * ScoreConstants.minorPenaltyPoints + getOpponentMajorPenalties()
+                * ScoreConstants.majorPenaltyPoints;
+        setTotalScore(getFallenRelics() * ScoreConstants.fallenRelicPoints + getStandingRelics() *
+                ScoreConstants.standingRelicPoints + getMoonRocks() * ScoreConstants.moonRockPoints +
+                getFlags() * ScoreConstants.flagPoints + enemyPenaltyPoints);
     }
 
     // Returns alliance-match info in CSV form in order of;
@@ -221,7 +281,7 @@ public class Alliance {
             out += teams.get(1) + ",";
         }
 
-        return out + getStandingRelics() + "," + getMoonRocks()+ "," + getFlags() + "," + getTotalScore() + "," + getRankingPoints() + "," + getWin();
+        return out + getStandingRelics() + "," + getFallenRelics() + "," + getMoonRocks()+ "," + getFlags() + "," + getTotalScore() + "," + getRankingPoints() + "," + getWin();
 
     }
 
