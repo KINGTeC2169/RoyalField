@@ -1,0 +1,5 @@
+To start sample server:
+node init.js
+
+Static webpage is in WebInterface/client
+This will not run without a server

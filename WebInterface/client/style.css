@@ -1,0 +1,81 @@
+body {
+  background-color: #0a0a0a;
+  color: #fff;
+  font-family: Verdana;
+}
+
+.header {
+  font-size: 48px;
+  text-align: center;
+}
+
+table {
+  background-color: inherit;
+  border-collapse: separate;
+  width: 100%;
+  padding: 10px;
+}
+
+table.rankings {
+  border-spacing: 0 1em;
+}
+
+table.games {
+  border-spacing: 1em;
+}
+
+#rankings > tr {
+  background-color: #A1061A;
+  font-size: 32px;
+
+  margin: 10px;
+  padding: 10px;
+}
+
+#rankings > tr td:first-child {
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+#rankings > tr td:last-child {
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+#rankings > tr:nth-child(even) {
+  background-color: #880411;
+}
+
+#rankings > th, td {
+  color: #ffffff;
+  text-align: center;
+  padding: 8px;
+}
+
+#games > tr {
+  background-color: #A1061A;
+  font-size: 32px;
+
+  margin: 10px;
+  padding: 10px;
+}
+
+#games > tr td {
+  border-radius: 10px;
+}
+
+.versus {
+  background-color: #0a0a0a;
+  font-size: 48px;
+}
+
+.red {
+  background-color: #c00;
+}
+
+.orange {
+  background-color: #c60;
+}
+
+.blue {
+  background-color: #00c;
+}
