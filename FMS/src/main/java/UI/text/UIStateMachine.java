@@ -1,5 +1,7 @@
 package main.java.UI.text;
 
+import java.util.ArrayList;
+
 @SuppressWarnings("ALL")
 public class UIStateMachine {
 
@@ -145,14 +147,14 @@ public class UIStateMachine {
 
         private static int blueOneNum = 0;
         private static int blueTwoNum = 0;
-        private static String blueOneRank = "";
-        private static String blueTwoRank = "";
+        private static int blueOneRank = 0;
+        private static int blueTwoRank = 0;
         private static String blueWLT = "";
 
         private static int redOneNum = 0;
         private static int redTwoNum = 0;
-        private static String redOneRank = "";
-        private static String redTwoRank = "";
+        private static int redOneRank = 0;
+        private static int redTwoRank = 0;
         private static String redWLT = "";
 
         public static int getBlueOneNum() {
@@ -171,19 +173,19 @@ public class UIStateMachine {
             Results.blueTwoNum = blueTwoNum;
         }
 
-        public static String getBlueOneRank() {
+        public static int getBlueOneRank() {
             return blueOneRank;
         }
 
-        public static void setBlueOneRank(String blueOneRank) {
+        public static void setBlueOneRank(int blueOneRank) {
             Results.blueOneRank = blueOneRank;
         }
 
-        public static String getBlueTwoRank() {
+        public static int getBlueTwoRank() {
             return blueTwoRank;
         }
 
-        public static void setBlueTwoRank(String blueTwoRank) {
+        public static void setBlueTwoRank(int blueTwoRank) {
             Results.blueTwoRank = blueTwoRank;
         }
 
@@ -220,19 +222,19 @@ public class UIStateMachine {
             Results.redTwoNum = redTwpoNum;
         }
 
-        public static String getRedOneRank() {
+        public static int getRedOneRank() {
             return redOneRank;
         }
 
-        public static void setRedOneRank(String redOneRank) {
+        public static void setRedOneRank(int redOneRank) {
             Results.redOneRank = redOneRank;
         }
 
-        public static String getRedTwoRank() {
+        public static int getRedTwoRank() {
             return redTwoRank;
         }
 
-        public static void setRedTwoRank(String redTwoRank) {
+        public static void setRedTwoRank(int redTwoRank) {
             Results.redTwoRank = redTwoRank;
         }
 
@@ -251,6 +253,12 @@ public class UIStateMachine {
         public static String getRedWLT() {
             return redWLT;
         }
+
+    }
+
+    public static class Rankings{
+        public static ArrayList<String> teamNames = new ArrayList<>();
+        public static ArrayList<Integer> teamNumbers = new ArrayList<>();
 
     }
 

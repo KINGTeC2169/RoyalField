@@ -53,10 +53,10 @@ public class PostTextHandler extends TextHandler{
         redElementTwoVal.updateText(UIStateMachine.getRedFlag() + "");
         redElementThreeVal.updateText(UIStateMachine.getRedStandingRelic()
                 + " : " + UIStateMachine.getRedFallenRelic());
-        redTeamOne.updateText(UIStateMachine.Results.getRedOneNum() + "");
-        redTeamTwo.updateText(UIStateMachine.Results.getRedTwoNum() + "");
-        redTeamOneRank.updateText(UIStateMachine.Results.getRedOneRank());
-        redTeamTwoRank.updateText(UIStateMachine.Results.getRedTwoRank());
+        redTeamOne.updateText("Team " + UIStateMachine.Results.getRedOneNum() + "");
+        redTeamTwo.updateText("Team " + UIStateMachine.Results.getRedTwoNum() + "");
+        redTeamOneRank.updateText(UIStateMachine.Results.getRedOneRank() + "");
+        redTeamTwoRank.updateText(UIStateMachine.Results.getRedTwoRank() + "");
         blueScore.updateText(UIStateMachine.getBlueScore() + "");
         blueWinLoss.updateText(UIStateMachine.Results.getBlueWLT());
         blueElementOne.updateText("Moon Rocks");
@@ -66,10 +66,10 @@ public class PostTextHandler extends TextHandler{
         blueElementTwoVal.updateText(UIStateMachine.getBlueFlag() + "");
         blueElementThreeVal.updateText(UIStateMachine.getBlueStandingRelic()
                 + " : " + UIStateMachine.getBlueFallenRelic());
-        blueTeamOne.updateText(UIStateMachine.Results.getBlueOneNum() + "");
-        blueTeamTwo.updateText(UIStateMachine.Results.getBlueTwoNum() + "");
-        blueTeamOneRank.updateText(UIStateMachine.Results.getBlueOneRank());
-        blueTeamTwoRank.updateText(UIStateMachine.Results.getBlueTwoRank());
+        blueTeamOne.updateText("Team " + UIStateMachine.Results.getBlueOneNum() + "");
+        blueTeamTwo.updateText("Team " + UIStateMachine.Results.getBlueTwoNum() + "");
+        blueTeamOneRank.updateText(UIStateMachine.Results.getBlueOneRank() + "");
+        blueTeamTwoRank.updateText(UIStateMachine.Results.getBlueTwoRank() + "");
 
     }
 

@@ -58,7 +58,6 @@ public class RobotTablet extends Client {
         if(robot.isLinked()){
             //TODO This tabletHandler is now linked to a robot.  Score stuff
             try{
-                System.out.println(s);
                 parsePenaltyData(s);
             }
             catch(IndexOutOfBoundsException e){

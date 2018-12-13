@@ -50,4 +50,21 @@ public class RegionManager {
     }
 
 
+    public StackPane getRankingsView(TextPane textPane){
+
+        BorderPane imagePlacement = new BorderPane();
+
+        //MatchView StackPane
+        StackPane matchView = new StackPane();
+        Image image = new Image("bin/media/rankings.png",1920,1080, true, false);
+        ImageView iv1 = new ImageView(image);
+        matchView.getChildren().add(iv1);
+        matchView.getChildren().add(textPane.getPane());
+        imagePlacement.setTop(matchView);
+
+        StackPane matchStackPane = new StackPane();
+        matchStackPane.getChildren().add(imagePlacement);
+        return matchStackPane;
+    }
+
 }

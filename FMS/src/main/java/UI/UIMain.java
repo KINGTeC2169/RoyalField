@@ -13,6 +13,7 @@ import main.java.Main;
 import main.java.UI.text.TextPane;
 import main.java.UI.text.textHandlers.MatchTextHandler;
 import main.java.UI.text.textHandlers.PostTextHandler;
+import main.java.UI.text.textHandlers.RankingsTextHandler;
 import main.java.UI.webcamHandlers.WebCamService;
 
 public class UIMain extends Application {
@@ -60,8 +61,8 @@ public class UIMain extends Application {
         StackPane postPane = new StackPane(regions.getPostMatchView(postTextPane));
 
         //Rankings Pane
-        TextPane rankingsText = new TextPane(new MatchTextHandler());
-        StackPane rankingsPane = new StackPane(regions.getMatchView(matchText, service));
+        TextPane rankingsText = new TextPane(new RankingsTextHandler());
+        StackPane rankingsPane = new StackPane(regions.getRankingsView(rankingsText));
 
         pane.getChildren().addAll(matchPane);
 
@@ -80,9 +81,7 @@ public class UIMain extends Application {
 
 
         Timeline updateMachine = new Timeline(new KeyFrame(Duration.millis(250), event -> {
-//            System.out.println(getLastUIState() + " " + getLastUIState());
-
-            if(UIMain.state != UIMain.lastState ){
+            if(UIMain.state != UIMain.lastState){
                 switch(getUIState()){
                     case PRE:
                         break;
@@ -97,6 +96,9 @@ public class UIMain extends Application {
                         pane.getChildren().add(postPane);
                         break;
                     case INTER:
+                        pane.getChildren().clear();
+                        pane.getChildren().removeAll();
+                        pane.getChildren().add(rankingsPane);
                         break;
                 }
                 //Prevents this from running multiple times
@@ -104,6 +106,7 @@ public class UIMain extends Application {
             }
             matchText.update();
             postTextPane.update();
+            rankingsText.update();
         }));
         updateMachine.setCycleCount(Timeline.INDEFINITE);
         updateMachine.play();

@@ -133,6 +133,8 @@ public class Match {
 
     private void updateScoreBoard(){
 
+
+        calculateWinner();
         if(!scoresLocked){
 
             //Update Time
@@ -159,6 +161,11 @@ public class Match {
             UIStateMachine.Results.setBlueOneNum(blue.getTeam(0));
             UIStateMachine.Results.setBlueTwoNum(blue.getTeam(1));
 
+            UIStateMachine.Results.setRedOneRank(red.getTeamRank(0));
+            UIStateMachine.Results.setRedTwoRank(red.getTeamRank(1));
+            UIStateMachine.Results.setBlueOneRank(blue.getTeamRank(0));
+            UIStateMachine.Results.setBlueTwoRank(blue.getTeamRank(1));
+
         }
     }
 
@@ -169,6 +176,16 @@ public class Match {
         j.add(matchNum + "");
         j.add(blue.toString());
         j.add(red.toString());
+        return j.toString();
+    }
+
+
+    public String toPrint(){
+        StringJoiner j = new StringJoiner(" ");
+        j.add(matchType + "");
+        j.add("#" + matchNum);
+        j.add("Blue Teams: " + blue.getTeam(0) + " and " + blue.getTeam(1));
+        j.add("Red Teams: " + red.getTeam(0) + " and " + red.getTeam(1));
         return j.toString();
     }
 

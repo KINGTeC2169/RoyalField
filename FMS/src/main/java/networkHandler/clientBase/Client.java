@@ -38,7 +38,6 @@ public class Client extends Thread {
             while (connected) {
                 //Check if we've got new data from our clientBase.
                 long startTime = System.currentTimeMillis();
-                System.out.println(this.response);
                 out.println(this.response);
                 out.flush();
                 while(!in.ready()){
@@ -77,6 +76,7 @@ public class Client extends Thread {
     }
 
     public void useData(String s){
+        System.out.println("[Client:80]" + s);
     }
 
     public void setResponse(String response) {

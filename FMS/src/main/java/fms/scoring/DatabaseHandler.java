@@ -4,6 +4,7 @@ import main.java.fms.match.Match;
 import main.java.fms.scoring.team.TeamMachine;
 
 import java.io.*;
+import java.util.Scanner;
 
 public class DatabaseHandler {
 
@@ -69,6 +70,21 @@ public class DatabaseHandler {
         return null;
     }
 
+    public Match readCustomMatch(Scanner scan){
+        System.out.println("Enter data in form of NUM,TYPE,R1,R2,B1,B2");
+        String[] data = scan.nextLine().split(",");
+        try{
+            return new Match(Integer.parseInt(data[0]), Match.MatchType.QUAL,
+                    TeamMachine.getTeam(Integer.parseInt(data[2])), TeamMachine.getTeam(Integer.parseInt(data[3])),
+                    TeamMachine.getTeam(Integer.parseInt(data[4])),
+                    TeamMachine.getTeam(Integer.parseInt(data[5])));
+        }
+        catch(IndexOutOfBoundsException e){
+            System.out.println("Incorrect Format!");
+            readCustomMatch(scan);
+        }
+        return null;
+    }
 
     private Match.MatchType codeToType(String code){
         switch(code){

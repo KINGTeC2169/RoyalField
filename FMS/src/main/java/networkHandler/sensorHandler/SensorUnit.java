@@ -16,15 +16,15 @@ public class SensorUnit extends Client {
 
     public SensorUnit(Socket s) {
         super(s);
+        this.start();
         sensorsConnected = true;
     }
 
     public void useData(String s){
-        System.out.println(FMSStates.matchStatus);
-        this.setResponse(FMSStates.matchStatus + "");
+        this.setResponse(FMSStates.stateToCode()+ "");
         String[] values = s.split(";");
-        redMoonRocks = Integer.parseInt(values[0]);
-        blueMoonRocks = Integer.parseInt(values[1]);
+        redMoonRocks = Integer.parseInt(values[1]);
+        blueMoonRocks = Integer.parseInt(values[2]);
     }
 
     public int getRedMoonRocks(){

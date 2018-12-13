@@ -1,5 +1,7 @@
 package main.java.fms.scoring.team;
 
+import java.util.StringJoiner;
+
 public class Team implements Comparable<Team> {
 
     Team(int number){
@@ -124,5 +126,18 @@ public class Team implements Comparable<Team> {
                 return Integer.compare(this.getFlags(), o.getFlags());
             }
         }
+    }
+    public String toCSV(){
+        StringJoiner joiner = new StringJoiner(",");
+        joiner.add(number + "");
+        joiner.add(name);
+        joiner.add(rp+"");
+        joiner.add(wins+"");
+        joiner.add(losses+"");
+        joiner.add(moonRocks+"");
+        joiner.add(flags+"");
+        joiner.add(fallenRelics+"");
+        joiner.add(standingRelics+"");
+        return joiner.toString();
     }
 }

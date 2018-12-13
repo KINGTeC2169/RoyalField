@@ -14,7 +14,6 @@ class DemoClient extends Client {
     }
 
     public void useData(String s) {
-        System.out.println(s);
         if (s.contains(" ")) {
             String[] splited = s.split(" ");
             if (splited[0].toLowerCase().contains("score")) {

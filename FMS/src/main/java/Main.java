@@ -55,6 +55,8 @@ public class Main {
                 //Wait For Connections until told to advance
                 try {
                     TeamMachine.generateTeamList();
+                    TeamMachine.updateRankings();
+                    TeamMachine.printTeamList();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -67,10 +69,20 @@ public class Main {
 
                 //Check Sensors
                 //Check Tablet Count
-                UIStateMachine.setGameMode("AUTO");
+                ui.setUIState(MATCH);
                 System.out.println("[MATCH] Prematch Started");
                 try {
-                    m = handler.readNextMatch();
+                    int match = FMSStates.getNextMatch(scan);
+                    if(match == -1){
+                        m = handler.readNextMatch();
+                    }
+                    else if(match == -2){
+                        m = handler.readCustomMatch(scan);
+                    }
+                    else{
+                        handler.readMatch(match);
+                    }
+                    System.out.println("[MATCH] Reading Match: " + m.toPrint());
                 } catch (IOException e) {
                     e.printStackTrace();
                     System.out.println("[ERROR] Match Read/Write Failed!");
@@ -92,6 +104,7 @@ public class Main {
 
                 }
 
+                UIStateMachine.setGameMode("AUTO");
                 try {
                     m.start();
                 }
@@ -99,7 +112,6 @@ public class Main {
                     System.out.println("[ERROR] Error Starting Match");
                 }
 
-                ui.setUIState(MATCH);
                 FMSStates.state = FMSStates.FMSState.MATCH;
                 System.out.println("[MATCH] Prematch Complete");
                 System.out.println("[MATCH] Starting Auto");
@@ -117,7 +129,7 @@ public class Main {
 
             case VERIFICATION:
 
-                ui.setUIState(POST);
+                FMSStates.matchStatus = FMSStates.MatchStatus.PRE;
                 AudioManager.playEnd();
                 UIStateMachine.setGameMode("DONE");
                 System.out.println("[MATCH] Awaiting Score Verification");
@@ -125,26 +137,31 @@ public class Main {
                 while (!scan.nextLine().equals("yes")) {
                     System.out.println("[MATCH] Are these score correct?");
                 }
+                UIMain.setUIState(POST);
                 FMSStates.state = FMSStates.FMSState.POSTMATCH;
                 break;
 
             case POSTMATCH:
                 try {
-                    TeamMachine.updateRankings();
                     handler.archiveMatch(m);
+                    TeamMachine.updateRankings();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
                 System.out.println("[MATCH] Match Completed");
                 System.out.println("[MATCH] *SHOWING RESULTS*");
                 m.lockScores();
+                System.out.println("[MATCH] Type Rankings to show rankings");
+                while(!scan.hasNext()){
+                }
                 FMSStates.state = FMSStates.FMSState.INTER;
                 break;
 
             case INTER:
                 System.out.println("[MATCH] Entering Intermatch");
-                while (!scan.nextLine().equals("yes")) {
-                    System.out.println("[MATCH] Would you like to start the next match?");
+                UIMain.setUIState(INTER);
+                System.out.println("[MATCH] Would you like to start the next match?");
+                while (!scan.hasNext()) {
                 }
                 FMSStates.state = FMSStates.FMSState.PREMATCH;
 

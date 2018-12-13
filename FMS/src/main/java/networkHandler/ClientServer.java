@@ -16,7 +16,7 @@ class ClientServer extends Thread{
 
     //Constructor that creates the ServerSocket
     ClientServer() throws IOException {
-        server = new ServerSocket(2169, 1, InetAddress.getLocalHost());
+        server = new ServerSocket(2169);
     }
 
     //Listener function that grabs new clients and hands them information.
@@ -60,6 +60,7 @@ class ClientServer extends Thread{
                             else if(data.startsWith("FMB")){
                                 System.out.println("Connected to Field Management Box");
                                 new SensorUnit(s);
+                                break;
                             }
                         }
                     }

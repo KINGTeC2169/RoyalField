@@ -110,6 +110,17 @@ public class Alliance {
 
     }
 
+    int getTeamRank(int num){
+        try{
+            return teams.get(num).getRanking();
+        }
+        catch(IndexOutOfBoundsException e){
+            System.out.println("Team Doesn't Exist!");
+        }
+        return 0;
+
+    }
+
     int getFallenRelics(){
         return fallenRelics;
     }
@@ -148,11 +159,17 @@ public class Alliance {
 
     public char getWLT(){
         if(win){
+            setWin(true);
+            setRankingPoints(2);
             return 'W';
         }
         else if(tie){
+            setRankingPoints(1);
+            setWin(false);
             return 'T';
         }
+        setRankingPoints(0);
+        setWin(false);
         return 'L';
     }
 
@@ -259,6 +276,7 @@ public class Alliance {
     //Outputs
 
     void calculateTotalScore(){
+        getWLT();
         interpretTabletData();
         enemyPenaltyPoints = getOpponentMinorPenalties() * ScoreConstants.minorPenaltyPoints + getOpponentMajorPenalties()
                 * ScoreConstants.majorPenaltyPoints;

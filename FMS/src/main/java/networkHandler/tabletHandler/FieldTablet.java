@@ -69,7 +69,6 @@ public class FieldTablet extends Client {
     }
 
     public void useData(String s){
-        System.out.println(s);
         System.out.println(Alliance.getAllianceCode(getAllianceColor()) + ";" + FMSStates.stateToCode() + ";");
         this.setResponse(Alliance.getAllianceCode(getAllianceColor()) + ";" + FMSStates.stateToCode() + ";");
         if(alliance.isLinked()){
