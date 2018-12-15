@@ -121,6 +121,18 @@ public class Alliance {
 
     }
 
+    String getTeamName(int num){
+        try{
+            return teams.get(num).getName();
+        }
+        catch(IndexOutOfBoundsException e){
+            System.out.println("Team Doesn't Exist!");
+        }
+        return "";
+
+    }
+
+
     int getFallenRelics(){
         return fallenRelics;
     }

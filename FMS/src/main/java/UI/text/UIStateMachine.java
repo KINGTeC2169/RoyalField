@@ -149,13 +149,51 @@ public class UIStateMachine {
         private static int blueTwoNum = 0;
         private static int blueOneRank = 0;
         private static int blueTwoRank = 0;
+
+        private static String blueOneName = "";
+        private static String blueTwoName = "";
         private static String blueWLT = "";
 
         private static int redOneNum = 0;
         private static int redTwoNum = 0;
         private static int redOneRank = 0;
         private static int redTwoRank = 0;
+        private static String redOneName = "";
+        private static String redTwoName = "";
         private static String redWLT = "";
+
+
+        public static String getBlueOneName() {
+            return blueOneName;
+        }
+
+        public static void setBlueOneName(String blueOneName) {
+            Results.blueOneName = blueOneName;
+        }
+
+        public static String getBlueTwoName() {
+            return blueTwoName;
+        }
+
+        public static void setBlueTwoName(String blueTwoName) {
+            Results.blueTwoName = blueTwoName;
+        }
+
+        public static String getRedOneName() {
+            return redOneName;
+        }
+
+        public static void setRedOneName(String redOneName) {
+            Results.redOneName = redOneName;
+        }
+
+        public static String getRedTwoName() {
+            return redTwoName;
+        }
+
+        public static void setRedTwoName(String redTwoName) {
+            Results.redTwoName = redTwoName;
+        }
 
         public static int getBlueOneNum() {
             return blueOneNum;
@@ -218,8 +256,8 @@ public class UIStateMachine {
             return redTwoNum;
         }
 
-        public static void setRedTwoNum(int redTwpoNum) {
-            Results.redTwoNum = redTwpoNum;
+        public static void setRedTwoNum(int redTwoNum) {
+            Results.redTwoNum = redTwoNum;
         }
 
         public static int getRedOneRank() {

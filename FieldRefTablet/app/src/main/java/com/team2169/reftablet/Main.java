@@ -10,7 +10,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.ConnectException;
 import java.net.Socket;
+import java.net.UnknownHostException;
 
 public class Main extends AppCompatActivity {
 
@@ -21,7 +23,7 @@ public class Main extends AppCompatActivity {
      * b connected to the blue alliance
      * */
 
-    String ip = "192.168.1.5";
+    String ip = "192.168.1.119";
     Socket s;
     private String incomingData = "";
     private int textColor = Color.WHITE;
@@ -114,68 +116,62 @@ public class Main extends AppCompatActivity {
 
     private void attemptToConnect() {
         try {
+            Thread.sleep(1000);
+            System.gc();
             s = new Socket(ip, 2169);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("Failed to Connect!");
+        } catch (Exception e) {
+            System.out.println("Connection Failed!  Retrying!");
+            attemptToConnect();
         }
-        System.out.println("Successfully Connected!");
         Thread in = new Thread(() -> ioThread(s));
         in.start();
     }
 
-    public void visualsUpdate(){
+        public void visualsUpdate () {
 
-        /*
-         * Output is in format connection;standingRelics;tippedRelics
-         * Connection is the name of the alliance the user has selected (r, b)
-         * */
+            /*
+             * Output is in format connection;standingRelics;tippedRelics
+             * Connection is the name of the alliance the user has selected (r, b)
+             * */
 
-        /*
-         * Input will be in format alliance;gameState
-         * Alliance is a 2 digit binary code using t and f
-         * where t means taken or true, and f means free or false
-         * gameState can be set to a value 0-3
-         * 0: Pre-game
-         * 1: Autonomous
-         * 2: TeleOp
-         * 3: Endgame
-         * */
+            /*
+             * Input will be in format alliance;gameState
+             * Alliance is a 2 digit binary code using t and f
+             * where t means taken or true, and f means free or false
+             * gameState can be set to a value 0-3
+             * 0: Pre-game
+             * 1: Autonomous
+             * 2: TeleOp
+             * 3: Endgame
+             * */
 
             String inputs[] = incomingData.split(";", 2);
-            try{
+            try {
 
                 String alliance = inputs[0];
-                if(alliance.equals("r")){
+                if (alliance.equals("r")) {
                     textColor = Color.RED;
-                }
-                else if(alliance.equals("b")){
+                } else if (alliance.equals("b")) {
                     textColor = Color.BLUE;
                 }
 
                 String gameState = inputs[1];
-                if(gameState.equals("0")){
+                if (gameState.equals("0")) {
                     this.gameState = "Pre-Match";
                     standing_relics = 0;
                     tipped_relics = 0;
                     flags = 0;
-                }
-                else if(gameState.equals("1")){
+                } else if (gameState.equals("1")) {
                     this.gameState = "Auto";
-                }
-                else if(gameState.equals("2")){
+                } else if (gameState.equals("2")) {
                     this.gameState = "Tele";
-                }
-                else if(gameState.equals("3")){
+                } else if (gameState.equals("3")) {
                     this.gameState = "End";
                 }
 
-            }
-            catch (ArrayIndexOutOfBoundsException e) {
+            } catch (ArrayIndexOutOfBoundsException e) {
                 textColor = Color.WHITE;
-            }
-            catch(NullPointerException e){
+            } catch (NullPointerException e) {
                 System.out.println("Gamemode Not Found!");
             }
 
@@ -187,4 +183,5 @@ public class Main extends AppCompatActivity {
 
             });
 
-        }}
+        }
+    }

@@ -161,6 +161,11 @@ public class Match {
             UIStateMachine.Results.setBlueOneNum(blue.getTeam(0));
             UIStateMachine.Results.setBlueTwoNum(blue.getTeam(1));
 
+            UIStateMachine.Results.setBlueOneName(blue.getTeamName(0));
+            UIStateMachine.Results.setBlueTwoName(blue.getTeamName(1));
+            UIStateMachine.Results.setRedOneName(red.getTeamName(0));
+            UIStateMachine.Results.setRedTwoName(red.getTeamName(1));
+
             UIStateMachine.Results.setRedOneRank(red.getTeamRank(0));
             UIStateMachine.Results.setRedTwoRank(red.getTeamRank(1));
             UIStateMachine.Results.setBlueOneRank(blue.getTeamRank(0));

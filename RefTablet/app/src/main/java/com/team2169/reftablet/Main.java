@@ -21,7 +21,7 @@ public class Main extends AppCompatActivity {
      * b connected to the blue alliance
      * */
 
-    String ip = "192.168.1.5";
+    String ip = "192.168.1.119";
     Socket s;
     private String incomingData = "";
     private int textColor = Color.WHITE;
@@ -69,13 +69,13 @@ public class Main extends AppCompatActivity {
 
     private void attemptToConnect() {
         try {
+            Thread.sleep(1000);
+            System.gc();
             s = new Socket(ip, 2169);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("Failed to Connect!");
+        } catch (Exception e) {
+            System.out.println("Connection Failed!  Retrying!");
+            attemptToConnect();
         }
-        System.out.println("Successfully Connected!");
         Thread in = new Thread(() -> ioThread(s));
         in.start();
     }

@@ -14,14 +14,14 @@ public class TeamRank {
         int y = 143 + (rank%9) * 96;
         teamNum = new ScoreText(x, y, 50, true);
         teamRank = new ScoreText(x + 550, y, 50, true);
-        teamName = new ScoreText(x + 290, y - 5, 35, true);
+        teamName = new ScoreText(x + 290, y - 5, 20, true);
         teamRank.updateText(rank + "");
     }
 
     public TeamRank(int rank, int x, int y){
         teamNum = new ScoreText(x, y, 50, true);
         teamRank = new ScoreText(x + 550, y, 50, true);
-        teamName = new ScoreText(x + 290, y - 5, 35, true);
+        teamName = new ScoreText(x + 290, y - 5, 20, true);
         teamRank.updateText(rank + "");
     }
 

@@ -15,8 +15,8 @@ public class PostTextHandler extends TextHandler{
     private ScoreText redElementOneVal = new ScoreText(728, 525, 40, true);
     private ScoreText redElementTwoVal = new ScoreText(728, 587, 40, true);
     private ScoreText redElementThreeVal = new ScoreText(728, 649, 40, true);
-    private ScoreText redTeamOne = new ScoreText(370, 790, 70, true);
-    private ScoreText redTeamTwo  = new ScoreText(370, 930, 70, true);
+    private ScoreText redTeamOne = new ScoreText(370, 790, 30, true);
+    private ScoreText redTeamTwo  = new ScoreText(370, 930, 30, true);
     private ScoreText redTeamOneRank = new ScoreText(1640-960, 790, 70, true);
     private ScoreText redTeamTwoRank  = new ScoreText(1640-960, 930, 70, true);
     private ScoreText blueScore = new ScoreText(1430,395, 250);
@@ -27,8 +27,8 @@ public class PostTextHandler extends TextHandler{
     private ScoreText blueElementOneVal = new ScoreText(1468, 525, 40, true);
     private ScoreText blueElementTwoVal = new ScoreText(1468, 587, 40, true);
     private ScoreText blueElementThreeVal = new ScoreText(1468, 649, 40, true);
-    private ScoreText blueTeamOne = new ScoreText(1330, 790, 70, true);
-    private ScoreText blueTeamTwo  = new ScoreText(1330, 930, 70, true);
+    private ScoreText blueTeamOne = new ScoreText(1330, 790, 30, true);
+    private ScoreText blueTeamTwo  = new ScoreText(1330, 930, 30, true);
     private ScoreText blueTeamOneRank = new ScoreText(1640, 790, 70, true);
     private ScoreText blueTeamTwoRank  = new ScoreText(1640, 930, 70, true);
 
@@ -53,8 +53,8 @@ public class PostTextHandler extends TextHandler{
         redElementTwoVal.updateText(UIStateMachine.getRedFlag() + "");
         redElementThreeVal.updateText(UIStateMachine.getRedStandingRelic()
                 + " : " + UIStateMachine.getRedFallenRelic());
-        redTeamOne.updateText("Team " + UIStateMachine.Results.getRedOneNum() + "");
-        redTeamTwo.updateText("Team " + UIStateMachine.Results.getRedTwoNum() + "");
+        redTeamOne.updateText(UIStateMachine.Results.getRedOneName());
+        redTeamTwo.updateText(UIStateMachine.Results.getRedTwoName());
         redTeamOneRank.updateText(UIStateMachine.Results.getRedOneRank() + "");
         redTeamTwoRank.updateText(UIStateMachine.Results.getRedTwoRank() + "");
         blueScore.updateText(UIStateMachine.getBlueScore() + "");
@@ -66,8 +66,8 @@ public class PostTextHandler extends TextHandler{
         blueElementTwoVal.updateText(UIStateMachine.getBlueFlag() + "");
         blueElementThreeVal.updateText(UIStateMachine.getBlueStandingRelic()
                 + " : " + UIStateMachine.getBlueFallenRelic());
-        blueTeamOne.updateText("Team " + UIStateMachine.Results.getBlueOneNum() + "");
-        blueTeamTwo.updateText("Team " + UIStateMachine.Results.getBlueTwoNum() + "");
+        blueTeamOne.updateText(UIStateMachine.Results.getBlueOneName());
+        blueTeamTwo.updateText(UIStateMachine.Results.getBlueTwoName());
         blueTeamOneRank.updateText(UIStateMachine.Results.getBlueOneRank() + "");
         blueTeamTwoRank.updateText(UIStateMachine.Results.getBlueTwoRank() + "");
 
